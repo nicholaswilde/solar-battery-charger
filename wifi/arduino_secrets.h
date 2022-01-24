@@ -1,2 +1,2 @@
-#define password "password"
-#define ssid "ssid"
+#define password "***REMOVED***"
+#define ssid "Ben"
