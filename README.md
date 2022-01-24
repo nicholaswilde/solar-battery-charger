@@ -6,8 +6,9 @@
 
 ```
 arduino-cli config init
-`arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json`
+arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
 ```
+
 `cat ~/.arduino15/arduino-cli.yaml`
 
 ```
@@ -16,9 +17,10 @@ board_manager:
     - https://arduino.esp8266.com/stable/package_esp8266com_index.json
 ...
 ```
+
 ```
-arduino-cli core update-index`
-arduino-cli board search huzzah`
+arduino-cli core update-index
+arduino-cli board search huzzah
 ```
 
 ```
