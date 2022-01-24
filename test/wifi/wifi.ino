@@ -3,7 +3,7 @@
  */
 
 #include <ESP8266WiFi.h>
-#include "arduino_secrets.h"
+#include "secrets.h"
 
 /*
 const char* ssid     = "yourssid";
