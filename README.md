@@ -44,3 +44,4 @@ screen /dev/ttyUSB0 115200
 - https://www.seeedstudio.com/blog/2019/10/09/voltage-dividers-everything-you-need-to-know/
 - https://cdn-learn.adafruit.com/downloads/pdf/adafruit-feather-huzzah-esp8266.pdf
 - http://web.mit.edu/evt/summary_battery_specifications.pdf
+- https://dronebotworkshop.com/dc-volt-current/#Voltage_References
