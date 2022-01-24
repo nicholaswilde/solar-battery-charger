@@ -27,3 +27,9 @@ arduino-cli board search huzzah
 Board Name                      FQBN                   Platform ID
 Adafruit Feather HUZZAH ESP8266 esp8266:esp8266:huzzah esp8266:esp8266
 ```
+
+
+```
+arduino-cli upload -p /dev/ttyUSB0 -b esp8266:esp8266:huzzah wifi.ino --verbose
+screen /dev/ttyUSB0 115200
+```

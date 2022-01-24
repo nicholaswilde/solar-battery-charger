@@ -1,3 +1,6 @@
+*.swp
+arduino_secrets.h
+
 # Prerequisites
 *.d
 
