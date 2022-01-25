@@ -165,4 +165,4 @@ WIP
 [Apache 2.0 License](./LICENSE)
 
 ## :pencil:&nbsp; Author
-This project was started in 2021 by [Nicholas Wilde](https://github.com/nicholaswilde/).
+This project was started in 2022 by [Nicholas Wilde](https://github.com/nicholaswilde/).
