@@ -97,6 +97,17 @@ screen /dev/ttyUSB0 115200
 # Kill the monitoring screen by pressing Ctrl+a k y Enter
 ```
 
+### Secrets
+
+`secrets.h` is a file used to store secrets such as API tokens and wifi
+credentials that aren't updated in GitHub. The file is ignored in `.gitignore`.
+
+Secrets can be used in sketches using the following code:
+
+```C++
+#include "secrets.h"
+```
+
 ## Tests
 - [ ] adafruitio
 - [X] [battery](./test/battery)
