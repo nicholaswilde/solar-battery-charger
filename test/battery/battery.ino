@@ -14,16 +14,15 @@
   Author:       Nicholas Wilde 0x08b7d7a3
 --------------------------------------------------------------*/
 
-// number of analog samples to take per reading
-#define NUM_SAMPLES 10
-#define BAUD_RATE 115200
-#define ANALOG_PIN_NO A0
-#define R1 1000000
-#define R2 220000
-#define VOLTAGE_MAX 4.2
-#define VOLTAGE_MIN 3.14
-#define DELAY_LOOP 1000
-#define DELAY_SAMPLE 10
+#define NUM_SAMPLES 10   // number of analog samples to take per reading
+#define BAUD_RATE 115200 // baud rate used for Serial console
+#define ANALOG_PIN_NO A0 // analog pin number
+#define R1 1000000       // resistor 1 on the voltage divider
+#define R2 220000        // resistor 2 on the voltage divider
+#define VOLTAGE_MAX 4.2  // max voltage of lipo battery
+#define VOLTAGE_MIN 3.14 // min voltage of lipo battery
+#define DELAY_LOOP 1000  // delay for loop routine
+#define DELAY_SAMPLE 10  // delay between samples
 
 int sum = 0;                    // sum of samples taken
 unsigned char sample_count = 0; // current sample number
@@ -34,9 +33,14 @@ float resistor_ratio = 0;       // resistor ratio
 
 void setup() {
   Serial.begin(BAUD_RATE);
+  
+  // calculate the voltage divider ratio
   resistor_ratio=(float)R2/((float)R1+(float)R2);
+  
+  // calculate the min battery number using the resistor ratio
   battery_min=(float)resistor_ratio*(float)VOLTAGE_MIN*1024;
   // battery_min=580;
+  // calculate the max battery number using the resistor ratio
   battery_max=(float)resistor_ratio*(float)VOLTAGE_MAX*1024;
   // battery_max=774;
 }
