@@ -4,9 +4,11 @@ Reads value on analog input A0 and calculates the the percent level of a lipo ba
 
 ## Hypothesis
 
+The Adafruit Feather Huzzah can be used to monitor the level of a lipo battery.
+
 ## Assumptions
 
-## Data
+## Procedure
 
 ## Analysis
 
