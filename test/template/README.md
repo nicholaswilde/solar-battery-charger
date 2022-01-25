@@ -4,7 +4,7 @@
 
 ## Assumptions
 
-## Data
+## Procedure
 
 ## Analysis
 
