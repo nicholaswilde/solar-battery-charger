@@ -53,43 +53,47 @@ charging is complete. It can also send notifications when the charge is complete
 - [ubuntu server](https://ubuntu.com/download/server)
 - [go-task](https://github.com/go-task/task)
 - [pre-commit](https://pre-commit.com/)
+- [GNU Screen](https://www.gnu.org/software/screen/)
 
 ## Schematics
 
 WIP
 
 ## Configuration
-```
+```bash
 arduino-cli config init
 arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
 cat ~/.arduino15/arduino-cli.yaml
 ```
 
-```
+```yaml
+# ~/.arduino15/arduino-cli.yaml
 board_manager:
   additional_urls:
     - https://arduino.esp8266.com/stable/package_esp8266com_index.json
 ...
 ```
 
-```
+```bash
 arduino-cli core update-index
 arduino-cli board search huzzah
 ```
 
-```
+```bash
 Board Name                      FQBN                   Platform ID
 Adafruit Feather HUZZAH ESP8266 esp8266:esp8266:huzzah esp8266:esp8266
 ```
 
-```
+```bash
 # Compile
 arduino-cli compile -b esp8266:esp8266:huzzah wifi.ino --verbose
 # Be sure to compile your code before uploading it!
 # Upload
 arduino-cli upload -p /dev/ttyUSB0 -b esp8266:esp8266:huzzah wifi.ino --verbose
-# Monitor serial connection
+# Monitor serial connection using GNU Screen
+# Make sure your baud rate matches the baud rate inside of your sketches!
 screen /dev/ttyUSB0 115200
+# Kill the monitoring screen by pressing Ctrl+a k y Enter
 ```
 
 ## Tests
