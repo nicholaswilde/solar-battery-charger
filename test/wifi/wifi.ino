@@ -1,16 +1,27 @@
-/*
- *  Simple HTTP get webclient test
- */
+/*--------------------------------------------------------------
+  Program:      wifi
+
+  Description:  A quick wifi test that pings a website.
+  
+  Hardware:     Adafruit Feather Huzzah and wifi AP
+                
+  Software:     Developed using arduino-cli 0.20.2.
+
+  Date:         24JAN2022
+ 
+  Author:       Nicholas Wilde 0x08b7d7a3
+--------------------------------------------------------------*/
 
 #include <ESP8266WiFi.h>
 #include "secrets.h"
 
-/*
-const char* ssid     = "yourssid";
-const char* password = "yourpassword";
-*/
+// values are specified in secrets.h
+// const char* ssid     = "yourssid";
+// const char* password = "yourpassword";
 
 const char* host = "wifitest.adafruit.com";
+
+int value = 0;
 
 void setup() {
   Serial.begin(115200);
@@ -35,8 +46,6 @@ void setup() {
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
 }
-
-int value = 0;
 
 void loop() {
   delay(5000);
