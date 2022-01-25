@@ -1,4 +1,4 @@
-# Solar Battery Charger
+# :battery: Solar Battery Charger
 
 A solar battery charger to charge lithium ion (li-ion) 18650, 9V, and coin batteries and Ni-MH AA and AAA batteries.
 
