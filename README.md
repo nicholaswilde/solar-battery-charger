@@ -162,6 +162,7 @@ WIP
 - https://siytek.com/arduino-cli-raspberry-pi/
 - https://www.best-microcontroller-projects.com/tp4056-page2.html
 - https://en.wikipedia.org/wiki/Nickel%E2%80%93metal_hydride_battery
+- https://arduino.github.io/arduino-cli/
 
 ## :balance_scale:&nbsp; License
 
