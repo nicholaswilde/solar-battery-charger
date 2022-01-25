@@ -30,6 +30,7 @@ monitor remotely as well as collect data. The board will monitor when the li-ion
 charging is complete. It can also send notifications when the charge is complete via IFTTT.
 
 ## Hardware
+- 15X [Energizer LED Solar pathway Lights](https://outdoorsolaroutlet.com/products/new-led-energizer-10pack-solar-pathway-lights-outdoor-stainless-steel-bronze)
 - 1X [Adafruit Feather Huzzah ESP8266](https://learn.adafruit.com/adafruit-feather-huzzah-esp8266/)
 - 2X [IMREN 3.7v 18650 Rechargeable Battery 3000mAh](https://www.amazon.com/gp/product/B09L5M1WN6/)
 - 1X [NITECORE UMS2 Charger](https://www.amazon.com/gp/product/B07JN49XYM/)
