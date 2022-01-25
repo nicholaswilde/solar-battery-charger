@@ -25,7 +25,7 @@ The concept is to create a solar panel and circuit to charge 18650 li-ion batter
 batteries to charge Ni-MH batteries via existing USB chargers. The li-ion batteries are to be disconnectable from
 the solar panel to make more portable to recharge other devices and batteries.
 
-Monitoring is handled by an Adafruit Feather Huzzah that has built in wifi support which makes it easy to
+Monitoring is handled by an Adafruit Feather Huzzah (Feather) that has built in wifi support which makes it easy to
 monitor remotely as well as collect data. The board will monitor when the li-ion battery is charging and when
 charging is complete. It can also send notifications when the charge is complete via IFTTT.
 
@@ -97,27 +97,30 @@ screen /dev/ttyUSB0 115200
 ```
 
 ## Tests
+- [ ] adafruitio
 - [X] [battery](./test/battery)
 - [X] [blink](./test/blink)
-- [X] [wifi](./test/wifi)
-- [ ] thingspeak
-- [ ] adafruitio
-- [ ] sleep
+- [ ] cell
 - [ ] notify
+- [ ] panel
+- [ ] sleep
+- [ ] thingspeak
 - [ ] v1
 - [ ] v2
+- [X] [wifi](./test/wifi)
 
 ## Todo
 
 ### Tests
 - [ ] Digital IO test with optocoupler on TP4056 red and blue LEDs to monitor 
 - [ ] Upload to ThinkSpeak/Adafruit IO.
-- [ ] Deep sleep.
-- [ ] Notifications.
+- [ ] Deep sleep to preserve battery.
+- [ ] Notifications for Amazon Alexa and phone notifications.
+- [ ] Power Feather by charging li-ion batteries and/or solar panel using a [pmosfet](https://www.best-microcontroller-projects.com/tp4056-page2.html).
 
 ### Tools
-- [ ] Implement go-task.
-- [ ] Implement pre-commit.
+- [ ] Implement `go-task`.
+- [ ] Implement `pre-commit`.
 - [ ] Create test template.
 
 ### Documentation
@@ -126,7 +129,7 @@ screen /dev/ttyUSB0 115200
 - [ ] Add images.
 - [ ] Cleanup `Configuration` section.
 - [ ] Write `test` READMEs.
-- [ ] Write up `v1` and `v2`.
+- [ ] Write up `v1`, `v2`, `cell`, and `panel` tests.
 
 ## Troubleshooting
 
@@ -140,6 +143,7 @@ WIP
 - https://learn.adafruit.com/using-ifttt-with-adafruit-io/arduino-code-2
 - https://learn.adafruit.com/using-ifttt-with-adafruit-io/wiring#battery-tracking
 - https://siytek.com/arduino-cli-raspberry-pi/
+- https://www.best-microcontroller-projects.com/tp4056-page2.html
 
 ## License
 
