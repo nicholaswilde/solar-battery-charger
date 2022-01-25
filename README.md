@@ -113,11 +113,13 @@ screen /dev/ttyUSB0 115200
 ## Todo
 
 ### Tests
-- [ ] Digital IO test with optocoupler on TP4056 red and blue LEDs to monitor 
-- [ ] Upload to ThinkSpeak/Adafruit IO.
+- [ ] Digital IO test with optocoupler on TP4056 red and blue LEDs to monitor.
+- [ ] Upload data to ThinkSpeak/Adafruit IO.
 - [ ] Deep sleep to preserve battery.
-- [ ] Notifications for Amazon Alexa and phone notifications.
+- [ ] Notifications for Amazon Alexa and mobile phone.
 - [ ] Power Feather by charging li-ion batteries and/or solar panel using a [pmosfet](https://www.best-microcontroller-projects.com/tp4056-page2.html).
+- [ ] Determine the optimal number of 18650 li-ion batteries to charge.
+- [ ] Optimize solar panel.
 
 ### Tools
 - [ ] Implement `go-task`.
