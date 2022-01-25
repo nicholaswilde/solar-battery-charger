@@ -123,6 +123,9 @@ Secrets can be used in sketches using the following code:
 
 ## :clipboard:&nbsp; Todo
 
+### Design
+- [ ] Wooden solar panel box designed as panel frame.
+
 ### Tests
 - [ ] Digital IO test with optocoupler on TP4056 red and blue LEDs to monitor.
 - [ ] Upload data to ThinkSpeak/Adafruit IO.
