@@ -13,3 +13,15 @@
  
   Author:       Nicholas Wilde 0x08b7d7a3
 --------------------------------------------------------------*/
+
+#define BAUD_RATE 115200 // baud rate used for Serial console
+#define DELAY_LOOP 1000  // loop delay time (ms)
+
+void setup() {
+  Serial.begin(BAUD_RATE);
+}
+
+void loop() {
+  Serial.println("test");
+  delay(DELAY_LOOP);
+}
