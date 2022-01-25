@@ -54,6 +54,10 @@ charging is complete. It can also send notifications when the charge is complete
 - [go-task](https://github.com/go-task/task)
 - [pre-commit](https://pre-commit.com/)
 
+## Schematics
+
+WIP
+
 ## Configuration
 ```
 arduino-cli config init
@@ -81,7 +85,7 @@ Adafruit Feather HUZZAH ESP8266 esp8266:esp8266:huzzah esp8266:esp8266
 ```
 # Compile
 arduino-cli compile -b esp8266:esp8266:huzzah wifi.ino --verbose
-# Be sure to compiile your code before uploading it!
+# Be sure to compile your code before uploading it!
 # Upload
 arduino-cli upload -p /dev/ttyUSB0 -b esp8266:esp8266:huzzah wifi.ino --verbose
 # Monitor serial connection
@@ -89,19 +93,36 @@ screen /dev/ttyUSB0 115200
 ```
 
 ## Tests
-- [X][battery](./test/battery)
-- [X][blink](./test/blink)
-- [X][wifi](./test/wifi)
-- [ ]thingspeak
-- [ ]adafruitio
-- [ ]sleep
+- [X] [battery](./test/battery)
+- [X] [blink](./test/blink)
+- [X] [wifi](./test/wifi)
+- [ ] thingspeak
+- [ ] adafruitio
+- [ ] sleep
+- [ ] notify
+- [ ] v1
+- [ ] v2
 
 ## Todo
+
+### Tests
 - [ ] Digital IO test with optocoupler on TP4056 red and blue LEDs to monitor 
-- [ ] Test upload to ThinkSpeak/Adafruit IO.
-- [ ] Test deep sleep.
+- [ ] Upload to ThinkSpeak/Adafruit IO.
+- [ ] Deep sleep.
+- [ ] Notifications.
+
+### Tools
 - [ ] Implement go-task.
 - [ ] Implement pre-commit.
+- [ ] Create test template.
+
+### Documentation
+- [ ] Write troubleshooting section.
+- [ ] Create schematics.
+- [ ] Add images.
+- [ ] Cleanup `Configuration` section.
+- [ ] Write `test` READMEs.
+- [ ] Write up `v1` and `v2`.
 
 ## Troubleshooting
 
