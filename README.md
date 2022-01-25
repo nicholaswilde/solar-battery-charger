@@ -2,7 +2,7 @@
 
 A solar battery charger to charge lithium ion (li-ion) 18650, 9V, and coin batteries and Ni-MH AA and AAA batteries.
 
-## Objectives
+## :goal_net:&nbsp; Objectives
 - Recharge li-ion 18650, 9V, and coin batteries via a solar panel.
 - Recharge Ni-MH AA and AAA batteries indirectly via a solar panel.
 - Make the li-ion battery pack portable to easily recharge other devices. 
@@ -10,7 +10,7 @@ A solar battery charger to charge lithium ion (li-ion) 18650, 9V, and coin batte
 - Monitor the rate of charging via an online IOT service such as [ThingSpeak](https://thingspeak.com/) or [Adafruit IO](https://io.adafruit.com/). 
 - Learn about solar cells, panels, li-ion, and [Ni-MH batteries](https://en.wikipedia.org/wiki/Nickel%E2%80%93metal_hydride_battery).
 
-## Background
+## :framed_picture:&nbsp; Background
 
 I recently replaced my solar landscape lights with hardwired ones and so I had a bunch of solar cells that I didn't
 know what to do with. I decided to salvage the solar cells to build myself a solar battery charger since I try to
@@ -19,7 +19,7 @@ problem with recharging Ni-MH batteries is that they're difficult to monitor and
 I decided to create a lithium ion solar charger that then can be used to charge Ni-MH batteries via existing USB
 chargers.
 
-## Concept
+## :bulb:&nbsp; Concept
 
 The concept is to create a solar panel and circuit to charge 18650 li-ion batteries and then use the charged li-ion
 batteries to charge Ni-MH batteries via existing USB chargers. The li-ion batteries are to be disconnectable from
@@ -29,7 +29,7 @@ Monitoring is handled by an Adafruit Feather Huzzah (Feather) that has built in 
 monitor remotely as well as collect data. The board will monitor when the li-ion battery is charging and when
 charging is complete. It can also send notifications when the charge is complete via IFTTT.
 
-## Hardware
+## :desktop_computer:&nbsp; Hardware
 - 15X [Energizer LED Solar pathway Lights](https://outdoorsolaroutlet.com/products/new-led-energizer-10pack-solar-pathway-lights-outdoor-stainless-steel-bronze)
 - 1X [Adafruit Feather Huzzah ESP8266](https://learn.adafruit.com/adafruit-feather-huzzah-esp8266/)
 - 2X [IMREN 3.7v 18650 Rechargeable Battery 3000mAh](https://www.amazon.com/gp/product/B09L5M1WN6/)
@@ -44,23 +44,23 @@ charging is complete. It can also send notifications when the charge is complete
 - 1X [220kΩ Resistor](https://www.amazon.com/gp/product/B072BL2VX1/)
 - 1X [1MΩ Resistor](https://www.amazon.com/gp/product/B072BL2VX1/)
 
-## Services
+## :robot:&nbsp; Services
 - [IFTTT](https://ifttt.com/)
 - [ThingSpeak](https://thingspeak.com/)
 - [Adafruit IO](https://io.adafruit.com/)
 
-## Software
+## :floppy_disk:&nbsp; Software
 - [arduino-cli](https://arduino.github.io/arduino-cli/latest/installation)
 - [ubuntu server](https://ubuntu.com/download/server)
 - [go-task](https://github.com/go-task/task)
 - [pre-commit](https://pre-commit.com/)
 - [GNU Screen](https://www.gnu.org/software/screen/)
 
-## Schematics
+## :electric_plug:&nbsp; Schematics
 
 WIP
 
-## Configuration
+## :gear:&nbsp; Configuration
 ```bash
 arduino-cli config init
 arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
@@ -97,7 +97,7 @@ screen /dev/ttyUSB0 115200
 # Kill the monitoring screen by pressing Ctrl+a k y Enter
 ```
 
-### Secrets
+### :key:&nbsp; Secrets
 
 `secrets.h` is a file used to store secrets such as API tokens and wifi
 credentials that aren't updated in GitHub. The file is ignored in `.gitignore`.
@@ -108,7 +108,7 @@ Secrets can be used in sketches using the following code:
 #include "secrets.h"
 ```
 
-## Tests
+## :test_tube:&nbsp; Tests
 - [ ] adafruitio
 - [X] [battery](./test/battery)
 - [X] [blink](./test/blink)
@@ -121,7 +121,7 @@ Secrets can be used in sketches using the following code:
 - [ ] v2
 - [X] [wifi](./test/wifi)
 
-## Todo
+## :clipboard:&nbsp; Todo
 
 ### Tests
 - [ ] Digital IO test with optocoupler on TP4056 red and blue LEDs to monitor.
@@ -145,11 +145,11 @@ Secrets can be used in sketches using the following code:
 - [ ] Write `test` READMEs.
 - [ ] Write up `v1`, `v2`, `cell`, and `panel` tests.
 
-## Troubleshooting
+## :hammer_and_wrench:&nbsp; Troubleshooting
 
 WIP
 
-## References
+## :link:&nbsp; References
 - https://www.seeedstudio.com/blog/2019/10/09/voltage-dividers-everything-you-need-to-know/
 - https://cdn-learn.adafruit.com/downloads/pdf/adafruit-feather-huzzah-esp8266.pdf
 - http://web.mit.edu/evt/summary_battery_specifications.pdf
@@ -160,9 +160,9 @@ WIP
 - https://www.best-microcontroller-projects.com/tp4056-page2.html
 - https://en.wikipedia.org/wiki/Nickel%E2%80%93metal_hydride_battery
 
-## License
+## :balance_scale:&nbsp; License
 
 [Apache 2.0 License](./LICENSE)
 
-## Author
+## :pencil:&nbsp; Author
 This project was started in 2021 by [Nicholas Wilde](https://github.com/nicholaswilde/).
