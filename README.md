@@ -44,8 +44,8 @@ screen /dev/ttyUSB0 115200
 - [wifi](./test/wifi)
 
 ## Todo
--[ ] Digital IO test with optocoupler on TP4056 red and blue LEDs to monitor 
--[ ] Test to upload to thinkspeak
+- [ ] Digital IO test with optocoupler on TP4056 red and blue LEDs to monitor 
+- [ ] Test to upload to thinkspeak
 
 ## References
 - https://www.seeedstudio.com/blog/2019/10/09/voltage-dividers-everything-you-need-to-know/
