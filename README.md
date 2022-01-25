@@ -8,7 +8,7 @@ A solar battery charger to charge lithium ion (li-ion) 18650, 9V, and coin batte
 - Make the li-ion battery pack portable to easily recharge other devices. 
 - Receive notificatinos when the li-ion batteries are fully charged.
 - Monitor the rate of charging via an online IOT service such as [ThingSpeak](https://thingspeak.com/) or [Adafruit IO](https://io.adafruit.com/). 
-- Learn about solar cells, panels, li-ion, and Ni-MH batteries.
+- Learn about solar cells, panels, li-ion, and [Ni-MH batteries](https://en.wikipedia.org/wiki/Nickel%E2%80%93metal_hydride_battery).
 
 ## Background
 
@@ -147,6 +147,7 @@ WIP
 - https://learn.adafruit.com/using-ifttt-with-adafruit-io/wiring#battery-tracking
 - https://siytek.com/arduino-cli-raspberry-pi/
 - https://www.best-microcontroller-projects.com/tp4056-page2.html
+- https://en.wikipedia.org/wiki/Nickel%E2%80%93metal_hydride_battery
 
 ## License
 
