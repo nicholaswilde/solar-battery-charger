@@ -1,5 +1,6 @@
 *.swp
-**/secrets.h
+**/**/secrets.h
+secrets.h
 
 # Prerequisites
 *.d
