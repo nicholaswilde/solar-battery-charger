@@ -15,6 +15,8 @@ WIP
 
 ### Schematic
 
+Connect the RST pin to pin 16.
+
 ![](./images/schematic.png)
 
 ### Code
@@ -30,7 +32,7 @@ screen /dev/ttyUSB0 115200
 ```
 
 During the first bootup after the upload, the Feather might be stuck with the
-internal light dim. Press the manual RST button.
+internal light dim. Press the manual RESET button.
 
 ### Output
 
