@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------
-  Program:      template
+  Program:      ${TEST_NAME}
 
   Description:  Reads value on analog input A0 and calculates
                 the the percent level of a lipo battery.
