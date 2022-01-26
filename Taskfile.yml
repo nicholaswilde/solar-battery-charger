@@ -3,7 +3,7 @@ version: '3'
 
 dotenv:
   - task.env
-  
+
 tasks:
   test:
     cmds:

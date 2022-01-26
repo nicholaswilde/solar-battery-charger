@@ -1,6 +1,6 @@
 *.swp
-**/**/secrets.h
 secrets.h
+sketch.json
 
 # Prerequisites
 *.d
