@@ -51,6 +51,7 @@ Therefore, charging the li-ion batteries and charging other things with the USB 
 - 1X [220kΩ Resistor](https://www.amazon.com/gp/product/B072BL2VX1/)
 - 1X [1MΩ Resistor](https://www.amazon.com/gp/product/B072BL2VX1/)
 - 1X [JST-PH 2.0 Male and Female Connector Cable](https://www.amazon.com/gp/product/B07NWD5NTN)
+- 1X [DPDT 2 Position 6 Terminals Panel Mount Horizontal Slide Switch](https://www.amazon.com/gp/product/B01N6ROMW3)
 
 ## :robot:&nbsp; Services
 - [IFTTT](https://ifttt.com/)
