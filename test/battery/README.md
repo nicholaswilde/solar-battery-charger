@@ -47,5 +47,4 @@ WIP
 WIP
 
 ## References
-
-WIP
+- https://learn.adafruit.com/using-ifttt-with-adafruit-io/wiring#battery-tracking
