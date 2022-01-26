@@ -34,7 +34,7 @@ charging is complete. It can also send notifications when the charge is complete
 ## Current Limitations
 
 As of the time of this writing, charging the li-ion batteries and using the USB port need to happen separately.
-Therefore, charing the li-ion batteries and charing other things with the USB port can't happen at the same time.
+Therefore, charging the li-ion batteries and charging other things with the USB port can't happen at the same time.
 
 ## :desktop_computer:&nbsp; Hardware
 - 15X [Energizer LED Solar pathway Lights](https://outdoorsolaroutlet.com/products/new-led-energizer-10pack-solar-pathway-lights-outdoor-stainless-steel-bronze)
