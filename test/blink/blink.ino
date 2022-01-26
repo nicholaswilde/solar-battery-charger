@@ -1,7 +1,7 @@
 /*--------------------------------------------------------------
   Program:      blink
   
-  Description:  Blnink the built in LED.
+  Description:  Blink the built in LED.
   
   Hardware:     Adafruit Feather Huzzah
                 
