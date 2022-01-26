@@ -12,9 +12,9 @@ WIP
 
 ## Procedure
 
-### Schematic
+### Circuit
 
-WIP
+![](./images/circuit.png)
 
 ### Code
 
