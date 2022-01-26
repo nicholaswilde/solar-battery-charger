@@ -1,5 +1,7 @@
 # blink
 
+Blink the built in LED.
+
 ## Hypothesis
 
 ## Assumptions
