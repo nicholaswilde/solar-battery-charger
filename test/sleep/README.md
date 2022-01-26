@@ -15,7 +15,7 @@ WIP
 
 ### Schematic
 
-Connect the RST pin to pin 16.
+Connect the `RST` pin to pin `16`.
 
 ![](./images/schematic.png)
 
@@ -32,7 +32,7 @@ screen /dev/ttyUSB0 115200
 ```
 
 During the first bootup after the upload, the Feather might be stuck with the
-internal light dim. Press the manual RESET button.
+internal light dim. Press the physical `RESET` button.
 
 ### Output
 
@@ -61,4 +61,4 @@ WIP
 
 ### The internal LED is dim and the console is blank when connected to a computer via USB
 
-The Feather needs to be reset. Press the physical reset button.
+The Feather needs to be reset. Press the physical `RESET` button.
