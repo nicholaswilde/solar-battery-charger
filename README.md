@@ -69,7 +69,8 @@ Therefore, charging the li-ion batteries and charging other things with the USB 
 WIP
 
 ## :gear:&nbsp; Configuration
-```bash
+
+```shell
 arduino-cli config init
 arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
 cat ~/.arduino15/arduino-cli.yaml
@@ -83,27 +84,78 @@ board_manager:
 ...
 ```
 
-```bash
+```shell
 arduino-cli core update-index
 arduino-cli board search huzzah
 ```
 
-```bash
+Typical Output
+
+```shell
 Board Name                      FQBN                   Platform ID
 Adafruit Feather HUZZAH ESP8266 esp8266:esp8266:huzzah esp8266:esp8266
 ```
 
-```bash
-# Compile
-arduino-cli compile -b esp8266:esp8266:huzzah wifi.ino --verbose
-# Be sure to compile your code before uploading it!
-# Upload
-arduino-cli upload -p /dev/ttyUSB0 -b esp8266:esp8266:huzzah wifi.ino --verbose
+Compile the sketch
+
+From the directory of the sketch:
+
+```shell
+arduino-cli compile -b esp8266:esp8266:huzzah .
+```
+
+Typical Output
+
+```shell
+Executable segment sizes:
+ICACHE : 32768           - flash instruction cache 
+IROM   : 236116          - code in flash         (default or ICACHE_FLASH_ATTR) 
+IRAM   : 27273   / 32768 - code in IRAM          (IRAM_ATTR, ISRs...) 
+DATA   : 1496  )         - initialized variables (global, static) in RAM/HEAP 
+RODATA : 908   ) / 81920 - constants             (global, static) in RAM/HEAP 
+BSS    : 25680 )         - zeroed variables      (global, static) in RAM/HEAP 
+Sketch uses 265793 bytes (25%) of program storage space. Maximum is 1044464 bytes.
+Global variables use 28084 bytes (34%) of dynamic memory, leaving 53836 bytes for local variables. Maximum is 81920 bytes.
+```
+
+Be sure to compile your code before uploading it!
+
+Upload the sketch to the Feather
+
+```shell
+arduino-cli upload -p /dev/ttyUSB0 -b esp8266:esp8266:huzzah .
+```
+
+Typical Output
+
+```shell
+esptool.py v3.0
+Serial port /dev/ttyUSB0
+Connecting........_____.
+Chip is ESP8266EX
+Features: WiFi
+Crystal is 26MHz
+MAC: bc:dd:c2:2d:ce:0d
+Uploading stub...
+Running stub...
+Stub running...
+Configuring flash size...
+Auto-detected Flash size: 4MB
+Compressed 269952 bytes to 198163...
+Wrote 269952 bytes (198163 compressed) at 0x00000000 in 17.5 seconds (effective 123.5 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...
+```
+
 # Monitor serial connection using GNU Screen
 # Make sure your baud rate matches the baud rate inside of your sketches!
+```shell
 screen /dev/ttyUSB0 115200
-# Kill the monitoring screen by pressing Ctrl+a k y Enter
 ```
+
+Kill the monitoring screen by pressing Ctrl+a k y
 
 ### :key:&nbsp; Secrets
 
@@ -123,7 +175,7 @@ Secrets can be used in sketches using the following code:
 - [ ] cell
 - [ ] notify
 - [ ] panel
-- [ ] sleep
+- [X] [sleep](./test/sleep)
 - [ ] thingspeak
 - [ ] v1
 - [ ] v2
@@ -137,7 +189,7 @@ Secrets can be used in sketches using the following code:
 ### Tests
 - [ ] Digital IO test with optocoupler on TP4056 red and blue LEDs to monitor.
 - [ ] Upload data to ThinkSpeak/Adafruit IO.
-- [ ] Deep sleep to preserve battery.
+- [X] Deep sleep to preserve battery.
 - [ ] Notifications for Amazon Alexa and mobile phone.
 - [ ] Power Feather by charging li-ion batteries and/or solar panel using a [pmosfet](https://www.best-microcontroller-projects.com/tp4056-page2.html).
 - [ ] Determine the optimal number of 18650 li-ion batteries to charge.
