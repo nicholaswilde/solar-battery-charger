@@ -22,7 +22,7 @@ Connect the `RST` pin to pin `16`.
 ### Code
 
 From the `./test/sleep` directory:
-```
+```shell
 # compile
 arduino-cli compile -b esp8266:esp8266:huzzah .
 # upload
@@ -36,7 +36,7 @@ internal light dim. Press the physical `RESET` button.
 
 ### Output
 
-```
+```shell
 rll��|�l�|�l�b|����r�b�b��nn�lnn���bp��lrlrlp�n��l��bn�|���b��nn�l��l`�nn�lnr���nrr�`p�n�r������bn�|�b��nn��l`�nn�lnr���nrl`r��nrl`��pl`�n�lwaking up
 going to sleep
 rll��|�l�|�l�b|����r�b�b��nn�lnn���bp��lrlrlp�n��l��bn�|���b��nn�l��l`�nn�lnr���nrr�`p�n�r������bn�|�b��nn��l`�nn�lnr���nrl`r��nrl`��pl`�n�lwaking up
