@@ -62,3 +62,6 @@ WIP
 ### The internal LED is dim and the console is blank when connected to a computer via USB
 
 The Feather needs to be reset. Press the physical `RESET` button.
+
+## References
+- https://randomnerdtutorials.com/esp8266-deep-sleep-with-arduino-ide/
