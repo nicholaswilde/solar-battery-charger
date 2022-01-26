@@ -64,4 +64,4 @@ WIP
 The Feather needs to be reset. Press the physical `RESET` button.
 
 ## References
-- https://randomnerdtutorials.com/esp8266-deep-sleep-with-arduino-ide/
+- https://learnarduinonow.com/2018/07/05/esp8266-deep-sleep-mode.html
