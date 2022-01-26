@@ -14,6 +14,9 @@ WIP
 
 ### Circuit
 
+Connect a 3.7V lipo battery to the Adafruit Feather Huzzah and create a 
+voltage divider using a `1MΩ` and `220kΩ` resistor.
+
 ![](./images/circuit.png)
 
 Circuit made with [Circuit Diagram](https://www.circuit-diagram.org/)
