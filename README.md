@@ -50,6 +50,7 @@ Therefore, charing the li-ion batteries and charing other things with the USB po
 - 1X [Lithium Ion Polymer Battery - 3.7v 500mAh](https://www.adafruit.com/product/1578)
 - 1X [220kΩ Resistor](https://www.amazon.com/gp/product/B072BL2VX1/)
 - 1X [1MΩ Resistor](https://www.amazon.com/gp/product/B072BL2VX1/)
+- 1X [JST-PH 2.0 Male and Female Connector Cable](https://www.amazon.com/gp/product/B07NWD5NTN)
 
 ## :robot:&nbsp; Services
 - [IFTTT](https://ifttt.com/)
