@@ -13,11 +13,13 @@ WIP
 
 ## Procedure
 
-### Schematic
+### Circuit
 
 Connect the `RST` pin to pin `16`.
 
-![](./images/schematic.png)
+![](./images/circuit.png)
+
+Circuit made with [Circuit Diagram](https://www.circuit-diagram.org/)
 
 ### Code
 
