@@ -231,7 +231,7 @@ The documentation doesn't show what a typical sketch.json looks like so here is 
 ### Tools
 - [ ] Implement `go-task`.
 - [ ] Implement `pre-commit`.
-- [ ] Create test template.
+- [X] Create test template.
 
 ### Documentation
 - [ ] Write troubleshooting section.
