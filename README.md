@@ -149,8 +149,10 @@ Leaving...
 Hard resetting via RTS pin...
 ```
 
-# Monitor serial connection using GNU Screen
-# Make sure your baud rate matches the baud rate inside of your sketches!
+Monitor serial connection using GNU Screen
+
+Make sure your baud rate matches the baud rate inside of your sketches!
+
 ```shell
 screen /dev/ttyUSB0 115200
 ```
