@@ -3,6 +3,10 @@
 Charge the li-ion batteries using a solar panel and then charge USB
 devices using the li-ion batteries.
 
+![](./images/front.jpg | width=100)
+
+![](./images/back.jpg | width=100)
+
 ## Hypothesis
 
 The `TP4056` can be used to charge a `3.7V` li-ion battery and then the
@@ -26,6 +30,8 @@ Connect the other `NO` throw of the switch between the `IN+` of the boost
 converter and `OUT+` of the `TP4056`.
 
 Connect the `3V` li-ion batter to the `B+` and `B-` of the `TP4056`.
+
+Connect the `JST-PH 2.0` connector between the solar panel and the `TP4056`.
 
 ![](./images/circuit.png)
 
