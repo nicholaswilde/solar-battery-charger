@@ -56,7 +56,7 @@ I=0.111A
 
 ### Power
 
-The power through the resistor can be calculated using Ohm's law.
+The [power](https://en.wikipedia.org/wiki/Power_%28physics%29) through the resistor can be calculated using the following formula.
 
 `P=IV`
 
