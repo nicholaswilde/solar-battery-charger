@@ -244,7 +244,8 @@ The documentation doesn't show what a typical sketch.json looks like so here is 
 - [X] [sleep](./test/sleep)
 - [ ] thingspeak
 - [ ] v1
-- [ ] v2
+- [X] [v2](./test/v2)
+- [ ] [v3](./test/v3)
 - [X] [wifi](./test/wifi)
 
 ## :clipboard:&nbsp; Todo
