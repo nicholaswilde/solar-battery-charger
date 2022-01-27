@@ -71,9 +71,27 @@ WIP
 
 ## :gear:&nbsp; Configuration
 
+Because I work mainly out of a Chromebook and Rasperry Pis, this project is using the `arduino-cli` command line utility
+[with Linux](https://support.google.com/chromebook/answer/9145439?hl=en) rather than the 
+[Arduino IDE](https://www.arduino.cc/en/software).
+
+Initialize the config
+
 ```shell
 arduino-cli config init
+```
+
+Add the esp8266 package library
+
+```shell
 arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
+```
+
+Check that the update addition was successful.
+
+Note: this is assuming that `arduino-cli` was installed in the home directory (`~/.arduino15`)
+
+```
 cat ~/.arduino15/arduino-cli.yaml
 ```
 
@@ -85,8 +103,15 @@ board_manager:
 ...
 ```
 
+Update the core index
+
 ```shell
 arduino-cli core update-index
+```
+
+Search for the huzzah board
+
+```shell
 arduino-cli board search huzzah
 ```
 
@@ -97,9 +122,14 @@ Board Name                      FQBN                   Platform ID
 Adafruit Feather HUZZAH ESP8266 esp8266:esp8266:huzzah esp8266:esp8266
 ```
 
+Take note of the output under `FQBN` because that is what will need to be passed as the `board` (`-b`) parameter with the `arduino-cli` command.
+In this example, the board to be used will be `esp8266:esp8266:huzzah`.
+
 Compile the sketch
 
 From the directory of the sketch:
+
+Note: The dot at the end of the command tells `arduino-cli` to use the sketch in the current directory. The name of the sketch may also be used.
 
 ```shell
 arduino-cli compile -b esp8266:esp8266:huzzah .
@@ -119,7 +149,7 @@ Sketch uses 265793 bytes (25%) of program storage space. Maximum is 1044464 byte
 Global variables use 28084 bytes (34%) of dynamic memory, leaving 53836 bytes for local variables. Maximum is 81920 bytes.
 ```
 
-Be sure to compile your code before uploading it!
+Be sure to compile your code before uploading it if changes have been made to the sketch!
 
 Upload the sketch to the Feather
 
@@ -170,6 +200,9 @@ Secrets can be used in sketches using the following code:
 ```C++
 #include "secrets.h"
 ```
+
+The nomenclature used in this project is different than what [arduino-cli](https://arduino.github.io/arduino-cli/0.20/sketch-specification/#secrets)
+specifies (`arduino_secrets.h`) because this project does not use an Arduino.
 
 ### Metadata
 
