@@ -85,7 +85,7 @@ I know that there are a lot of factors that go into this value but this can be u
 Solar cell radiation intensity
 
 ```
-solar radiation intensity=0.25W/(57^2mm^2)*1000^2m^2
+solar radiation intensity=0.25W/(57^2mm^2)*(1000^2mm^2/1m^2)
 solar radiation intensity=77W/m2
 ```
 
