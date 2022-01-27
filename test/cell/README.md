@@ -34,11 +34,10 @@ Measure the actual resistance of the resistor.
 
 Measure the voltage across the resistor when the cell is in direct sun light.
 
-| Measurement | Value |
-| :---------- | ----: |
-| Resistance  | 20Ω   |
-| ----------- | ----: |
-| Volage      | 2.212 |
+| Measurement | Value  |
+| :---------- | ----:  |
+| Resistance  | 20Ω    |
+| Voltage     | 2.212V |
 
 ## Analysis
 
