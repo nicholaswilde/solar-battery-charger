@@ -3,9 +3,9 @@
 Charge the li-ion batteries using a solar panel and then charge USB
 devices using the li-ion batteries.
 
-![](./images/front.jpg | width=100)
+<img src="./images/front.jpg" width="480">
 
-![](./images/back.jpg | width=100)
+<img src="./images/back.jpg" width="480">
 
 ## Hypothesis
 
