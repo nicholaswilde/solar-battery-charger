@@ -9,8 +9,8 @@ the charging li-ion battery as it is being charged by the solar
 panel.
 
 ## Assumptions
-- One lipo is being used to capture the soloar energy.
-- One lipo is being used to power the Feather.
+- One `3.7V` lipo is being used to capture the soloar energy.
+- One `3.7V` lipo is being used to power the Feather.
 - The grounds of the TP4056 and Feather will not interfere with each other.
 
 ## Procedure
