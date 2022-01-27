@@ -80,7 +80,7 @@ According to [this site](https://www.whoi.edu/science/AOPE/mvco/description/SolR
 
 `solar radiation intensity = 1000 W/m2`
 
-I know that there are a lot of factors that go into this value but this can be used as a very rough starting poing.
+I know that there are a lot of factors that go into this value but this can be used as a very rough starting point.
 
 Solar cell radiation intensity
 
