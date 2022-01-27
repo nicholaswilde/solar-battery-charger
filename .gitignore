@@ -1,6 +1,7 @@
 *.swp
 secrets.h
 sketch.json
+*.save
 
 # Prerequisites
 *.d
