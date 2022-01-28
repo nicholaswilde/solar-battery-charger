@@ -246,7 +246,7 @@ The documentation doesn't show what a typical sketch.json looks like so here is 
 - [ ] adafruitio
 - [X] [battery](./test/battery)
 - [X] [blink](./test/blink)
-- [ ] cell
+- [X] [cell](./test/cell)
 - [ ] notify
 - [ ] panel
 - [X] [sleep](./test/sleep)
