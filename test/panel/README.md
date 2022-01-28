@@ -19,8 +19,6 @@ WIP
 
 ## Procedure
 
-WIP
-
 ### Circuit
 
 There are 3 rows of cells that are wired in series and each row is wired in parallel.
