@@ -23,6 +23,11 @@ Create a channel on [ThingSpeak](https://www.mathworks.com/help/thingspeak/getti
 
 Enter ThingSpeak and WiFi credentials in `secrets.h`.
 
+Change the ThingSpeak update interval by changing the `DELAY_LOOP` variable in the sketch.
+
+Note: The update interval should not be less than 15 seconds (15000) for free accounts.
+See the [ThingSpeak FAQ](https://thingspeak.com/pages/license_faq) for details.
+
 Install the ThingSpeak library
 
 ```shell
