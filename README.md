@@ -190,6 +190,14 @@ screen /dev/ttyUSB0 115200
 
 Kill the monitoring screen by pressing Ctrl+a k y
 
+### :books:&nbsp; Libraries
+
+Install the ThingSpeak library
+
+```shell
+arduino-cli lib install ThingSpeak
+```
+
 ### :key:&nbsp; Secrets
 
 `secrets.h` is a file used to store secrets such as API tokens and wifi
@@ -242,7 +250,7 @@ The documentation doesn't show what a typical sketch.json looks like so here is 
 - [ ] notify
 - [ ] panel
 - [X] [sleep](./test/sleep)
-- [ ] thingspeak
+- [X] [thingspeak](./test/thingspeak)
 - [ ] v1
 - [X] [v2](./test/v2)
 - [ ] [v3](./test/v3)
