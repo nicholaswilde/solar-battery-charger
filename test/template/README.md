@@ -1,4 +1,4 @@
-# ${TEST_NAME}
+# ${NAME}
 
 WIP
 
