@@ -109,6 +109,12 @@ Update the core index
 arduino-cli core update-index
 ```
 
+Install the `esp8266` core
+
+```shell
+arduino-cli core install esp8266:esp8266
+```
+
 Search for the huzzah board
 
 ```shell
@@ -256,6 +262,7 @@ The documentation doesn't show what a typical sketch.json looks like so here is 
 - [ ] notify
 - [ ] panel
 - [X] [sleep](./test/sleep)
+- [X] [smoothed](./test/smoothed)
 - [X] [thingspeak](./test/thingspeak)
 - [ ] v1
 - [X] [v2](./test/v2)
@@ -291,7 +298,17 @@ The documentation doesn't show what a typical sketch.json looks like so here is 
 
 ## :hammer_and_wrench:&nbsp; Troubleshooting
 
-WIP
+### Error during build: platform not installed
+
+```shell
+Error during build: platform not installed
+```
+
+Fix
+
+```shell
+arduino-cli core install esp8266:esp8266
+```
 
 ## :link:&nbsp; References
 - https://www.seeedstudio.com/blog/2019/10/09/voltage-dividers-everything-you-need-to-know/
@@ -305,6 +322,8 @@ WIP
 - https://en.wikipedia.org/wiki/Nickel%E2%80%93metal_hydride_battery
 - https://arduino.github.io/arduino-cli/
 - https://www.electronicshub.org/solar-battery-charger-for-18650/
+- https://create.arduino.cc/projecthub/B45i/getting-started-with-arduino-cli-7652a5
+- https://github.com/webdevops/go-replace
 
 ## :balance_scale:&nbsp; License
 
