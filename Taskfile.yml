@@ -4,7 +4,64 @@ version: '3'
 dotenv:
   - task.env
 
+vars:
+  GIT_ROOT:
+    sh: git rev-parse --show-toplevel
+  PORT:
+    sh: cat {{ .GIT_ROOT }}/sketch.json | jq -r '.cpu.port' | sed s/"serial:\/\/"//
+
 tasks:
-  test:
+  attach:
+    desc: Export board and port to sketch.json file
     cmds:
-      - echo $GREETING
+      - jq -n --arg board {{ .BOARD }} --arg port {{ .PORT}} '{"cpu":{"fqbn":$board,"port":$port}}' > sketch.json
+    deps:
+      - _varcheck
+
+  _varcheck:
+    cmds:
+      - test ! -z "{{.BOARD}}" || (echo "Please define BOARD parameter"; exit 1)
+      - test ! -z "{{.PORT}}" || (echo "Please define PORT parameter"; exit 1)
+
+  compile:
+    desc: Compile the main sketch
+    cmds:
+      - arduino-cli compile .
+
+  compile-upload:
+    desc: Compile and upload main sketch
+    cmds:
+      - task: compile
+      - task: upload
+      - task: console
+
+  console:
+    desc: Monitor the console with screen
+    cmds:
+      - screen {{ .PORT }}  $BAUD_RATE
+
+  upload:
+    desc: Upload the main sketch
+    cmds:
+      - arduino-cli upload .
+
+  test:
+    desc: test
+    cmds:
+      - echo {{ .TEST }}
+
+  vars:
+    desc: Print all the variables
+    cmds:
+      - "printf 'task: Available variables for this project:\n'"
+      - 'printf "{{ .COLOR }}* BAUD_RATE\e[m          %s\n" "{{ .BAUD_RATE }}"'
+      - 'printf "{{ .COLOR }}* PORT\e[m               %s\n" "{{ .PORT }}"'
+    vars:
+      # Blue
+      COLOR: '\e[1;34m'
+    silent: true
+
+  default:
+    cmds:
+      - task -l
+    silent: true
