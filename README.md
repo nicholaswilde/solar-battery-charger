@@ -298,6 +298,7 @@ WIP
 - https://www.best-microcontroller-projects.com/tp4056-page2.html
 - https://en.wikipedia.org/wiki/Nickel%E2%80%93metal_hydride_battery
 - https://arduino.github.io/arduino-cli/
+- https://www.electronicshub.org/solar-battery-charger-for-18650/
 
 ## :balance_scale:&nbsp; License
 
