@@ -192,10 +192,16 @@ Kill the monitoring screen by pressing Ctrl+a k y
 
 ### :books:&nbsp; Libraries
 
-Install the ThingSpeak library
+Install the [ThingSpeak library](https://www.arduinolibraries.info/libraries/thing-speak)
 
 ```shell
 arduino-cli lib install ThingSpeak
+```
+
+Install the [Smoothed library](https://www.arduinolibraries.info/libraries/smoothed)
+
+```shell
+arduino-cli lib install Smoothed
 ```
 
 ### :key:&nbsp; Secrets
