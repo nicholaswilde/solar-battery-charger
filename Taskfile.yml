@@ -59,8 +59,8 @@ tasks:
       - test ! -z "{{ .NAME }}" || (echo "Please define NAME parameter"; exit 1)
       - cp -r {{ .GIT_ROOT }}/test/template "{{ .GIT_ROOT }}/test/{{ .NAME }}"
       - mv "{{ .GIT_ROOT }}/test/{{ .NAME }}/template.ino" "{{ .GIT_ROOT }}/test/{{ .NAME }}/{{ .NAME }}.ino"
-      - go-replace -s '${TEST_NAME}' -r "{{.NAME}}" --path="{{ .GIT_ROOT }}/test/{{ .NAME }}/README.md" --path-pattern='*.*'
-      - go-replace -s '${TESTNAME}' -r "{{.NAME}}" --path="{{ .GIT_ROOT }}/test/{{ .NAME }}/{{ .NAME }}.ino" --path-pattern='*.*'
+      - go-replace -s '${NAME}' -r "{{.NAME}}" --path="{{ .GIT_ROOT }}/test/{{ .NAME }}/README.md" --path-pattern='*.*'
+      - go-replace -s '${NAME}' -r "{{.NAME}}" --path="{{ .GIT_ROOT }}/test/{{ .NAME }}/{{ .NAME }}.ino" --path-pattern='*.*'
       - go-replace -s '${DATE}' -r "{{ .DATE }}" --path="{{ .GIT_ROOT }}/test/{{ .NAME }}/{{ .NAME }}.ino" --path-pattern='*.*'
       - go-replace -s '${VERSION}' -r "{{ .VERSION }}" --path="{{ .GIT_ROOT }}/test/{{ .NAME }}/{{ .NAME }}.ino" --path-pattern='*.*'
       - test ! -f "{{ .GIT_ROOT }}/sketch.json" || cp "{{ .GIT_ROOT }}/sketch.json" "{{ .GIT_ROOT }}/test/{{ .NAME }}/sketch.json"
