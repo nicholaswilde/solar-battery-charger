@@ -4,7 +4,7 @@ Smooth out sensor readings using the Smoothed library.
 
 ## Hypothesis
 
-WIP
+The smoothed library actually smooths out the data.
 
 ## Assumptions
 
@@ -12,11 +12,11 @@ WIP
 
 ## Procedure
 
-WIP
-
 ### Circuit
 
-![](./images/circuit.png)
+The circuit is the same as the [battery test](../battery).
+
+![](../battery/images/circuit.png)
 
 Circuit made with [Circuit Diagram](https://www.circuit-diagram.org/)
 
@@ -26,11 +26,24 @@ WIP
 
 ### Output
 
-WIP
+```shell
+Smoothed
+669.00  671.80  671.74
+Smoothed
+669.00  671.40  671.47
+Smoothed
+668.00  670.90  671.12
+Smoothed
+669.00  670.50  670.91
+Smoothed
+668.00  670.00  670.62
+Smoothed
+669.00  669.60  670.45
+```
 
 ## Analysis
 
-WIP
+The first column is the current value, second is the average, and the third exponential.
 
 ## Conclusion
 

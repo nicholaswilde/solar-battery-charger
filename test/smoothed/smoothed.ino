@@ -19,15 +19,16 @@
 #define BAUD_RATE 115200 // baud rate used for Serial console
 #define DELAY_LOOP 1000  // loop delay time (ms)
 #define SENSOR_PIN A0
+#define SMOOTHED_SAMPLE 10  // delay between samples
 
-// Create two instances of the class to use. 
-Smoothed <float> mySensor; 
+// Create two instances of the class to use.
+Smoothed <float> mySensor;
 Smoothed <float> mySensor2;
 
 void setup() {
   Serial.begin(BAUD_RATE);
-  mySensor.begin(SMOOTHED_AVERAGE, 10);
-  mySensor2.begin(SMOOTHED_EXPONENTIAL, 10);
+  mySensor.begin(SMOOTHED_AVERAGE, SMOOTHED_SAMPLE);
+  mySensor2.begin(SMOOTHED_EXPONENTIAL, SMOOTHED_SAMPLE);
 }
 
 void loop() {
