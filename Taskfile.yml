@@ -1,3 +1,4 @@
+
 ---
 version: '3'
 
@@ -7,8 +8,6 @@ dotenv:
 vars:
   GIT_ROOT:
     sh: git rev-parse --show-toplevel
-  #PORT:
-    #sh: cat {{ .GIT_ROOT }}/sketch.json | jq -r '.cpu.port' | sed s/"serial:\/\/"//
 
 tasks:
   attach:
@@ -18,10 +17,21 @@ tasks:
     deps:
       - _varcheck
 
+  init:
+    desc: Initialize the config settings.
+    cmds:
+      - arduino-cli config init
+      - arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
+      - arduino-cli core install esp8266:esp8266
+      - arduino-cli core update-index
+      - task: lib-install
+      - arduino-cli board search huzzah
+
   _varcheck:
     cmds:
       - test ! -z "{{.BOARD}}" || (echo "Please define BOARD parameter"; exit 1)
       - test ! -z "{{.PORT}}" || (echo "Please define PORT parameter"; exit 1)
+    silent: true
 
   compile:
     desc: Compile the main sketch
@@ -42,6 +52,11 @@ tasks:
         sh: cat {{ .GIT_ROOT }}/sketch.json | jq -r '.cpu.port' | sed s/"serial:\/\/"//
     cmds:
       - screen {{ .PORT }}  $BAUD_RATE
+
+  lib-install:
+    desc: Install arduino-cli libraries
+    cmds:
+      - arduino-cli lib install ThingSpeak Ticker
 
   upload:
     desc: Upload the main sketch

@@ -204,10 +204,10 @@ Install the [ThingSpeak library](https://www.arduinolibraries.info/libraries/thi
 arduino-cli lib install ThingSpeak
 ```
 
-Install the [Smoothed library](https://www.arduinolibraries.info/libraries/smoothed)
+Install the [Ticker library](https://www.arduinolibraries.info/libraries/ticker)
 
 ```shell
-arduino-cli lib install Smoothed
+arduino-cli lib install Ticker
 ```
 
 ### :key:&nbsp; Secrets

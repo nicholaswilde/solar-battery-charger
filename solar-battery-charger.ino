@@ -16,6 +16,7 @@
 --------------------------------------------------------------*/
 
 #include <ESP8266WiFi.h>
+#include <Ticker.h> 
 #include "secrets.h"
 #include "ThingSpeak.h"         // always include thingspeak header file after other header files and custom macros
 
@@ -31,14 +32,20 @@
 #define SLEEP_TIME 15           // sleep time (m)
 #define FIELD_NO_PERCENTAGE 1   // field number of battery percentage
 #define FIELD_NO_LEVEL 2        // field number of battery percentage
+#define INTERVAL_BLINK 100      // blink interval (ms)
 
 WiFiClient  client;
+Ticker blinker;
 
 char ssid[] = SECRET_SSID;      // your network SSID (name)
 char pass[] = SECRET_PASS;      // your network password
 
 unsigned long myChannelNumber = SECRET_CH_ID;
 const char * myWriteAPIKey = SECRET_WRITE_APIKEY;
+const char * myHostName = SECRET_HOSTNAME;
+
+unsigned long previousMillis = 0;    // will store last time LED was updated
+const long interval = 100;           // interval at which to blink (milliseconds)
 
 int sum = 0;                    // sum of samples taken
 unsigned char sample_count = 0; // current sample number
@@ -65,15 +72,20 @@ void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
 
   WiFi.mode(WIFI_STA);
-  ThingSpeak.begin(client);  // Initialize ThingSpeak
+
+  WiFi.hostname(myHostName);
+
+  ThingSpeak.begin(client);
+
+  blinker.attach_ms(INTERVAL_BLINK, changeState);
 
   Serial.println();
 }
 
 void loop() {
-  digitalWrite(LED_BUILTIN, LOW);
-
   conntectToWifi();
+
+  digitalWrite(LED_BUILTIN, LOW);
 
   sum = getSum();
 
@@ -96,12 +108,15 @@ void conntectToWifi(){
     while(WiFi.status() != WL_CONNECTED){
       WiFi.begin(ssid, pass);  // Connect to WPA/WPA2 network. Change this line if using open or WEP network
       Serial.print(".");
-      digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+      //digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
       delay(DELAY_WIFI*1e3);
     }
+    blinker.detach();
     Serial.println("connected");
     Serial.print("IP Address: ");
     Serial.println(WiFi.localIP());
+    Serial.print("Hostname: ");
+    Serial.println(WiFi.hostname());
   }
 }
 
@@ -153,4 +168,17 @@ void goToSleep(){
   Serial.print(SLEEP_TIME);
   Serial.println(" minutes");
   ESP.deepSleep(SLEEP_TIME * 60 * 1e6);
+}
+
+void blink(){
+  unsigned long currentMillis = millis();
+
+  if (currentMillis - previousMillis >= interval) {
+    previousMillis = currentMillis;
+    digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+  }
+}
+
+void changeState(){
+  digitalWrite(LED_BUILTIN, !(digitalRead(LED_BUILTIN)));
 }
