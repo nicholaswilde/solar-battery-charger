@@ -323,6 +323,7 @@ arduino-cli core install esp8266:esp8266
 - https://www.electronicshub.org/solar-battery-charger-for-18650/
 - https://create.arduino.cc/projecthub/B45i/getting-started-with-arduino-cli-7652a5
 - https://github.com/webdevops/go-replace
+- https://arduino-esp8266.readthedocs.io/en/latest/index.html
 
 ## :balance_scale:&nbsp; License
 

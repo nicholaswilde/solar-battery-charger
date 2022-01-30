@@ -26,7 +26,6 @@
 #define R2 220000               // resistor 2 on the voltage divider
 #define VOLTAGE_MAX 4.2         // max voltage of lipo battery
 #define VOLTAGE_MIN 3.14        // min voltage of lipo battery
-//#define DELAY_LOOP 20000      // delay for loop routine
 #define DELAY_SAMPLE 10         // delay between samples
 #define DELAY_WIFI 5            // delay between samples (s)
 #define SLEEP_TIME 60           // sleep time (s)
@@ -41,7 +40,6 @@ char pass[] = SECRET_PASS;      // your network password
 unsigned long myChannelNumber = SECRET_CH_ID;
 const char * myWriteAPIKey = SECRET_WRITE_APIKEY;
 
-//int number = 0;
 int sum = 0;                    // sum of samples taken
 unsigned char sample_count = 0; // current sample number
 int level = 0;                  // calculated battery level
@@ -93,7 +91,7 @@ void loop() {
 void conntectToWifi(){
    // Connect or reconnect to WiFi
   if(WiFi.status() != WL_CONNECTED){
-    Serial.print("Attempting to connect to SSID: ");
+    Serial.print("Connecting to SSID: ");
     Serial.println(SECRET_SSID);
     while(WiFi.status() != WL_CONNECTED){
       WiFi.begin(ssid, pass);  // Connect to WPA/WPA2 network. Change this line if using open or WEP network
@@ -102,6 +100,8 @@ void conntectToWifi(){
       delay(DELAY_WIFI*1e3);
     }
     Serial.println("connected");
+    Serial.print("IP Address: ");
+    Serial.println(WiFi.localIP());
   }
 }
 
@@ -133,10 +133,10 @@ int getBatteryPercentage(int level){
 }
 
 void writeToThingSpeak(int percentage, int level){
-  // Write to ThingSpeak. There are up to 8 fields in a channel, allowing you to store up to 8 different
-  // pieces of information in a channel.  Here, we write to field 1.
   ThingSpeak.setField(FIELD_NO_PERCENTAGE, percentage);
   ThingSpeak.setField(FIELD_NO_LEVEL, level);
+  ThingSpeak.setStatus(String("Charging"));
+
   Serial.print("Channel number: ");
   Serial.println(myChannelNumber);
   int x = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
