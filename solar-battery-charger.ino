@@ -28,7 +28,7 @@
 #define VOLTAGE_MIN 3.14        // min voltage of lipo battery
 #define DELAY_SAMPLE 10         // delay between samples
 #define DELAY_WIFI 5            // delay between samples (s)
-#define SLEEP_TIME 60           // sleep time (s)
+#define SLEEP_TIME 15           // sleep time (m)
 #define FIELD_NO_PERCENTAGE 1   // field number of battery percentage
 #define FIELD_NO_LEVEL 2        // field number of battery percentage
 
@@ -151,6 +151,6 @@ void writeToThingSpeak(int percentage, int level){
 void goToSleep(){
   Serial.print("Going to sleep for ");
   Serial.print(SLEEP_TIME);
-  Serial.println(" seconds");
-  ESP.deepSleep(SLEEP_TIME * 1e6);
+  Serial.println(" minutes");
+  ESP.deepSleep(SLEEP_TIME * 60 * 1e6);
 }
