@@ -3,14 +3,14 @@
 
   Description:  Reads value on analog input A0 and calculates
                 the the percent level of a lipo battery.
-  
+
   Hardware:     Adafruit Feather Huzzah with 3.7V lipo battery
                 and voltage divider on A0.
-                
+
   Software:     Developed using arduino-cli ${VERSION}.
 
   Date:         ${DATE}
- 
+
   Author:       Nicholas Wilde 0x08b7d7a3
 --------------------------------------------------------------*/
 
@@ -19,12 +19,15 @@
 
 #define BAUD_RATE 115200 // baud rate used for Serial console
 #define DELAY_LOOP 1000  // loop delay time (ms)
+#define ANALOG_PIN_NO A0 // analog pin number
 
 void setup() {
   Serial.begin(BAUD_RATE);
 }
 
 void loop() {
-  Serial.println("test");
+  Serial.println("${NAME}");
+  int val = analogRead(ANALOG_PIN_NO)
+  Serial.println(val);
   delay(DELAY_LOOP);
 }
