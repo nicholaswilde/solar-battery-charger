@@ -1,4 +1,5 @@
 # :battery: Solar Battery Charger
+[![version](https://img.shields.io/badge/CURRENT%20VERSION-4-brightgreen?style=for-the-badge)](./test/v4)
 
 A solar battery charger to charge lithium ion (li-ion) 18650, 9V, and coin batteries and Ni-MH AA and AAA batteries.
 
@@ -268,6 +269,7 @@ The documentation doesn't show what a typical sketch.json looks like so here is 
 - [X] [thingspeak](./test/thingspeak)
 - [X] [v2](./test/v2)
 - [X] [v3](./test/v3)
+- [X] [v4](./test/v4)
 - [X] [wifi](./test/wifi)
 
 ## :clipboard:&nbsp; Todo
