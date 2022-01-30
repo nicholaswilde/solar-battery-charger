@@ -259,10 +259,12 @@ The documentation doesn't show what a typical sketch.json looks like so here is 
 - [X] [battery](./test/battery)
 - [X] [blink](./test/blink)
 - [X] [cell](./test/cell)
+- [ ] debounce
 - [ ] notify
-- [ ] panel
+- [X] [panel](./test/panel)
 - [X] [sleep](./test/sleep)
-- [X] [smoothed](./test/smoothed)
+- [ ] [smoothed](./test/smoothed)
+- [ ] statechange
 - [X] [thingspeak](./test/thingspeak)
 - [X] [v2](./test/v2)
 - [X] [v3](./test/v3)
@@ -309,6 +311,10 @@ Fix
 arduino-cli core install esp8266:esp8266
 ```
 
+### The internal LED is dim and the console is blank when connected to a computer via USB
+
+The Feather needs to be reset. Press the physical `RESET` button.
+
 ## :link:&nbsp; References
 - https://www.seeedstudio.com/blog/2019/10/09/voltage-dividers-everything-you-need-to-know/
 - https://cdn-learn.adafruit.com/downloads/pdf/adafruit-feather-huzzah-esp8266.pdf
@@ -324,6 +330,10 @@ arduino-cli core install esp8266:esp8266
 - https://create.arduino.cc/projecthub/B45i/getting-started-with-arduino-cli-7652a5
 - https://github.com/webdevops/go-replace
 - https://arduino-esp8266.readthedocs.io/en/latest/index.html
+- https://roboticsbackend.com/arduino-store-array-into-eeprom/
+- https://www.arduino.cc/en/Tutorial/BuiltInExamples/Debounce
+- https://www.arduino.cc/en/Tutorial/BuiltInExamples/StateChangeDetection
+- https://github.com/esp8266/Arduino/tree/master/libraries/EEPROM
 
 ## :balance_scale:&nbsp; License
 
