@@ -334,6 +334,7 @@ The Feather needs to be reset. Press the physical `RESET` button.
 - https://www.arduino.cc/en/Tutorial/BuiltInExamples/Debounce
 - https://www.arduino.cc/en/Tutorial/BuiltInExamples/StateChangeDetection
 - https://github.com/esp8266/Arduino/tree/master/libraries/EEPROM
+- https://support.microsoft.com/en-us/office/slope-function-11fb8f97-3117-4813-98aa-61d7e01276b9
 
 ## :balance_scale:&nbsp; License
 
