@@ -7,15 +7,14 @@ be retrieved later by another sketch.
 
 ## Hypothesis
 
-WIP
+- A variable value is lost when the Feather goes into a deep sleep
+  but can be stored and retrieved in the EEPROM.
 
 ## Assumptions
 
 WIP
 
 ## Procedure
-
-WIP
 
 ### Circuit
 
@@ -27,19 +26,55 @@ Circuit made with [Circuit Diagram](https://www.circuit-diagram.org/)
 
 ### Code
 
-WIP
+The Feather takes a reading of the `A0` pin, divides the value by `4`, prints the value, then saves it to the `EEPROM`.
+
+The Feather then goes into a deep sleep for a period of time.
+
+On next bootup, the same variable is printed to the console and the `EEPROM` saved value is retrieved and printed to the console.
 
 ### Output
 
-WIP
+The `Retrieved value` of the current reading should match the `Pin value` of the
+previous reading.
+
+The `Variable value` should be `0` when the Feather wakes up again because the
+variable is not retained.
+
+```shell
+rll��|�l�|�l�b|����r�b�b��nn�lnn���bp��lrlrlp�n��l��bn�|���b��nn�l��l`�nn�lnr���nrr�`p�n�r������bn�|�b��nn��l`�nn�lnr���nrl`r��nrl`���l`�n�l
+eeprom
+Retrieved value: 238
+Variable value: 0
+Pin value: 240
+EEPROM successfully committed
+rll��|�l�|�l�b|����r�b�b��nn�lnn���bp��lrlrlp�n��l��bn�|���b��nn�l��l`�nn�lnr���nrr�`p�n�r������bn�|�b��nn��l`�nn�lnr���nrl`r��nrl`���l`�n�l
+eeprom
+Retrieved value: 240
+Variable value: 0
+Pin value: 238
+EEPROM successfully committed
+rll��|�l�|�l�b|����r�b�b��nn�lnn���bp��lrlrlp�n��l��bn�|���b��nn�l��l`�nn�lnr���nrr�`p�n�r������bn�|�b��nn��l`�nn�lnr���nrl`r��nrl`���l`�n�l
+eeprom
+Retrieved value: 238
+Variable value: 0
+Pin value: 238
+EEPROM successfully committed
+...
+```
 
 ## Analysis
 
-WIP
+Everything worked as expected.
+
+The original variable was reset to `0` after waking up from a deep sleep.
+
+The value was able to be successfully stored and retrieved in the `EEPROM`
+before and after the deep sleep respectively.
 
 ## Conclusion
 
-WIP
+If a sketch uses the deep sleep mode and a previous values is to be used again,
+ it firsts needs to be saved to the EEPROM and then retrieved on the next boot.
 
 ## Troubleshooting
 

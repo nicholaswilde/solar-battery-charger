@@ -23,24 +23,24 @@
 #define ANALOG_PIN_NO A0 // analog pin number
 
 int addr = 0;
+int val = 0;
 byte value;
 
 void setup() {
   Serial.begin(BAUD_RATE);
   EEPROM.begin(512);
-
-  value = EEPROM.read(addr);
   Serial.println();
-  Serial.println("Setup");
-  Serial.print(addr);
-  Serial.print("\t");
-  Serial.print(value, DEC);
+  Serial.println("eeprom");
+  value = EEPROM.read(addr);
+  Serial.print("Retrieved value: ");
+  Serial.println(value, DEC);
+  Serial.print("Variable value: ");
+  Serial.println(val);
 }
 
 void loop() {
-  Serial.println("eeprom");
   // divide by 4 becasue analog pin range is 0-1023 and byte is 0-255
-  int val = analogRead(ANALOG_PIN_NO) / 4;
+  val = analogRead(ANALOG_PIN_NO) / 4;
   EEPROM.write(addr, val);
   Serial.print("Pin value: ");
   Serial.println(val);
