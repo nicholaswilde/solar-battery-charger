@@ -6,9 +6,9 @@ A solar battery charger to charge lithium ion (li-ion) 18650, 9V, and coin batte
 
 <img src="./images/charger.jpg" width="480">
 
-<img src="./images/front.jpg" width="480">
+<img src="./test/v4/images/front.jpg" width="480">
 
-<img src="./images/back.jpg" width="480">
+<img src="./test/v4/images/back.jpg" width="480">
 
 ## :goal_net:&nbsp; Objectives
 - Recharge li-ion 18650, 9V, and coin batteries via a solar panel.
