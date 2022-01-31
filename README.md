@@ -323,6 +323,15 @@ arduino-cli core install esp8266:esp8266
 
 The Feather needs to be reset. Press the physical `RESET` button.
 
+### Count not open port [Errno 16] Device or resource busy
+
+```shell
+serial.serialutil.SerialException: [Errno 16] could not open port /dev/ttyUSB0: [Errno 16] Device or resource busy: '/dev/ttyUSB0'
+Error during Upload: Failed uploading: uploading error: exit status 1
+```
+
+Fix: The serial port is open and reading the output of the Feather. Close the connection
+
 ## :link:&nbsp; References
 - https://www.seeedstudio.com/blog/2019/10/09/voltage-dividers-everything-you-need-to-know/
 - https://cdn-learn.adafruit.com/downloads/pdf/adafruit-feather-huzzah-esp8266.pdf
