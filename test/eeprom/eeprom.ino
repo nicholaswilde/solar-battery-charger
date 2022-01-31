@@ -23,8 +23,10 @@
 #define ANALOG_PIN_NO A0 // analog pin number
 
 int addr = 0;
+int addr_bool = 1;
 int val = 0;
 byte value;
+bool didNotify = false;
 
 void setup() {
   Serial.begin(BAUD_RATE);
@@ -32,18 +34,26 @@ void setup() {
   Serial.println();
   Serial.println("eeprom");
   value = EEPROM.read(addr);
-  Serial.print("Retrieved value: ");
+  Serial.print("Retrieved analog value: ");
   Serial.println(value, DEC);
   Serial.print("Variable value: ");
+  didNotify = EEPROM.read(addr_bool);
   Serial.println(val);
+  Serial.print("Retrieved didNotify: ");
+  Serial.println(didNotify);
 }
 
 void loop() {
   // divide by 4 becasue analog pin range is 0-1023 and byte is 0-255
   val = analogRead(ANALOG_PIN_NO) / 4;
   EEPROM.write(addr, val);
-  Serial.print("Pin value: ");
+  Serial.print("Write analog value: ");
   Serial.println(val);
+  // toggle didNotify
+  didNotify = !didNotify;
+  Serial.print("Write didNotify: ");
+  Serial.println(didNotify);
+  EEPROM.write(addr_bool, didNotify);
   if (EEPROM.commit()) {
     Serial.println("EEPROM successfully committed");
   } else {
