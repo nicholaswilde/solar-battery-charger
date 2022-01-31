@@ -15,7 +15,7 @@
 --------------------------------------------------------------*/
 
 #include <ESP8266WiFi.h>
-#include <Ticker.h> 
+#include <Ticker.h>
 #include "secrets.h"
 
 #define BAUD_RATE 115200        // baud rate used for Serial console
@@ -39,11 +39,11 @@ const long interval = 100;           // interval at which to blink (milliseconds
 
 void setup() {
   Serial.begin(BAUD_RATE);
-  
+  while(! Serial);
   WiFi.mode(WIFI_STA);
 
   WiFi.hostname(myHostName);
-  
+
   blinker.attach_ms(INTERVAL_BLINK, changeState);
 
   Serial.println();
