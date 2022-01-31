@@ -266,6 +266,7 @@ The documentation doesn't show what a typical sketch.json looks like so here is 
 - [X] [blink](./test/blink)
 - [X] [cell](./test/cell)
 - [ ] debounce
+- [X] [eeprom](./test/eeprom)
 - [ ] notify
 - [X] [panel](./test/panel)
 - [X] [sleep](./test/sleep)
