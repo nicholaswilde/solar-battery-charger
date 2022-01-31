@@ -4,6 +4,8 @@ Reads value on analog input A0 and calculates
 the the percent level of a lipo battery and
 upload the value to ThingSpeak.
 
+<img src="../../images/charger.jpg" width="480">
+
 <img src="./images/front.jpg" width="480">
 
 <img src="./images/back.jpg" width="480">
