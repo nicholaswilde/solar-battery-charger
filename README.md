@@ -265,6 +265,7 @@ The documentation doesn't show what a typical sketch.json looks like so here is 
 - [X] [battery](./test/battery)
 - [X] [blink](./test/blink)
 - [X] [cell](./test/cell)
+- [ ] [date](./test/date)
 - [ ] [debounce](./test/debounce)
 - [X] [eeprom](./test/eeprom)
 - [ ] notify
