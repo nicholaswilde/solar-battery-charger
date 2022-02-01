@@ -13,28 +13,27 @@
   Author:       Nicholas Wilde 0x08b7d7a3
 --------------------------------------------------------------*/
 
-#define BAUD_RATE 115200        // baud rate used for Serial console
+#define BAUD_RATE 115200            // baud rate used for Serial console
 
 // constants won't change. They're used here to set pin numbers:
-const int buttonPin = 0;    // the number of the pushbutton pin
-const int ledPin = LED_BUILTIN;      // the number of the LED pin
+const int buttonPin = 0;            // the number of the pushbutton pin
+const int ledPin = LED_BUILTIN;     // the number of the LED pin
 
 // Variables will change:
 int ledState = HIGH;         // the current state of the output pin
-int buttonState = 0;         // the current reading from the input pin
+int buttonState;             // the current reading from the input pin
 int lastButtonState = LOW;   // the previous reading from the input pin
 
 // the following variables are unsigned longs because the time, measured in
 // milliseconds, will quickly become a bigger number than can be stored in an int.
-unsigned long lastDebounceTime = 0;  // the last time the output pin was toggled
-unsigned long debounceDelay = 50;    // the debounce time; increase if the output flickers
+unsigned long lastDebounceTime = 0; // the last time the output pin was toggled
+unsigned long debounceDelay = 50;   // the debounce time; increase if the output flickers
 
 void setup() {
   Serial.begin(BAUD_RATE);
-  while(! Serial);
+  while(!Serial);
   pinMode(buttonPin, INPUT);
   pinMode(ledPin, OUTPUT);
-
   digitalWrite(ledPin, ledState);
 }
 
@@ -52,8 +51,6 @@ void loop() {
       }
     }
   }
-
   digitalWrite(ledPin, ledState);
-
   lastButtonState = reading;
 }

@@ -10,13 +10,13 @@
 
   Software:     Developed using arduino-cli 0.20.2.
 
-  Date:         27JAN2022
+  Date:         01FEB2022
 
   Author:       Nicholas Wilde 0x08b7d7a3
 --------------------------------------------------------------*/
 
 #include <ESP8266WiFi.h>
-#include <Ticker.h> 
+#include <Ticker.h>
 #include "secrets.h"
 #include "ThingSpeak.h"         // always include thingspeak header file after other header files and custom macros
 
@@ -26,7 +26,7 @@
 #define R1 1000000              // resistor 1 on the voltage divider
 #define R2 220000               // resistor 2 on the voltage divider
 #define VOLTAGE_MAX 4.2         // max voltage of lipo battery
-#define VOLTAGE_MIN 3.14        // min voltage of lipo battery
+#define VOLTAGE_MIN 2.88        // min voltage of lipo battery
 #define DELAY_SAMPLE 10         // delay between samples
 #define DELAY_WIFI 5            // delay between samples (s)
 #define SLEEP_TIME 15           // sleep time (m)
@@ -37,15 +37,13 @@
 WiFiClient  client;
 Ticker blinker;
 
-char ssid[] = SECRET_SSID;      // your network SSID (name)
-char pass[] = SECRET_PASS;      // your network password
+const char ssid[] = SECRET_SSID;      // your network SSID (name)
+const char pass[] = SECRET_PASS;      // your network password
+const int ledPin = LED_BUILTIN;
 
 unsigned long myChannelNumber = SECRET_CH_ID;
 const char * myWriteAPIKey = SECRET_WRITE_APIKEY;
 const char * myHostName = SECRET_HOSTNAME;
-
-unsigned long previousMillis = 0;    // will store last time LED was updated
-const long interval = 100;           // interval at which to blink (milliseconds)
 
 int sum = 0;                    // sum of samples taken
 unsigned char sample_count = 0; // current sample number
@@ -57,6 +55,8 @@ float resistor_ratio = 0;       // resistor ratio
 
 void setup() {
   Serial.begin(BAUD_RATE);
+  while(!Serial);
+  Serial.println();
 
   // calculate the voltage divider ratio
   resistor_ratio=(float)R2/((float)R1+(float)R2);
@@ -69,23 +69,13 @@ void setup() {
   battery_max=(float)resistor_ratio*(float)VOLTAGE_MAX*1024;
   // battery_max=774;
 
-  pinMode(LED_BUILTIN, OUTPUT);
-
-  WiFi.mode(WIFI_STA);
-
-  WiFi.hostname(myHostName);
-
   ThingSpeak.begin(client);
-
+  pinMode(ledPin, OUTPUT);
   blinker.attach_ms(INTERVAL_BLINK, changeState);
-
-  Serial.println();
+  conntectToWifi();
 }
 
 void loop() {
-  conntectToWifi();
-
-  digitalWrite(LED_BUILTIN, LOW);
 
   sum = getSum();
 
@@ -95,29 +85,26 @@ void loop() {
 
   writeToThingSpeak(percentage, level);
 
-  digitalWrite(LED_BUILTIN, HIGH);
-
   goToSleep();
 }
 
 void conntectToWifi(){
-   // Connect or reconnect to WiFi
-  if(WiFi.status() != WL_CONNECTED){
-    Serial.print("Connecting to SSID: ");
-    Serial.println(SECRET_SSID);
-    while(WiFi.status() != WL_CONNECTED){
-      WiFi.begin(ssid, pass);  // Connect to WPA/WPA2 network. Change this line if using open or WEP network
-      Serial.print(".");
-      //digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
-      delay(DELAY_WIFI*1e3);
-    }
-    blinker.detach();
-    Serial.println("connected");
-    Serial.print("IP Address: ");
-    Serial.println(WiFi.localIP());
-    Serial.print("Hostname: ");
-    Serial.println(WiFi.hostname());
+  // Connect or reconnect to WiFi
+  WiFi.mode(WIFI_STA);
+  WiFi.hostname(myHostName);
+  Serial.print("Connecting to SSID: ");
+  Serial.println(SECRET_SSID);
+  while(WiFi.status() != WL_CONNECTED){
+    WiFi.begin(ssid, pass);
+    Serial.print(".");
+    delay(DELAY_WIFI*1e3);
   }
+  blinker.detach();
+  Serial.println("connected");
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.localIP());
+  Serial.print("Hostname: ");
+  Serial.println(WiFi.hostname());
 }
 
 int getSum(){
@@ -170,15 +157,15 @@ void goToSleep(){
   ESP.deepSleep(SLEEP_TIME * 60 * 1e6);
 }
 
-void blink(){
+/*void blink(){
   unsigned long currentMillis = millis();
 
   if (currentMillis - previousMillis >= interval) {
     previousMillis = currentMillis;
-    digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+    digitalWrite(ledPin, !digitalRead(ledPin));
   }
-}
+}*/
 
 void changeState(){
-  digitalWrite(LED_BUILTIN, !(digitalRead(LED_BUILTIN)));
+  digitalWrite(ledPin, !(digitalRead(ledPin)));
 }
