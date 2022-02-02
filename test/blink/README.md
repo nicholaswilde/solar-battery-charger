@@ -1,6 +1,6 @@
 # blink
 
-Blink the built in LED.
+Blink the built in LED without a delay.
 
 ## Hypothesis
 
@@ -16,7 +16,7 @@ WIP
 
 ### Circuit
 
-Use the internal red LED.
+Use the built in red LED.
 
 ![](./images/circuit.png)
 
@@ -43,5 +43,4 @@ WIP
 WIP
 
 ## References
-
-WIP
+- https://www.arduino.cc/en/Tutorial/BuiltInExamples/BlinkWithoutDelay
