@@ -1,6 +1,6 @@
 # createdat
 
-WIP
+Get the latest createdAt from ThinkSpeak.
 
 ## Hypothesis
 
