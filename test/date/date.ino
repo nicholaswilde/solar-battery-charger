@@ -18,6 +18,7 @@
 #include <WiFiUdp.h>
 #include <Ticker.h>
 #include "secrets.h"
+#include <stdio.h>
 
 #define BAUD_RATE 115200        // baud rate used for Serial console
 #define INTERVAL_BLINK 100      // blink interval (ms)
@@ -47,11 +48,12 @@ static const char ntpServerName[] = "us.pool.ntp.org";
 //static const char ntpServerName[] = "time-b.timefreq.bldrdoc.gov";
 //static const char ntpServerName[] = "time-c.timefreq.bldrdoc.gov";
 
-//const int timeZone = 1;     // Central European Time
+const int timeZone = 0;     // UTC
+//const int timeZone = 1;   // Central European Time
 //const int timeZone = -5;  // Eastern Standard Time (USA)
 //const int timeZone = -4;  // Eastern Daylight Time (USA)
-const int timeZone = -8;  // Pacific Standard Time (USA)
 //const int timeZone = -7;  // Pacific Daylight Time (USA)
+//const int timeZone = -8;  // Pacific Standard Time (USA)
 
 void setup() {
   Serial.begin(BAUD_RATE);
@@ -87,7 +89,15 @@ void goToSleep(){
 void digitalClockDisplay() {
   // digital clock display of the time
   Serial.print("date: ");
-  Serial.print(hour());
+  //2022-02-02T02:58:45Z
+  //https://forum.arduino.cc/t/how-to-make-arduino-sync-time-from-internet/58815/5
+  char timeToDisplay[20];
+
+  sprintf(timeToDisplay, "%02d-%02d-%02dT%02d:%02d:%02dZ", year(), month(), day(), hour(), minute(), second());
+
+  Serial.println(timeToDisplay);
+
+  /*Serial.print(hour());
   printDigits(minute());
   printDigits(second());
   Serial.print(" ");
@@ -96,7 +106,7 @@ void digitalClockDisplay() {
   Serial.print(month());
   Serial.print(".");
   Serial.print(year());
-  Serial.println();
+  Serial.println();*/
 }
 
 void printDigits(int digits){

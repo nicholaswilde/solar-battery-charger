@@ -18,7 +18,7 @@
 #include "ThingSpeak.h"         // always include thingspeak header file after other header files and custom macros
 
 #define BAUD_RATE 115200        // baud rate used for Serial console
-#define DELAY_LOOP 1000         // loop delay time (ms)
+#define DELAY_LOOP 10000        // loop delay time (ms)
 #define DELAY_WIFI 5            // delay between samples (s)
 #define INTERVAL_BLINK 100      // blink interval (ms)
 
@@ -46,6 +46,12 @@ void setup() {
 void loop() {
   String val = getCreatedAt();
   Serial.println(val);
+  if (strcmp("2022-02-02T02:58:45Z", "2022-02-02T02:58:45Z") < 0) {
+		Serial.println(val + " is older than d2");
+	}
+	else {
+		Serial.println("d1 is newer than d2");
+	}
   delay(DELAY_LOOP);
 }
 
