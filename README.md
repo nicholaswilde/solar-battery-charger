@@ -355,6 +355,7 @@ Fix: The serial port is open and reading the output of the Feather. Close the co
 - https://support.microsoft.com/en-us/office/slope-function-11fb8f97-3117-4813-98aa-61d7e01276b9
 - https://github.com/arduino-libraries/NTPClient/blob/master/examples/Basic/Basic.ino
 - https://www.mathworks.com/help/thingspeak/use-ifttt-to-send-text-message-notification.html?searchHighlight=ifttt&s_tid=srchtitle_ifttt_1
+- https://www.mathworks.com/help/thingspeak/read-data-for-regression-analysis.html
 
 ## :balance_scale:&nbsp; License
 
