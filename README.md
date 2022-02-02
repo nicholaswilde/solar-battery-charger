@@ -266,13 +266,12 @@ The documentation doesn't show what a typical sketch.json looks like so here is 
 - [X] [battery](./test/battery)
 - [X] [blink](./test/blink)
 - [X] [cell](./test/cell)
-- [ ] [date](./test/date)
-- [ ] [debounce](./test/debounce)
+- [X] [comparedates](./test/comparedates)
+- [X] [createdat](./test/createdat)
+- [X] [date](./test/date)
 - [X] [eeprom](./test/eeprom)
-- [ ] notify
 - [X] [panel](./test/panel)
 - [X] [sleep](./test/sleep)
-- [ ] [smoothed](./test/smoothed)
 - [ ] statechange
 - [X] [thingspeak](./test/thingspeak)
 - [X] [v2](./test/v2)
