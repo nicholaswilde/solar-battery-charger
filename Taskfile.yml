@@ -8,6 +8,8 @@ dotenv:
 vars:
   GIT_ROOT:
     sh: git rev-parse --show-toplevel
+  BOARD:
+    sh: arduino-cli board search | grep huzzah | awk '{print $5}'
 
 tasks:
   attach:
@@ -15,7 +17,7 @@ tasks:
     cmds:
       - jq -n --arg board {{ .BOARD }} --arg port {{ .PORT}} '{"cpu":{"fqbn":$board,"port":$port}}' > sketch.json
     deps:
-      - _varcheck
+      - task: _varcheck
 
   init:
     desc: Initialize the config settings.
@@ -31,6 +33,8 @@ tasks:
     cmds:
       - test ! -z "{{.BOARD}}" || (echo "Please define BOARD parameter"; exit 1)
       - test ! -z "{{.PORT}}" || (echo "Please define PORT parameter"; exit 1)
+    vars:
+      BOARD: '{{ .BOARD }}'
     silent: true
 
   compile:
