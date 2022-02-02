@@ -144,7 +144,7 @@ int getBatteryPercentage(int level){
 
 float getBatteryVoltage(int level){
   // convert battery level to voltage
-  float voltage = map(level, battery_min, battery_max, VOLTAGE_MIN, VOLTAGE_MAX);
+  float voltage = map(level, battery_min, battery_max, VOLTAGE_MIN*100, VOLTAGE_MAX*100)/100;
   Serial.print("Battery voltage: ");
   Serial.print(voltage);
   Serial.println("V");
