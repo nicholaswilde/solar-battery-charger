@@ -31,7 +31,8 @@
 #define DELAY_WIFI 5            // delay between samples (s)
 #define SLEEP_TIME 15           // sleep time (m)
 #define FIELD_NO_PERCENTAGE 1   // field number of battery percentage
-#define FIELD_NO_LEVEL 2        // field number of battery percentage
+#define FIELD_NO_LEVEL 2        // field number of battery level
+#define FIELD_NO_VOLTAGE 3      // field number of battery voltage
 #define INTERVAL_BLINK 100      // blink interval (ms)
 
 WiFiClient  client;
@@ -49,7 +50,7 @@ int sum = 0;                    // sum of samples taken
 unsigned char sample_count = 0; // current sample number
 int level = 0;                  // calculated battery level
 int percentage = 0;             // calculated battery percentage
-int voltage = 0;                // calculated battery voltage
+float voltage = 0;              // calculated battery voltage
 int battery_min = 0;            // min battery level
 int battery_max = 0;            // max battery level
 float resistor_ratio = 0;       // resistor ratio
@@ -86,7 +87,7 @@ void loop() {
 
   voltage = getBatteryVoltage(level);
 
-  writeToThingSpeak(percentage, level);
+  writeToThingSpeak(percentage, level, voltage);
 
   goToSleep();
 }
@@ -139,18 +140,19 @@ int getBatteryPercentage(int level){
   return percentage;
 }
 
-int getBatteryVoltage(int level){
+float getBatteryVoltage(int level){
   // convert battery level to voltage
   voltage = map(level, battery_min, battery_max, VOLTAGE_MIN, VOLTAGE_MAX);
   Serial.print("Battery voltage: ");
   Serial.print(voltage);
-  Serial.println("VDC");
+  Serial.println("V");
   return voltage;
 }
 
-void writeToThingSpeak(int percentage, int level){
+void writeToThingSpeak(int percentage, int level, float voltage){
   ThingSpeak.setField(FIELD_NO_PERCENTAGE, percentage);
   ThingSpeak.setField(FIELD_NO_LEVEL, level);
+  ThingSpeak.setField(FIELD_NO_VOLTAGE, voltage);
   ThingSpeak.setStatus(String("Charging"));
 
   Serial.print("Channel number: ");
