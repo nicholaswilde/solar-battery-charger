@@ -46,14 +46,14 @@ unsigned long myChannelNumber = SECRET_CH_ID;
 const char * myWriteAPIKey = SECRET_WRITE_APIKEY;
 const char * myHostName = SECRET_HOSTNAME;
 
-int sum = 0;                    // sum of samples taken
-unsigned char sample_count = 0; // current sample number
-int level = 0;                  // calculated battery level
-int percentage = 0;             // calculated battery percentage
-float voltage = 0;              // calculated battery voltage
+//int sum = 0;                    // sum of samples taken
+//unsigned char sample_count = 0; // current sample number
+//int level = 0;                  // calculated battery level
+//int percentage = 0;             // calculated battery percentage
+//float voltage = 0;              // calculated battery voltage
 int battery_min = 0;            // min battery level
 int battery_max = 0;            // max battery level
-float resistor_ratio = 0;       // resistor ratio
+//float resistor_ratio = 0;       // resistor ratio
 
 void setup() {
   Serial.begin(BAUD_RATE);
@@ -61,7 +61,7 @@ void setup() {
   Serial.println();
 
   // calculate the voltage divider ratio
-  resistor_ratio=(float)R2/((float)R1+(float)R2);
+  float resistor_ratio=(float)R2/((float)R1+(float)R2);
 
   // calculate the min battery number using the resistor ratio
   battery_min=(float)resistor_ratio*(float)VOLTAGE_MIN*1024;
@@ -79,13 +79,13 @@ void setup() {
 
 void loop() {
 
-  sum = getSum();
+  int sum = getSum();
 
-  level = getBatteryLevel(sum);
+  int level = getBatteryLevel(sum);
 
-  percentage = getBatteryPercentage(level);
+  int percentage = getBatteryPercentage(level);
 
-  voltage = getBatteryVoltage(level);
+  float voltage = getBatteryVoltage(level);
 
   writeToThingSpeak(percentage, level, voltage);
 
@@ -115,6 +115,8 @@ void conntectToWifi(){
 
 int getSum(){
   // take a number of analog samples and add them up
+  int sum;
+  unsigned char sample_count;
   while (sample_count < NUM_SAMPLES) {
     sum += analogRead(ANALOG_PIN_NO);
     sample_count++;
@@ -125,7 +127,7 @@ int getSum(){
 
 int getBatteryLevel(int sum){
   // calculate the average level
-  level = (float)sum / (float)NUM_SAMPLES;
+  int level = (float)sum / (float)NUM_SAMPLES;
   Serial.print("Battery level: ");
   Serial.println(level);
   return level;
@@ -133,7 +135,7 @@ int getBatteryLevel(int sum){
 
 int getBatteryPercentage(int level){
   // convert battery level to percent
-  percentage = map(level, battery_min, battery_max, 0, 100);
+  int percentage = map(level, battery_min, battery_max, 0, 100);
   Serial.print("Battery percentage: ");
   Serial.print(percentage);
   Serial.println("%");
@@ -142,7 +144,7 @@ int getBatteryPercentage(int level){
 
 float getBatteryVoltage(int level){
   // convert battery level to voltage
-  voltage = map(level, battery_min, battery_max, VOLTAGE_MIN, VOLTAGE_MAX);
+  float voltage = map(level, battery_min, battery_max, VOLTAGE_MIN, VOLTAGE_MAX);
   Serial.print("Battery voltage: ");
   Serial.print(voltage);
   Serial.println("V");
