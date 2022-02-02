@@ -45,8 +45,10 @@ void setup() {
 
 void loop() {
   String val = getCreatedAt();
-  Serial.println(val);
-  if (strcmp("2022-02-02T02:58:45Z", "2022-02-02T02:58:45Z") < 0) {
+  int splitted = val.indexOf("T");
+  String datestr = val.substring(0, splitted);
+  Serial.println(datestr);
+  if (strcmp("2022-02-01", "2022-02-02") < 0) {
 		Serial.println(val + " is older than d2");
 	}
 	else {
