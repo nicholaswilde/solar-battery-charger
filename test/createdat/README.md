@@ -41,5 +41,4 @@ WIP
 WIP
 
 ## References
-
-WIP
+- https://arduino.stackexchange.com/a/63475
