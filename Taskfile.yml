@@ -68,7 +68,7 @@ tasks:
       - arduino-cli upload .
 
   test-create:
-    desc: test
+    desc: Create a test from the template folder.
     vars:
       VERSION:
         sh: arduino-cli version | awk '{print $3}'
