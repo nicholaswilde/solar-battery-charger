@@ -23,7 +23,7 @@
 #include "ThingSpeak.h"         // always include thingspeak header file after other header files and custom macros
 
 #define BAUD_RATE 115200        // baud rate used for Serial console
-#define DELAY_LOOP 1000         // loop delay time (ms)
+#define SLEEP_TIME 10           // loop delay time (ms)
 #define ANALOG_PIN_NO A0        // analog pin number
 #define DELAY_WIFI 5            // delay between samples (s)
 #define INTERVAL_BLINK 100      // blink interval (ms)
@@ -34,16 +34,16 @@ Ticker blinker;
 WiFiUDP Udp;
 time_t getNtpTime();
 
-const char ssid[] = SECRET_SSID;      // your network SSID (name)
-const char pass[] = SECRET_PASS;      // your network password
+const char ssid[] = SECRET_SSID;  // your network SSID (name)
+const char pass[] = SECRET_PASS;  // your network password
 const int ledPin = LED_BUILTIN;
 
 unsigned long myChannelNumber = SECRET_CH_ID;
 const char * myWriteAPIKey = SECRET_WRITE_APIKEY;
 const char * myHostName = SECRET_HOSTNAME;
 
-const int timeZone = 0;     // UTC
-unsigned int localPort = 8888;  // local port to listen for UDP packets
+const int timeZone = 0;           // UTC
+unsigned int localPort = 8888;    // local port to listen for UDP packets
 
 void sendNTPpacket(IPAddress &address);
 
@@ -67,40 +67,23 @@ void setup() {
 }
 
 void loop() {
-  Serial.println(getCurrentDate());
-  Serial.println(getCreatedAt());
-  delay(DELAY_LOOP);
+  String currentDate = getCurrentDate();
+  Serial.println(currentDate);
+  String createdAt = getCreatedAt();
+  Serial.println(createdAt);
+
+  if (strcmp(createdAt.c_str(), currentDate.c_str()) < 0) {
+		Serial.println(createdAt + " is older than " + currentDate);
+	} else if (strcmp(createdAt.c_str(), currentDate.c_str()) == 0) {
+		Serial.println(createdAt + " is the same day as " + currentDate);
+  } else {
+		Serial.println(createdAt + " is newer than " + currentDate);
+	}
+  Serial.println("going to sleep");
+  ESP.deepSleep(SLEEP_TIME * 1e6);
 }
 
-// https://www.geeksforgeeks.org/convert-character-array-to-string-in-c/
-String convertToString(char* a, int size){
-  int i;
-  String s = "";
-  for (i = 0; i < size; i++) {
-    s = s + a[i];
-  }
-  return s;
-}
-
-String getCurrentDate(){
-  char timeToDisplay[20];
-  sprintf(timeToDisplay, "%02d-%02d-%02dT%02d:%02d:%02dZ", year(), month(), day(), hour(), minute(), second());
-  Serial.print("CurrentDate: ");
-  String s = convertToString(timeToDisplay,sizeof(timeToDisplay) / sizeof(char));
-  return getDate(s);
-}
-
-// Format: 2017-01-12 13:22:54
-String getCreatedAt(){
-  Serial.print("CreatedAt: ");
-  String s = ThingSpeak.readCreatedAt(myChannelNumber, myWriteAPIKey);
-  return getDate(s);
-}
-
-String getDate(String s){
-  int i = s.indexOf("T");
-  return s.substring(0, i);
-}
+/*---------------------------------------------------------------------------*/
 
 void setupTime(){
   Serial.println("Starting UDP");
@@ -134,6 +117,38 @@ void conntectToWifi(){
 
 void changeState(){
   digitalWrite(ledPin, !(digitalRead(ledPin)));
+}
+
+/*-------- Functions ----------*/
+
+// Format: 2017-01-12 13:22:54
+String getCreatedAt(){
+  Serial.print("CreatedAt: ");
+  String s = ThingSpeak.readCreatedAt(myChannelNumber, myWriteAPIKey);
+  return getDate(s);
+}
+
+String getCurrentDate(){
+  char timeToDisplay[20];
+  sprintf(timeToDisplay, "%02d-%02d-%02dT%02d:%02d:%02dZ", year(), month(), day(), hour(), minute(), second());
+  Serial.print("CurrentDate: ");
+  String s = convertToString(timeToDisplay,sizeof(timeToDisplay) / sizeof(char));
+  return getDate(s);
+}
+
+// https://www.geeksforgeeks.org/convert-character-array-to-string-in-c/
+String convertToString(char* a, int size){
+  int i;
+  String s = "";
+  for (i = 0; i < size; i++) {
+    s = s + a[i];
+  }
+  return s;
+}
+
+String getDate(String s){
+  int i = s.indexOf("T");
+  return s.substring(0, i);
 }
 
 /*-------- NTP code ----------*/

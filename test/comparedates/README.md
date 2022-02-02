@@ -1,6 +1,6 @@
 # comparedates
 
-WIP
+Compares the createdAt date from Thingspeak and the current date at UTC.
 
 ## Hypothesis
 
