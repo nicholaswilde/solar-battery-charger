@@ -1,15 +1,13 @@
 /*--------------------------------------------------------------
-  Program:      ${NAME}
+  Program:      createdat
 
-  Description:  Reads value on analog input A0 and calculates
-                the the percent level of a lipo battery.
+  Description:  Gets the latest createdAt from ThinkSpeak
 
-  Hardware:     Adafruit Feather Huzzah with 3.7V lipo battery
-                and voltage divider on A0.
+  Hardware:     Adafruit Feather Huzzah.
 
   Software:     Developed using arduino-cli ${VERSION}.
 
-  Date:         ${DATE}
+  Date:         01FEB2022
 
   Author:       Nicholas Wilde 0x08b7d7a3
 --------------------------------------------------------------*/
@@ -21,7 +19,6 @@
 
 #define BAUD_RATE 115200        // baud rate used for Serial console
 #define DELAY_LOOP 1000         // loop delay time (ms)
-#define ANALOG_PIN_NO A0        // analog pin number
 #define DELAY_WIFI 5            // delay between samples (s)
 #define INTERVAL_BLINK 100      // blink interval (ms)
 
@@ -38,7 +35,7 @@ const char * myHostName = SECRET_HOSTNAME;
 
 void setup() {
   Serial.begin(BAUD_RATE);
-  while(! Serial);
+  while(!Serial);
   Serial.println();
   Serial.println("test: createdat");
   ThingSpeak.begin(client);

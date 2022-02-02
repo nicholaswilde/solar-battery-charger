@@ -27,35 +27,49 @@
 WiFiClient  client;
 Ticker blinker;
 
-char ssid[] = SECRET_SSID;      // your network SSID (name)
-char pass[] = SECRET_PASS;      // your network password
+const char ssid[] = SECRET_SSID;      // your network SSID (name)
+const char pass[] = SECRET_PASS;      // your network password
+const int ledPin = LED_BUILTIN;
 
 unsigned long myChannelNumber = SECRET_CH_ID;
 const char * myWriteAPIKey = SECRET_WRITE_APIKEY;
 const char * myHostName = SECRET_HOSTNAME;
 
-unsigned long previousMillis = 0;    // will store last time LED was updated
-const long interval = 100;           // interval at which to blink (milliseconds)
-
 void setup() {
   Serial.begin(BAUD_RATE);
-  while(! Serial);
-  WiFi.mode(WIFI_STA);
-
-  WiFi.hostname(myHostName);
-
-  blinker.attach_ms(INTERVAL_BLINK, changeState);
-
+  while(!Serial);
   Serial.println();
+  Serial.println("test: ${NAME}");
+  pinMode(ledPin, OUTPUT);
+  blinker.attach_ms(INTERVAL_BLINK, changeState);
+  conntectToWifi();
 }
 
 void loop() {
-  Serial.println("${NAME}");
-  int val = analogRead(ANALOG_PIN_NO)
+  int val = analogRead(ANALOG_PIN_NO);
   Serial.println(val);
   delay(DELAY_LOOP);
 }
 
+void conntectToWifi(){
+  // Connect or reconnect to WiFi
+  WiFi.mode(WIFI_STA);
+  WiFi.hostname(myHostName);
+  Serial.print("Connecting to SSID: ");
+  Serial.println(SECRET_SSID);
+  while(WiFi.status() != WL_CONNECTED){
+    WiFi.begin(ssid, pass);
+    Serial.print(".");
+    delay(DELAY_WIFI*1e3);
+  }
+  blinker.detach();
+  Serial.println("connected");
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.localIP());
+  Serial.print("Hostname: ");
+  Serial.println(WiFi.hostname());
+}
+
 void changeState(){
-  digitalWrite(LED_BUILTIN, !(digitalRead(LED_BUILTIN)));
+  digitalWrite(ledPin, !(digitalRead(ledPin)));
 }
