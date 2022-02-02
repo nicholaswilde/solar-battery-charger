@@ -90,6 +90,7 @@ tasks:
     cmds:
       - "printf 'task: Available variables for this project:\n'"
       - 'printf "{{ .COLOR }}* BAUD_RATE\e[m          %s\n" "{{ .BAUD_RATE }}"'
+      - 'printf "{{ .COLOR }}* BOARD\e[m              %s\n" "{{ .BOARD }}"'
       - 'printf "{{ .COLOR }}* PORT\e[m               %s\n" "{{ .PORT }}"'
     vars:
       # Blue
