@@ -11,6 +11,19 @@ A solar battery charger to charge lithium ion (li-ion) 18650, 9V, and coin batte
 
 <img src="./test/v4/images/back.jpg" width="480">
 
+## TL;DR;
+
+```shell
+brew install arduino-cli
+arduino-cli config init
+arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
+arduino-cli core update-index
+arduino-cli core install esp8266:esp8266
+arduino-cli compile -b esp8266:esp8266:huzzah .
+arduino-cli upload -b esp8266:esp8266:huzzah . -p /dev/ttyUSB0 .
+screen /dev/ttyUSB0 115200
+```
+
 ## :goal_net:&nbsp; Objectives
 - Recharge li-ion 18650, 9V, and coin batteries via a solar panel.
 - Recharge Ni-MH AA and AAA batteries indirectly via a solar panel.
@@ -273,6 +286,7 @@ The documentation doesn't show what a typical sketch.json looks like so here is 
 - [X] [panel](./test/panel)
 - [X] [sleep](./test/sleep)
 - [ ] statechange
+- [ ] [sunset](./test/sunset)
 - [X] [thingspeak](./test/thingspeak)
 - [X] [v2](./test/v2)
 - [X] [v3](./test/v3)
