@@ -50,3 +50,4 @@ arduino-cli lib install --zip-path v1.9.1.zip
 
 ## References
 - https://github.com/khoih-prog/Timezone_Generic/blob/523402eee8e74a6499431b59afd81d12cfce032d/examples/tzTest/tzTest.ino
+- https://forum.arduino.cc/t/loading-my-p-c-time-and-date-into-the-arduino-during-the-programing/586028/5
