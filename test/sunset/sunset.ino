@@ -1,7 +1,7 @@
 /*--------------------------------------------------------------
   Program:      sunset
 
-  Description:  Get the sunset time from a website.
+  Description:  Get the sunrise and sunset times from a website.
 
   Hardware:     Adafruit Feather Huzzah.
 
@@ -14,87 +14,91 @@
 
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
-#include <Arduino_JSON.h>
+#include <ArduinoJson.h>
+#include <Ticker.h>
 #include "secrets.h"
+
+#define BAUD_RATE 115200        // baud rate used for Serial console
+#define DELAY_LOOP 1000         // loop delay time (ms)
+#define ANALOG_PIN_NO A0        // analog pin number
+#define DELAY_WIFI 5            // delay between samples (s)
+#define INTERVAL_BLINK 100      // blink interval (ms)
+
+WiFiClient  client;
+Ticker blinker;
+
+const char * lat = "33.60";
+const char * lng = "-117.68";
 
 // values are specified in secrets.h
 const char ssid[] = SECRET_SSID;      // your network SSID (name)
 const char pass[] = SECRET_PASS;      // your network password
 
-const char* host = "http://api.sunrise-sunset.org/json?lat=33.6053681&lng=-117.6552182&date=today";
+const int ledPin = LED_BUILTIN;
+unsigned long myChannelNumber = SECRET_CH_ID;
+const char * myWriteAPIKey = SECRET_WRITE_APIKEY;
+const char * myHostName = SECRET_HOSTNAME;
 
-int value = 0;
-
-const char* sensorReadingsArr[3];
+char* host = "http://api.sunrise-sunset.org/json?&date=today&formatted=0";
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(BAUD_RATE);
+  while(!Serial);
   delay(100);
-
-  // We start by connecting to a WiFi network
-
   Serial.println();
-  Serial.println();
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
-
-  WiFi.begin(ssid, pass);
-
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-
-  Serial.println("");
-  Serial.println("WiFi connected");
-  Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());
+  Serial.println("test: sunset");
+  pinMode(ledPin, OUTPUT);
+  conntectToWifi();
 }
 
 void loop() {
+  String payload = httpGETRequest(host);
+  String sunrise = jsonParse(payload, "sunrise");
+  String sunset = jsonParse(payload, "sunset");
+  Serial.print("Sunrise: ");
+  Serial.println(sunrise);
+  Serial.print("Sunset: ");
+  Serial.println(sunset);
   delay(5000);
-  ++value;
+}
 
-  Serial.print("connecting to ");
-  Serial.println(host);
+String jsonParse(String payload, const char* value){
+  // Use arduinojson.org/v6/assistant to compute the capacity
+  StaticJsonDocument<768> doc;
+  DeserializationError error = deserializeJson(doc, payload);
+  // Test if parsing succeeds.
+  String sunset;
+  if (error) {
+    Serial.print(F("deserializeJson() failed: "));
+    Serial.println(error.f_str());
+  } else {
+    sunset = (String)doc["results"][value];
+  }
+  return sunset;
+}
 
-  // Use WiFiClient class to create TCP connections
-  WiFiClient client;
+String httpGETRequest(const char* host) {
   HTTPClient http;
-  http.begin(client, host);
-
+  char buffer[100]; // long eough for the combined text
+  strcpy(buffer, host);
+  strcat(buffer, "&lat=");
+  strcat(buffer, lat);
+  strcat(buffer, "&lng=");
+  strcat(buffer, lng);
+  Serial.print("host: ");
+  Serial.println(buffer);
+  // Your IP address with path or Domain name with URL path 
+  http.begin(client, buffer);
   http.addHeader("Content-Type","application/json");
+  // Send HTTP POST request
   int httpResponseCode = http.GET();
 
-   String payload = "{}";
+  String payload = "{}";
 
   if (httpResponseCode>0) {
     Serial.print("HTTP Response code: ");
     Serial.println(httpResponseCode);
     payload = http.getString();
-    JSONVar myObject = JSON.parse(payload);
-    // JSON.typeof(jsonVar) can be used to get the type of the var
-    if (JSON.typeof(myObject) == "undefined") {
-      Serial.println("Parsing input failed!");
-      return;
-    }
-    Serial.print("JSON object = ");
-    Serial.println(myObject["results"]["sunrise"]);
-    //Serial.println(myObject2);
-    JSONVar keys = myObject["results"].keys();
-    for (int i = 0; i < keys.length(); i++) {
-        JSONVar value = myObject["results"][keys[i]];
-        Serial.print(keys[i]);
-        Serial.print(" = ");
-        Serial.println(value);
-        sensorReadingsArr[i] = (const char*)myObject["results"][keys[i]];
-      }
-      Serial.print("1 = ");
-      Serial.println(sensorReadingsArr[0]);
-      Serial.print("2 = ");
-      Serial.println(sensorReadingsArr[1]);
-      Serial.print("3 = ");
-      Serial.println(sensorReadingsArr[2]);
   }
   else {
     Serial.print("Error code: ");
@@ -103,7 +107,29 @@ void loop() {
   // Free resources
   http.end();
 
-  Serial.println();
-  Serial.println("closing connection");
-  delay(500);
+  return payload;
+}
+
+void conntectToWifi(){
+  // Connect or reconnect to WiFi
+  WiFi.mode(WIFI_STA);
+  WiFi.hostname(myHostName);
+  Serial.print("Connecting to SSID: ");
+  Serial.println(SECRET_SSID);
+  blinker.attach_ms(INTERVAL_BLINK, changeState);
+  while(WiFi.status() != WL_CONNECTED){
+    WiFi.begin(ssid, pass);
+    Serial.print(".");
+    delay(DELAY_WIFI*1e3);
+  }
+  blinker.detach();
+  Serial.println("connected");
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.localIP());
+  Serial.print("Hostname: ");
+  Serial.println(WiFi.hostname());
+}
+
+void changeState(){
+  digitalWrite(ledPin, !(digitalRead(ledPin)));
 }

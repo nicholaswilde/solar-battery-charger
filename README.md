@@ -276,6 +276,7 @@ The documentation doesn't show what a typical sketch.json looks like so here is 
 
 ## :test_tube:&nbsp; Tests
 - [ ] adafruitio
+- [ ] [adjusttime](./test/adjusttime)
 - [X] [battery](./test/battery)
 - [X] [blink](./test/blink)
 - [X] [cell](./test/cell)
@@ -286,7 +287,7 @@ The documentation doesn't show what a typical sketch.json looks like so here is 
 - [X] [panel](./test/panel)
 - [X] [sleep](./test/sleep)
 - [ ] statechange
-- [ ] [sunset](./test/sunset)
+- [X] [sunset](./test/sunset)
 - [X] [thingspeak](./test/thingspeak)
 - [X] [v2](./test/v2)
 - [X] [v3](./test/v3)
