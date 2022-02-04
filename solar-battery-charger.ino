@@ -23,11 +23,11 @@
 #define NUM_SAMPLES 10          // number of analog samples to take per reading
 #define BAUD_RATE 115200        // baud rate used for Serial console
 #define ANALOG_PIN_NO A0        // analog pin number
-#define R1 1000000              // resistor 1 on the voltage divider
-#define R2 220000               // resistor 2 on the voltage divider
-#define VOLTAGE_MAX 4.2         // max voltage of lipo battery
-#define VOLTAGE_MIN 2.88        // min voltage of lipo battery
-#define DELAY_SAMPLE 10         // delay between samples
+#define R1 1000000              // resistor 1 on the voltage divider (Ω)
+#define R2 220000               // resistor 2 on the voltage divider (Ω)
+#define VOLTAGE_MAX 4.2         // max voltage of lipo battery (V)
+#define VOLTAGE_MIN 2.64        // min voltage of lipo battery (V)
+#define DELAY_SAMPLE 10         // delay between samples (ms)
 #define DELAY_WIFI 5            // delay between samples (s)
 #define SLEEP_TIME 15           // sleep time (m)
 #define FIELD_NO_PERCENTAGE 1   // field number of battery percentage
@@ -38,22 +38,16 @@
 WiFiClient  client;
 Ticker blinker;
 
-const char ssid[] = SECRET_SSID;      // your network SSID (name)
-const char pass[] = SECRET_PASS;      // your network password
+const char ssid[] = SECRET_SSID; // your network SSID (name)
+const char pass[] = SECRET_PASS; // your network password
 const int ledPin = LED_BUILTIN;
 
 unsigned long myChannelNumber = SECRET_CH_ID;
 const char * myWriteAPIKey = SECRET_WRITE_APIKEY;
 const char * myHostName = SECRET_HOSTNAME;
 
-//int sum = 0;                    // sum of samples taken
-//unsigned char sample_count = 0; // current sample number
-//int level = 0;                  // calculated battery level
-//int percentage = 0;             // calculated battery percentage
-//float voltage = 0;              // calculated battery voltage
 int battery_min = 0;            // min battery level
 int battery_max = 0;            // max battery level
-//float resistor_ratio = 0;       // resistor ratio
 
 void setup() {
   Serial.begin(BAUD_RATE);
@@ -73,15 +67,14 @@ void setup() {
 
   ThingSpeak.begin(client);
   pinMode(ledPin, OUTPUT);
-  blinker.attach_ms(INTERVAL_BLINK, changeState);
   conntectToWifi();
 }
 
 void loop() {
 
-  int sum = getSum();
+  //int sum = getSum();
 
-  int level = getBatteryLevel(sum);
+  int level = getBatteryLevel();
 
   int percentage = getBatteryPercentage(level);
 
@@ -92,14 +85,13 @@ void loop() {
   goToSleep();
 }
 
-
-
 void conntectToWifi(){
   // Connect or reconnect to WiFi
   WiFi.mode(WIFI_STA);
   WiFi.hostname(myHostName);
   Serial.print("Connecting to SSID: ");
   Serial.println(SECRET_SSID);
+  blinker.attach_ms(INTERVAL_BLINK, changeState);
   while(WiFi.status() != WL_CONNECTED){
     WiFi.begin(ssid, pass);
     Serial.print(".");
@@ -125,8 +117,9 @@ int getSum(){
   return sum;
 }
 
-int getBatteryLevel(int sum){
+int getBatteryLevel(){
   // calculate the average level
+  int sum = getSum();
   int level = (float)sum / (float)NUM_SAMPLES;
   Serial.print("Battery level: ");
   Serial.println(level);
@@ -144,7 +137,7 @@ int getBatteryPercentage(int level){
 
 float getBatteryVoltage(int level){
   // convert battery level to voltage
-  float voltage = map(level, battery_min, battery_max, VOLTAGE_MIN*100, VOLTAGE_MAX*100)/100;
+  float voltage = (float)map(level, battery_min, battery_max, VOLTAGE_MIN*100, VOLTAGE_MAX*100)/100;
   Serial.print("Battery voltage: ");
   Serial.print(voltage);
   Serial.println("V");
@@ -162,8 +155,7 @@ void writeToThingSpeak(int percentage, int level, float voltage){
   int x = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
   if (x == 200){
     Serial.println("Channel update successful");
-  }
-  else {
+  } else {
     Serial.println("Problem updating channel. HTTP error code " + String(x));
   }
 }
