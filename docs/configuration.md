@@ -16,43 +16,33 @@ Add the [esp8266 package library](https://github.com/esp8266/Arduino)
 arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
 ```
 
-Check that the update addition was successful.
 
-Note: this is assuming that `arduino-cli` was installed in the home directory (`~/.arduino15`)
-
-```
+```shell title="Check that the update addition was successful."
 cat ~/.arduino15/arduino-cli.yaml
 ```
+!!! note
+    This is assuming that `arduino-cli` was installed in the home directory (`~/.arduino15`)
 
-```yaml
-# ~/.arduino15/arduino-cli.yaml
+```yaml title="~/.arduino15/arduino-cli.yaml"
 board_manager:
   additional_urls:
     - https://arduino.esp8266.com/stable/package_esp8266com_index.json
 ...
 ```
 
-Update the core index
-
-```shell
+```shell title="Update the core index"
 arduino-cli core update-index
 ```
 
-Install the `esp8266` core
-
-```shell
+```shell title="Install the esp8266 core"
 arduino-cli core install esp8266:esp8266
 ```
 
-Search for the huzzah board
-
-```shell
+```shell title="Search for the huzzah board"
 arduino-cli board search huzzah
 ```
 
-Typical Output
-
-```shell
+```shell title="Typical Output"
 Board Name                      FQBN                   Platform ID
 Adafruit Feather HUZZAH ESP8266 esp8266:esp8266:huzzah esp8266:esp8266
 ```
@@ -60,29 +50,22 @@ Adafruit Feather HUZZAH ESP8266 esp8266:esp8266:huzzah esp8266:esp8266
 Take note of the output under `FQBN` because that is what will need to be passed as the `board` (`-b`) parameter with the `arduino-cli` command.
 In this example, the board to be used will be `esp8266:esp8266:huzzah`.
 
-Install the [ThingSpeak library](https://www.arduinolibraries.info/libraries/thing-speak)
-
-```shell
+```shell title="Install the ThingSpeak library"
 arduino-cli lib install ThingSpeak
 ```
 
-Create a channel on ThingSpeak and take note of the channel ID and API key.
+Create a channel on [ThingSpeak](#thingspeak) and take note of the channel ID and API key.
 
 Update the variables in [`secret.h`](#key-secrets) and the header of `solar-battery-charger.ino`.
 
-Compile the sketch
 
-From the directory of the sketch:
-
-Note: The dot at the end of the command tells `arduino-cli` to use the sketch in the current directory. The name of the sketch may also be used.
-
-```shell
+```shell title="Compile the sketch"
 arduino-cli compile -b esp8266:esp8266:huzzah .
 ```
+!!! note
+    The dot at the end of the command tells `arduino-cli` to use the sketch in the current directory. The name of the sketch may also be used.
 
-Typical Output
-
-```shell
+```shell title="Typical Output"
 Executable segment sizes:
 ICACHE : 32768           - flash instruction cache
 IROM   : 236116          - code in flash         (default or ICACHE_FLASH_ATTR)
@@ -96,15 +79,11 @@ Global variables use 28084 bytes (34%) of dynamic memory, leaving 53836 bytes fo
 
 Be sure to compile your code before uploading it if changes have been made to the sketch!
 
-Upload the sketch to the Feather
-
-```shell
+```shell title="Upload the sketch to the Feather"
 arduino-cli upload -p /dev/ttyUSB0 -b esp8266:esp8266:huzzah .
 ```
 
-Typical Output
-
-```shell
+```shell title="Typical Output"
 esptool.py v3.0
 Serial port /dev/ttyUSB0
 Connecting........_____.
@@ -125,17 +104,14 @@ Leaving...
 Hard resetting via RTS pin...
 ```
 
-Monitor serial connection using GNU Screen
-
-Make sure your baud rate matches the baud rate inside of your sketches!
-
-```shell
+```shell title="Monitor serial connection using GNU Screen"
 screen /dev/ttyUSB0 115200
 ```
 
-Typical Output
+!!! note
+    Make sure the baud rate matches the `BAUDE_RATE` in the sketch!
 
-```shell
+```shell title="Typical Output"
 Connecting to SSID: MySSID
 .connected
 IP Address: 192.168.1.77
@@ -156,9 +132,8 @@ Kill the monitoring screen by pressing <kbd>Ctrl</kbd> + <kbd>a</kbd> <kbd>k</kb
 `secrets.h` is a file used to store secrets such as API tokens and wifi
 credentials that aren't updated in GitHub. The file is ignored in `.gitignore`.
 
-Secrets can be used in sketches using the following code:
 
-```C++
+```C++ title="Secrets can be used in sketches"
 #include "secrets.h"
 ```
 
@@ -181,12 +156,12 @@ Attaching the board didn't work for me because `arduino-cli` didn't recognize
 the Feather attached to my port for some reason and so I had to manually add
 the port.
 
-Note: The port needs to start with the protocol, e.g. `serial://`.
+!!! note
+    The port needs to start with the protocol, e.g. `serial://`.
 
-The documentation doesn't show what a typical sketch.json looks like so here is one:
+The documentation doesn't show what a typical `sketch.json` looks like so here is one:
 
-`sketch.json`
-```json
+```json title="sketch.json"
 {
   "cpu": {
     "fqbn": "esp8266:esp8266:huzzah",
@@ -197,7 +172,7 @@ The documentation doesn't show what a typical sketch.json looks like so here is 
 
 ## ThingSpeak
 
-The results are exported to a ThingSpeak public channel which can be seen [here](https://thingspeak.com/channels/1642208).
+The results are exported to a [ThingSpeak](https://thingspeak.com/) public channel which can be seen [here](https://thingspeak.com/channels/1642208).
 
 The `User API Key` (`SECRET_WRITE_APIKEY`) can be found under the [ThingSpeak profile page](https://thingspeak.com/account/profile).
 
@@ -207,7 +182,7 @@ The `Channel ID` (`SECRET_CH_ID`) can be found on at the top of the channel page
 
 ### Notification from IFTTT
 
-Notifications from IFTTT can be setup by connecting ThingSpeak to IFTTT. See [these instructions](https://www.mathworks.com/help/thingspeak/use-ifttt-to-send-text-message-notification.html).
+Notifications from [IFTTT](https://ifttt.com/) can be setup by connecting ThingSpeak to IFTTT. See [these instructions](https://www.mathworks.com/help/thingspeak/use-ifttt-to-send-text-message-notification.html).
 
 ## Task
 
@@ -215,25 +190,21 @@ Notifications from IFTTT can be setup by connecting ThingSpeak to IFTTT. See [th
 
 Update the parameters in `task.env`.
 
-> Note: Variables are duplicated both in `task.env` and `sketch.json` because I couldn't get
-  go-task to not have errors when trying to parse `sketch.json` when it didn't exist.
+!!! note
+    Variables are duplicated both in `task.env` and `sketch.json` because I couldn't get
+    go-task to not have errors when trying to parse `sketch.json` when it didn't exist.
 
-Bootstrap the entire environment (not including the installation of `arduino-cli`).
-
-> :warning: WARNING! this will overwrite your entire `arduino-cli` config file!
-
-```shell
+```shell title="Bootstrap the entire environment (not including the installation of arduino-cli)"
 task bootstrap
 ```
 
-Compile, upload, and monitor the sketch.
+!!! warning
+    This will overwrite your entire `arduino-cli` config file!
 
-```shell
+```shell title="Compile, upload, and monitor the sketch."
 task compile-upload
 ```
 
-Get a list of all of the commands.
-
-```shell
+```shell title="Get a list of all of the commands."
 task
 ```
