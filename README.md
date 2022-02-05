@@ -166,7 +166,7 @@ Install the [ThingSpeak library](https://www.arduinolibraries.info/libraries/thi
 arduino-cli lib install ThingSpeak
 ```
 
-Update the variables in `secret.h` and the header of `solar-battery-charger.ino`.
+Update the variables in [`secret.h`](#key-secrets) and the header of `solar-battery-charger.ino`.
 
 Compile the sketch
 
