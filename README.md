@@ -411,6 +411,7 @@ Fix: The serial port is open and reading the output of the Feather. Close the co
 - https://github.com/arduino-libraries/NTPClient/blob/master/examples/Basic/Basic.ino
 - https://www.mathworks.com/help/thingspeak/use-ifttt-to-send-text-message-notification.html?searchHighlight=ifttt&s_tid=srchtitle_ifttt_1
 - https://www.mathworks.com/help/thingspeak/read-data-for-regression-analysis.html
+- https://electronics.stackexchange.com/questions/307586/need-help-calibrating-adc-input-using-a-voltage-divider
 
 ## :balance_scale:&nbsp; License
 
