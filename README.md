@@ -293,6 +293,16 @@ The documentation doesn't show what a typical sketch.json looks like so here is 
 }
 ```
 
+## ThingSpeak
+
+The results are exported to a ThingSpeak public channel which can be seen [here](https://thingspeak.com/channels/1642208).
+
+<img src="./images/thingspeak.png" width="480">
+
+### Notification from IFTTT
+
+Notifications from IFTTT can be setup by connecting ThingSpeak to IFTTT. See [these instructions](https://www.mathworks.com/help/thingspeak/use-ifttt-to-send-text-message-notification.html).
+
 ## Task
 
 [go-task](https://github.com/go-task/task) may be used to automate some of the commands.
