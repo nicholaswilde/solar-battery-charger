@@ -84,8 +84,8 @@ Therefore, charging the li-ion batteries and charging other things with the USB 
 - [arduino-cli](https://arduino.github.io/arduino-cli/latest/installation)
 - [ubuntu server](https://ubuntu.com/download/server)
 - [go-task](https://github.com/go-task/task)
-- [pre-commit](https://pre-commit.com/)
 - [GNU Screen](https://www.gnu.org/software/screen/)
+- [jq](https://stedolan.github.io/jq)(for go-task)
 
 ## :electric_plug:&nbsp; Schematics
 
