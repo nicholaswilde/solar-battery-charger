@@ -43,6 +43,8 @@ problem with recharging Ni-MH batteries is that they're difficult to monitor and
 I decided to create a lithium ion solar charger that then can be used to charge Ni-MH batteries via existing USB
 chargers.
 
+<img src="./images/1.jpg" width="480">
+
 ## :bulb:&nbsp; Concept
 
 The concept is to create a solar panel and circuit to charge 18650 li-ion batteries and then use the charged li-ion
