@@ -78,14 +78,13 @@ Therefore, charging the li-ion batteries and charging other things with the USB 
 ## :robot:&nbsp; Services
 - [IFTTT](https://ifttt.com/)
 - [ThingSpeak](https://thingspeak.com/)
-- [Adafruit IO](https://io.adafruit.com/)
 
 ## :floppy_disk:&nbsp; Software
 - [arduino-cli](https://arduino.github.io/arduino-cli/latest/installation)
 - [ubuntu server](https://ubuntu.com/download/server)
 - [go-task](https://github.com/go-task/task)
 - [GNU Screen](https://www.gnu.org/software/screen/)
-- [jq](https://stedolan.github.io/jq)(for go-task)
+- [jq](https://stedolan.github.io/jq) (for go-task)
 
 ## :electric_plug:&nbsp; Schematics
 
@@ -316,7 +315,6 @@ task
 ```
 
 ## :test_tube:&nbsp; Tests
-- [ ] adafruitio
 - [ ] [adjusttime](./test/adjusttime)
 - [X] [battery](./test/battery)
 - [X] [blink](./test/blink)
@@ -327,7 +325,6 @@ task
 - [X] [eeprom](./test/eeprom)
 - [X] [panel](./test/panel)
 - [X] [sleep](./test/sleep)
-- [ ] statechange
 - [X] [sunset](./test/sunset)
 - [X] [thingspeak](./test/thingspeak)
 - [X] [v2](./test/v2)
@@ -341,26 +338,20 @@ task
 - [ ] Wooden solar panel box designed as panel frame.
 
 ### Tests
-- [ ] Digital IO test with optocoupler on TP4056 red and blue LEDs to monitor.
-- [ ] Upload data to ThinkSpeak/Adafruit IO.
-- [X] Deep sleep to preserve battery.
 - [ ] Notifications for Amazon Alexa and mobile phone.
-- [ ] Power Feather by charging li-ion batteries and/or solar panel using a [pmosfet](https://www.best-microcontroller-projects.com/tp4056-page2.html).
 - [ ] Determine the optimal number of 18650 li-ion batteries to charge.
 - [ ] Optimize solar panel.
 
 ### Tools
-- [ ] Implement `go-task`.
+- [X] Implement `go-task`.
 - [ ] Implement `pre-commit`.
 - [X] Create test template.
 
 ### Documentation
 - [ ] Write troubleshooting section.
 - [ ] Create schematics.
-- [ ] Add images.
-- [ ] Cleanup `Configuration` section.
+- [X] Add images.
 - [ ] Write `test` READMEs.
-- [ ] Write up `v1`, `v2`, `cell`, and `panel` tests.
 
 ## :hammer_and_wrench:&nbsp; Troubleshooting
 
