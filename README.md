@@ -296,7 +296,7 @@ Update the parameters in `task.env`.
 
 Bootstrap the entire environment (not including the installation of `arduino-cli`).
 
-> WARNING! this will overwrite your entire `arduino-cli` config file!
+> :warning: WARNING! this will overwrite your entire `arduino-cli` config file!
 
 ```shell
 task bootstrap
