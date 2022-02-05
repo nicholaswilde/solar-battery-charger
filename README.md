@@ -57,15 +57,12 @@ charging is complete. It can also send notifications when the charge is complete
 
 ## Current Limitations
 
-As of the time of this writing, charging the li-ion batteries and using the USB port need to happen separately.
-Therefore, charging the li-ion batteries and charging other things with the USB port can't happen at the same time.
-
-The Feather is being powered by the charging li-ion batteries and so the Feather won't turn on unless there is enough
-juice in the batteries.
-
-The Feather is draining the charging li-ion batteries as they are charging.
-
-The voltage divider used to measure the battery voltage is constantly draining the battery.
+- As of the time of this writing, charging the li-ion batteries and using the USB port need to happen separately.
+  Therefore, charging the li-ion batteries and charging other things with the USB port can't happen at the same time.
+- The Feather is being powered by the charging li-ion batteries and so the Feather won't turn on unless there is enough
+  juice in the batteries.
+- The Feather is draining the charging li-ion batteries as they are charging.
+- The voltage divider used to measure the battery voltage is constantly draining the battery.
 
 ## :desktop_computer:&nbsp; Hardware
 - 15X [Energizer LED Solar pathway Lights](https://outdoorsolaroutlet.com/products/new-led-energizer-10pack-solar-pathway-lights-outdoor-stainless-steel-bronze)
@@ -113,7 +110,7 @@ Initialize the config
 arduino-cli config init
 ```
 
-Add the esp8266 package library
+Add the [esp8266 package library](https://github.com/esp8266/Arduino)
 
 ```shell
 arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
