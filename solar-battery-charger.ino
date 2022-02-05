@@ -2,7 +2,7 @@
   Program:      solar-battery-charger
 
   Description:  Reads value on analog input A0 and calculates
-                the the percent level of a lipo battery and
+                the the percent level of a li-ion battery and
                 upload the value to ThingSpeak.
 
   Hardware:     Adafruit Feather Huzzah with 3.7V lipo battery
@@ -20,31 +20,35 @@
 #include "secrets.h"
 #include "ThingSpeak.h"         // always include thingspeak header file after other header files and custom macros
 
-#define NUM_SAMPLES 10          // number of analog samples to take per reading
-#define BAUD_RATE 115200        // baud rate used for Serial console
+// Change these parameters
 #define ANALOG_PIN_NO A0        // analog pin number
+#define BAUD_RATE 115200        // baud rate used for Serial console
 #define R1 1000000              // resistor 1 on the voltage divider (Ω)
 #define R2 220000               // resistor 2 on the voltage divider (Ω)
-#define VOLTAGE_MAX 4.2         // max voltage of lipo battery (V)
-#define VOLTAGE_MIN 2.64        // min voltage of lipo battery (V)
-#define DELAY_SAMPLE 10         // delay between samples (ms)
-#define DELAY_WIFI 5            // delay between samples (s)
-#define SLEEP_TIME 15           // sleep time (m)
 #define FIELD_NO_PERCENTAGE 1   // field number of battery percentage
 #define FIELD_NO_LEVEL 2        // field number of battery level
 #define FIELD_NO_VOLTAGE 3      // field number of battery voltage
+#define SLEEP_TIME 15           // the time the Feather goes into a deep sleep (m)
+#define VOLTAGE_MAX 4.2         // max voltage of lipo battery (V)
+#define VOLTAGE_MIN 2.64        // min voltage of lipo battery (V)
+
+// Don't have to change these
+#define DELAY_SAMPLE 10         // delay between samples (ms)
+#define DELAY_WIFI 5            // delay between samples (s)
+#define NUM_SAMPLES 10          // number of analog samples to take per reading
 #define INTERVAL_BLINK 100      // blink interval (ms)
 
-WiFiClient  client;
+WiFiClient client;
 Ticker blinker;
 
+// Pulled from secrets.h
 const char ssid[] = SECRET_SSID; // your network SSID (name)
 const char pass[] = SECRET_PASS; // your network password
-const int ledPin = LED_BUILTIN;
-
 unsigned long myChannelNumber = SECRET_CH_ID;
 const char * myWriteAPIKey = SECRET_WRITE_APIKEY;
 const char * myHostName = SECRET_HOSTNAME;
+
+const int ledPin = LED_BUILTIN;
 
 int battery_min = 0;            // min battery level
 int battery_max = 0;            // max battery level
@@ -71,8 +75,6 @@ void setup() {
 }
 
 void loop() {
-
-  //int sum = getSum();
 
   int level = getBatteryLevel();
 
@@ -148,7 +150,6 @@ void writeToThingSpeak(int percentage, int level, float voltage){
   ThingSpeak.setField(FIELD_NO_PERCENTAGE, percentage);
   ThingSpeak.setField(FIELD_NO_LEVEL, level);
   ThingSpeak.setField(FIELD_NO_VOLTAGE, voltage);
-  ThingSpeak.setStatus(String("Charging"));
 
   Serial.print("Channel number: ");
   Serial.println(myChannelNumber);

@@ -8,33 +8,35 @@ dotenv:
 vars:
   GIT_ROOT:
     sh: git rev-parse --show-toplevel
-  BOARD:
-    sh: arduino-cli board search | grep huzzah | awk '{print $5}'
 
 tasks:
   attach:
     desc: Export board and port to sketch.json file
     cmds:
-      - jq -n --arg board {{ .BOARD }} --arg port {{ .PORT}} '{"cpu":{"fqbn":$board,"port":$port}}' > sketch.json
+      - jq -n --arg board {{ .BOARD }} --arg port {{ .PROTOCOL }}://{{ .PORT}} '{"cpu":{"fqbn":$board,"port":$port}}' > sketch.json
     deps:
       - task: _varcheck
 
-  init:
-    desc: Initialize the config settings.
+  core-install:
+    desc: Install core
     cmds:
-      - arduino-cli config init
       - arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
       - arduino-cli core update-index
-      - arduino-cli core install esp8266:esp8266
+      - arduino-cli core install {{ .CORES }}
+
+  bootstrap:
+    desc: Bootstrap the entire environment. ⚠️ WARNING! This overwrites the exiting arduino-cli config file!
+    cmds:
+      - arduino-cli config init --overwrite
+      - task: core-install
       - task: lib-install
-      - arduino-cli board search huzzah
+      - task: attach
 
   _varcheck:
     cmds:
       - test ! -z "{{.BOARD}}" || (echo "Please define BOARD parameter"; exit 1)
       - test ! -z "{{.PORT}}" || (echo "Please define PORT parameter"; exit 1)
-    vars:
-      BOARD: '{{ .BOARD }}'
+      - test ! -z "{{.PROTOCOL}}" || (echo "Please define PROTOCOL parameter"; exit 1)
     silent: true
 
   compile:
@@ -51,16 +53,13 @@ tasks:
 
   console:
     desc: Monitor the console with screen
-    vars:
-      PORT:
-        sh: cat {{ .GIT_ROOT }}/sketch.json | jq -r '.cpu.port' | sed s/"serial:\/\/"//
     cmds:
-      - screen {{ .PORT }}  $BAUD_RATE
+      - screen {{ .PORT }} $BAUD_RATE
 
   lib-install:
     desc: Install arduino-cli libraries
     cmds:
-      - arduino-cli lib install ThingSpeak Ticker
+      - 'arduino-cli lib install {{ .LIBS }}'
 
   upload:
     desc: Upload the main sketch
@@ -92,6 +91,8 @@ tasks:
       - 'printf "{{ .COLOR }}* BAUD_RATE\e[m          %s\n" "{{ .BAUD_RATE }}"'
       - 'printf "{{ .COLOR }}* BOARD\e[m              %s\n" "{{ .BOARD }}"'
       - 'printf "{{ .COLOR }}* PORT\e[m               %s\n" "{{ .PORT }}"'
+      - 'printf "{{ .COLOR }}* PROTOCOL\e[m           %s\n" "{{ .PROTOCOL }}"'
+
     vars:
       # Blue
       COLOR: '\e[1;34m'
