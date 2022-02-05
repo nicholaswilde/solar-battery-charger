@@ -13,6 +13,8 @@ A solar battery charger to charge lithium ion (li-ion) 18650, 9V, and coin batte
 
 ## TL;DR;
 
+Update parameters in `secrets.h` and header of `solar-battery-charger.ino`.
+
 ```shell
 brew install arduino-cli
 arduino-cli config init
@@ -92,7 +94,7 @@ WIP
 ## :gear:&nbsp; Configuration
 
 Because I work mainly out of a Chromebook and Rasperry Pis, this project is using the `arduino-cli` command line utility
-[with Linux](https://support.google.com/chromebook/answer/9145439?hl=en) rather than the 
+[with Linux](https://support.google.com/chromebook/answer/9145439?hl=en) rather than the
 [Arduino IDE](https://www.arduino.cc/en/software).
 
 Initialize the config
@@ -151,6 +153,14 @@ Adafruit Feather HUZZAH ESP8266 esp8266:esp8266:huzzah esp8266:esp8266
 Take note of the output under `FQBN` because that is what will need to be passed as the `board` (`-b`) parameter with the `arduino-cli` command.
 In this example, the board to be used will be `esp8266:esp8266:huzzah`.
 
+Install the [ThingSpeak library](https://www.arduinolibraries.info/libraries/thing-speak)
+
+```shell
+arduino-cli lib install ThingSpeak
+```
+
+Update the variables in `secret.h` and the header of `solar-battery-charger.ino`.
+
 Compile the sketch
 
 From the directory of the sketch:
@@ -165,12 +175,12 @@ Typical Output
 
 ```shell
 Executable segment sizes:
-ICACHE : 32768           - flash instruction cache 
-IROM   : 236116          - code in flash         (default or ICACHE_FLASH_ATTR) 
-IRAM   : 27273   / 32768 - code in IRAM          (IRAM_ATTR, ISRs...) 
-DATA   : 1496  )         - initialized variables (global, static) in RAM/HEAP 
-RODATA : 908   ) / 81920 - constants             (global, static) in RAM/HEAP 
-BSS    : 25680 )         - zeroed variables      (global, static) in RAM/HEAP 
+ICACHE : 32768           - flash instruction cache
+IROM   : 236116          - code in flash         (default or ICACHE_FLASH_ATTR)
+IRAM   : 27273   / 32768 - code in IRAM          (IRAM_ATTR, ISRs...)
+DATA   : 1496  )         - initialized variables (global, static) in RAM/HEAP
+RODATA : 908   ) / 81920 - constants             (global, static) in RAM/HEAP
+BSS    : 25680 )         - zeroed variables      (global, static) in RAM/HEAP
 Sketch uses 265793 bytes (25%) of program storage space. Maximum is 1044464 bytes.
 Global variables use 28084 bytes (34%) of dynamic memory, leaving 53836 bytes for local variables. Maximum is 81920 bytes.
 ```
@@ -214,21 +224,23 @@ Make sure your baud rate matches the baud rate inside of your sketches!
 screen /dev/ttyUSB0 115200
 ```
 
-Kill the monitoring screen by pressing Ctrl+a k y
-
-### :books:&nbsp; Libraries
-
-Install the [ThingSpeak library](https://www.arduinolibraries.info/libraries/thing-speak)
+Typical Output
 
 ```shell
-arduino-cli lib install ThingSpeak
+Connecting to SSID: MySSID
+.connected
+IP Address: 192.168.1.77
+Hostname: Feather
+Battery level: 644
+Battery percentage: 55%
+Battery voltage: 3.49V
+Channel number: 1642208
+Channel update successful
+Going to sleep for 15 minutes
+...
 ```
 
-Install the [Ticker library](https://www.arduinolibraries.info/libraries/ticker)
-
-```shell
-arduino-cli lib install Ticker
-```
+Kill the monitoring screen by pressing <kbd>Ctrl</kbd> + <kbd>a</kbd> <kbd>k</kbd> <kbd>y</kbd>
 
 ### :key:&nbsp; Secrets
 
@@ -272,6 +284,35 @@ The documentation doesn't show what a typical sketch.json looks like so here is 
     "port": "serial:///dev/ttyUSB0"
   }
 }
+```
+
+## Task
+
+[go-task](https://github.com/go-task/task) may be used to automate some of the commands.
+
+Update the parameters in `task.env`.
+
+> Note: Variables are duplicated both in `task.env` and `sketch.json` because I couldn't get
+  go-task to not have errors when trying to parse `sketch.json` when it didn't exist.
+
+Bootstrap the entire environment (not including the installation of `arduino-cli`).
+
+> WARNING! this will overwrite your entire `arduino-cli` config file!
+
+```shell
+task bootstrap
+```
+
+Compile, upload, and monitor the sketch.
+
+```shell
+task compile-upload
+```
+
+Get a list of all of the commands.
+
+```shell
+task
 ```
 
 ## :test_tube:&nbsp; Tests
