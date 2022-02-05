@@ -43,7 +43,7 @@ problem with recharging Ni-MH batteries is that they're difficult to monitor and
 I decided to create a lithium ion solar charger that then can be used to charge Ni-MH batteries via existing USB
 chargers.
 
-<img src="./images/1.jpg" width="480">
+<img src="./test/cell/images/1.jpg" width="480">
 
 ## :bulb:&nbsp; Concept
 
