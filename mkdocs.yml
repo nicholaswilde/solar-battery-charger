@@ -14,6 +14,9 @@ edit_uri: ""
 # Page tree
 nav:
   - Home: index.md
+  - About: about.md
+  - Design: design.md
+  - Configuration: configuration.md
 
 extra:
   social:
