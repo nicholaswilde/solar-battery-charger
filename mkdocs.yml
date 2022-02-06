@@ -5,7 +5,7 @@ site_author: Nicholas Wilde
 site_url: https://nicholaswilde.io/solar-battery-charger
 copyright: Copyright &copy; 2022 Nicholas Wilde
 dev_addr: '0.0.0.0:8000'
- 
+
 # Repository
 repo_name: nicholaswilde/solar-battery-charger
 repo_url: https://github.com/nicholaswilde/solar-battery-charger
@@ -22,6 +22,7 @@ nav:
     - battery: test/battery.md
     - blink: test/blink.md
     - cell: test/cell.md
+    - panel: test/panel.md
   - To Do: todo.md
   - Troubleshooting: troubleshooting.md
   - References: references.md
@@ -48,7 +49,6 @@ theme:
   language: en
   features:
     - navigation.top
-    - navigation.expand
   palette:
     - scheme: default
       primary: indigo
