@@ -23,6 +23,7 @@ nav:
     - blink: test/blink.md
     - cell: test/cell.md
     - comparedates: test/comparedates.md
+    - createdat: test/createdat.md
     - panel: test/panel.md
   - To Do: todo.md
   - Troubleshooting: troubleshooting.md
