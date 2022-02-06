@@ -27,6 +27,7 @@ nav:
     - date: test/date.md
     - eeprom: test/eeprom.md
     - panel: test/panel.md
+    - sleep: test/sleep.md
   - To Do: todo.md
   - Troubleshooting: troubleshooting.md
   - References: references.md
