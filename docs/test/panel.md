@@ -2,8 +2,13 @@
 
 Measure the voltage and current of a solar panel made of multiple solar cells.
 
-![](../assets/images/charger.jpg){width="480"}
-![](../assets/images/panel-back.jpg){width="480"}
+<figure markdown>
+  ![](../assets/images/charger.jpg){width="480"}
+</figure>
+
+<figure markdown>
+  ![](../assets/images/panel-back.jpg){width="480"}
+</figure>
 
 ## Hypothesis
 
