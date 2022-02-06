@@ -35,10 +35,13 @@ Measure the actual resistance of the resistor.
 
 Measure the voltage across the resistor when the cell is in direct sun light.
 
-| Measurement | Value  |
-| :---------- | ----:  |
-| Resistance  | 20Ω    |
-| Voltage     | 2.212V |
+$$
+Resistance=20Ω
+$$
+
+$$
+Voltage=2.212V
+$$
 
 ## Analysis
 
@@ -52,30 +55,31 @@ $$
 
 Using our measure values.
 
-```
-I=2.212V/20Ω
-I=0.111A
-```
+$$
+I=\frac{2.212V}{20Ω}
+$$
+
+$$
+\boxed{I=0.111A}
+$$
 
 ### Power
 
 The [power](https://en.wikipedia.org/wiki/Power_%28physics%29) through the resistor can be calculated using the following formula.
 
 $$
-P=\frac{I}{V}
+P=IV
 $$
 
 Using our measure values.
 
-```
-P=0.111A*2.212V
-P=0.25W
-```
+$$
+P=0.111A\times2.212V
+$$
 
-| Calculation | Value  |
-| :---------- | ----:  |
-| Current     | 0.111A |
-| Power       | 0.25W  |
+$$
+\boxed{P=0.25W}
+$$
 
 ### Efficiency
 
@@ -95,10 +99,6 @@ $$
 $$
 \boxed{solar\;radiation\;intensity=77\frac{W}{m^2}}
 $$
-
-| Calculation               | Value  |
-| :------------------------ | -----: |
-| Solar Radiation Intensity | 77W/m2 |
 
 $$
 efficiency=\frac{77\frac{W}{m^2}}{1000\frac{W}{m^2}}
