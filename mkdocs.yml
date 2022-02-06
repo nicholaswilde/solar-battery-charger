@@ -29,6 +29,7 @@ nav:
     - panel: test/panel.md
     - sleep: test/sleep.md
     - sunset: test/sunset.md
+    - thingspeak: test/thingspeak.md
   - To Do: todo.md
   - Troubleshooting: troubleshooting.md
   - References: references.md
