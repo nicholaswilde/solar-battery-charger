@@ -125,41 +125,59 @@ WIP
 
 As stated above, the solare cells were salvaged from outdoor solar LED lights.
 
-![](../assets/images/cell-1.jpg){ width="480" }
+<figure markdown>
+  ![](../assets/images/cell-1.jpg){ width="480" }
+</figure>
 
 Remove the top of the light from the glass housing.
 
-![](../assets/images/cell-2.jpg){ width="480" }
+<figure markdown>
+  ![](../assets/images/cell-2.jpg){ width="480" }
+</figure>
 
 Remove the lid by unscrewing the philips screws.
 
-![](../assets/images/cell-3.jpg){ width="480" }
+<figure markdown>
+  ![](../assets/images/cell-3.jpg){ width="480" }
+</figure>
 
 Snip the wires to the solar cell.
 
-![](../assets/images/cell-4.jpg){ width="480" }
+<figure markdown>
+  ![](../assets/images/cell-4.jpg){ width="480" }
+</figure>
 
 Remove the caulking with a flathead screwdriver.
 
-![](../assets/images/cell-5.jpg){ width="480" }
+<figure markdown>
+  ![](../assets/images/cell-5.jpg){ width="480" }
+</figure>
 
 The top of the light with the solar cell.
 
-![](../assets/images/cell-6.jpg){ width="480" }
+<figure markdown>
+  ![](../assets/images/cell-6.jpg){ width="480" }
+</figure>
 
 Use a flathead screwdriver to pry underneath the cell to dislodge the adhesive.
 It's easiest if the top is rotated while holding the screwdriver.
 
-![](../assets/images/cell-7.jpg){ width="480" }
+<figure markdown>
+  ![](../assets/images/cell-7.jpg){ width="480" }
+</figure>
 
 The solar cell removed from the top.
 
-![](../assets/images/cell-8.jpg){ width="480" }
+<figure markdown>
+  ![](../assets/images/cell-8.jpg){ width="480" }
+</figure>
 
 Use a razor blade to remove the rest of the adhesive and caulking.
 A wire brush and a little water can also be used to remove the rest of the caulking.
 
-![](../assets/images/cell-9.jpg){ width="480" }
+<figure markdown>
+  ![](../assets/images/cell-9.jpg){ width="480" }
+</figure>
 
 ## References
 
