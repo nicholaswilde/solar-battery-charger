@@ -30,6 +30,11 @@
 
 ## :electric_plug: Circuit
 
+- Connect the `RST` pin to pin `16` to allow the [Feather to wake from deep sleep](https://learnarduinonow.com/2018/07/05/esp8266-deep-sleep-mode.html).
+- Create a voltage divider and connect the `A0` analog pin to the connection point.
+- Connect a DPDT switch which allows power from the solar panel and no power to the output and vice versa.
+- Insert a schottky diode between the solar panel and the `TP4056` input.
+
 ![](./assets/images/circuit.png)
 
 Circuit made with [Circuit Diagram](https://www.circuit-diagram.org/)

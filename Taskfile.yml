@@ -17,13 +17,6 @@ tasks:
     deps:
       - task: _varcheck
 
-  core-install:
-    desc: Install core
-    cmds:
-      - arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
-      - arduino-cli core update-index
-      - arduino-cli core install {{ .CORES }}
-
   bootstrap:
     desc: Bootstrap the entire environment. ⚠️ WARNING! This overwrites the exiting arduino-cli config file!
     cmds:
@@ -31,13 +24,6 @@ tasks:
       - task: core-install
       - task: lib-install
       - task: attach
-
-  _varcheck:
-    cmds:
-      - test ! -z "{{.BOARD}}" || (echo "Please define BOARD parameter"; exit 1)
-      - test ! -z "{{.PORT}}" || (echo "Please define PORT parameter"; exit 1)
-      - test ! -z "{{.PROTOCOL}}" || (echo "Please define PROTOCOL parameter"; exit 1)
-    silent: true
 
   compile:
     desc: Compile the main sketch
@@ -56,15 +42,23 @@ tasks:
     cmds:
       - screen {{ .PORT }} $BAUD_RATE
 
+  core-install:
+    desc: Install core
+    cmds:
+      - arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
+      - arduino-cli core update-index
+      - arduino-cli core install {{ .CORES }}
+
   lib-install:
     desc: Install arduino-cli libraries
     cmds:
       - 'arduino-cli lib install {{ .LIBS }}'
 
-  upload:
-    desc: Upload the main sketch
+  serve:
+    desc: Run the builtin mkdocs development server.
     cmds:
-      - arduino-cli upload .
+      - mkdocs serve
+    silient: true
 
   test-create:
     desc: Create a test from the template folder.
@@ -84,6 +78,11 @@ tasks:
       - test ! -f "{{ .GIT_ROOT }}/sketch.json" || cp "{{ .GIT_ROOT }}/sketch.json" "{{ .GIT_ROOT }}/test/{{ .NAME }}/sketch.json"
     silent: true
 
+  upload:
+    desc: Upload the main sketch
+    cmds:
+      - arduino-cli upload .
+
   vars:
     desc: Print all the variables
     cmds:
@@ -92,12 +91,18 @@ tasks:
       - 'printf "{{ .COLOR }}* BOARD\e[m              %s\n" "{{ .BOARD }}"'
       - 'printf "{{ .COLOR }}* PORT\e[m               %s\n" "{{ .PORT }}"'
       - 'printf "{{ .COLOR }}* PROTOCOL\e[m           %s\n" "{{ .PROTOCOL }}"'
-
     vars:
       # Blue
       COLOR: '\e[1;34m'
       PORT:
         sh: cat {{ .GIT_ROOT }}/sketch.json | jq -r '.cpu.port' | sed s/"serial:\/\/"//
+    silent: true
+
+  _varcheck:
+    cmds:
+      - test ! -z "{{.BOARD}}" || (echo "Please define BOARD parameter"; exit 1)
+      - test ! -z "{{.PORT}}" || (echo "Please define PORT parameter"; exit 1)
+      - test ! -z "{{.PROTOCOL}}" || (echo "Please define PROTOCOL parameter"; exit 1)
     silent: true
 
   default:

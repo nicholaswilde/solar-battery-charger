@@ -24,7 +24,7 @@ WIP
 
 Same circuit as [battery](../battery).
 
-![](../battery/images/circuit.png)
+![](../assets/images/circuit-blink.png)
 
 Circuit made with [Circuit Diagram](https://www.circuit-diagram.org/)
 
