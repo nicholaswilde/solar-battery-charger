@@ -2,6 +2,10 @@
 
 Compares the createdAt date from Thingspeak and the current date at UTC.
 
+## Sketch
+
+The sketch can be found [here](https://github.com/nicholaswilde/solar-battery-charger/tree/main/test/comparedates).
+
 ## Hypothesis
 
 WIP
