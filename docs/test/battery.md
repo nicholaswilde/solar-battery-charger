@@ -2,6 +2,10 @@
 
 Reads value on analog input A0 and calculates the the percent level of a lipo battery.
 
+## Sketch
+
+Sketch can be found [here](https://github.com/nicholaswilde/solar-battery-charger/tree/main/test/battery).
+
 ## Hypothesis
 
 The Adafruit Feather Huzzah can be used to monitor the level of a lipo battery.
