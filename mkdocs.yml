@@ -28,6 +28,7 @@ nav:
     - eeprom: test/eeprom.md
     - panel: test/panel.md
     - sleep: test/sleep.md
+    - sunset: test/sunset.md
   - To Do: todo.md
   - Troubleshooting: troubleshooting.md
   - References: references.md
