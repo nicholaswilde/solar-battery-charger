@@ -25,6 +25,7 @@ nav:
     - comparedates: test/comparedates.md
     - createdat: test/createdat.md
     - date: test/date.md
+    - eeprom: test/eeprom.md
     - panel: test/panel.md
   - To Do: todo.md
   - Troubleshooting: troubleshooting.md
