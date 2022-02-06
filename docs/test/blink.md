@@ -2,6 +2,10 @@
 
 Blink the built in LED without a delay.
 
+## Sketch
+
+The sketch can be found [here](https://github.com/nicholaswilde/solar-battery-charger/tree/main/test/blink).
+
 ## Hypothesis
 
 WIP
