@@ -2,14 +2,6 @@
 
 A quick wifi test that pings a website.
 
-## Hypothesis
+## Documentation
 
-The Adafruit Feather Huzzah can be used to ping a website.
-
-## Assumptions
-
-## Procedure
-
-## Analysis
-
-## Conclusion
+Documentation can be found [here](https://nicholaswilde.io/solar-battery-charger/test/wifi/).

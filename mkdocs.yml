@@ -30,6 +30,7 @@ nav:
     - sleep: test/sleep.md
     - sunset: test/sunset.md
     - thingspeak: test/thingspeak.md
+    - wifi: test/wifi.md
   - To Do: todo.md
   - Troubleshooting: troubleshooting.md
   - References: references.md
