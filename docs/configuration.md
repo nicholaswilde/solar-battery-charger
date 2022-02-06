@@ -4,18 +4,13 @@ Because I work mainly out of a Chromebook and Rasperry Pis, this project is usin
 [with Linux](https://support.google.com/chromebook/answer/9145439?hl=en) rather than the
 [Arduino IDE](https://www.arduino.cc/en/software).
 
-Initialize the config
-
-```shell
+```shell title="Initialize the config"
 arduino-cli config init
 ```
 
-Add the [esp8266 package library](https://github.com/esp8266/Arduino)
-
-```shell
+```shell title="Add the esp8266 package library"
 arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
 ```
-
 
 ```shell title="Check that the update addition was successful."
 cat ~/.arduino15/arduino-cli.yaml
@@ -170,7 +165,7 @@ The documentation doesn't show what a typical `sketch.json` looks like so here i
 }
 ```
 
-## ThingSpeak
+## :speech_balloon: ThingSpeak
 
 The results are exported to a [ThingSpeak](https://thingspeak.com/) public channel which can be seen [here](https://thingspeak.com/channels/1642208).
 
@@ -180,7 +175,7 @@ The `Channel ID` (`SECRET_CH_ID`) can be found on at the top of the channel page
 
 <img src="../assets/images/thingspeak.png" width="480">
 
-### Notification from IFTTT
+### :robot: Notification from IFTTT
 
 Notifications from [IFTTT](https://ifttt.com/) can be setup by connecting ThingSpeak to IFTTT. See [these instructions](https://www.mathworks.com/help/thingspeak/use-ifttt-to-send-text-message-notification.html).
 

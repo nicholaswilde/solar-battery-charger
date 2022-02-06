@@ -1,0 +1,24 @@
+# :link:&nbsp; References
+- https://www.seeedstudio.com/blog/2019/10/09/voltage-dividers-everything-you-need-to-know/
+- https://cdn-learn.adafruit.com/downloads/pdf/adafruit-feather-huzzah-esp8266.pdf
+- http://web.mit.edu/evt/summary_battery_specifications.pdf
+- https://dronebotworkshop.com/dc-volt-current/#Voltage_References
+- https://learn.adafruit.com/using-ifttt-with-adafruit-io/arduino-code-2
+- https://learn.adafruit.com/using-ifttt-with-adafruit-io/wiring#battery-tracking
+- https://siytek.com/arduino-cli-raspberry-pi/
+- https://www.best-microcontroller-projects.com/tp4056-page2.html
+- https://en.wikipedia.org/wiki/Nickel%E2%80%93metal_hydride_battery
+- https://arduino.github.io/arduino-cli/
+- https://www.electronicshub.org/solar-battery-charger-for-18650/
+- https://create.arduino.cc/projecthub/B45i/getting-started-with-arduino-cli-7652a5
+- https://github.com/webdevops/go-replace
+- https://arduino-esp8266.readthedocs.io/en/latest/index.html
+- https://roboticsbackend.com/arduino-store-array-into-eeprom/
+- https://www.arduino.cc/en/Tutorial/BuiltInExamples/Debounce
+- https://www.arduino.cc/en/Tutorial/BuiltInExamples/StateChangeDetection
+- https://github.com/esp8266/Arduino/tree/master/libraries/EEPROM
+- https://support.microsoft.com/en-us/office/slope-function-11fb8f97-3117-4813-98aa-61d7e01276b9
+- https://github.com/arduino-libraries/NTPClient/blob/master/examples/Basic/Basic.ino
+- https://www.mathworks.com/help/thingspeak/use-ifttt-to-send-text-message-notification.html?searchHighlight=ifttt&s_tid=srchtitle_ifttt_1
+- https://www.mathworks.com/help/thingspeak/read-data-for-regression-analysis.html
+- https://electronics.stackexchange.com/questions/307586/need-help-calibrating-adc-input-using-a-voltage-divider

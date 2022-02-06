@@ -17,6 +17,14 @@ nav:
   - About: about.md
   - Design: design.md
   - Configuration: configuration.md
+  - Test:
+    - adjusttime: test/adjusttime.md
+    - battery: test/battery.md
+    - blink: test/blink.md
+    - cell: test/cell.md
+  - To Do: todo.md
+  - Troubleshooting: troubleshooting.md
+  - References: references.md
 
 extra:
   social:
@@ -40,6 +48,7 @@ theme:
   language: en
   features:
     - navigation.top
+    - navigation.expand
   palette:
     - scheme: default
       primary: indigo
@@ -98,3 +107,8 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.tilde
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
