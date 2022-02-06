@@ -33,3 +33,7 @@
 ![](./assets/images/circuit.png)
 
 Circuit made with [Circuit Diagram](https://www.circuit-diagram.org/)
+
+!!! note
+    The li-ion batteries are wired in parallel even though the 2 battery holder
+    come wired in parallel.
