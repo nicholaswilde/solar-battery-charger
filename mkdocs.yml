@@ -22,6 +22,7 @@ nav:
     - battery: test/battery.md
     - blink: test/blink.md
     - cell: test/cell.md
+    - comparedates: test/comparedates.md
     - panel: test/panel.md
   - To Do: todo.md
   - Troubleshooting: troubleshooting.md

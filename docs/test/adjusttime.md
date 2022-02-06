@@ -20,7 +20,7 @@ WIP
 
 ### Circuit
 
-![](../assets/images/circuit-adjusttime.png)
+![](../assets/images/circuit-blink.png)
 
 Circuit made with [Circuit Diagram](https://www.circuit-diagram.org/)
 
