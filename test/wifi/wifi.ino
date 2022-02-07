@@ -2,13 +2,13 @@
   Program:      wifi
 
   Description:  A quick wifi test that pings a website.
-  
+
   Hardware:     Adafruit Feather Huzzah and wifi AP
-                
+
   Software:     Developed using arduino-cli 0.20.2.
 
   Date:         24JAN2022
- 
+
   Author:       Nicholas Wilde 0x08b7d7a3
 --------------------------------------------------------------*/
 
@@ -18,6 +18,9 @@
 // values are specified in secrets.h
 // const char* ssid     = "yourssid";
 // const char* password = "yourpassword";
+
+const char ssid[] = SECRET_SSID; // your network SSID (name)
+const char pass[] = SECRET_PASS; // your network password
 
 const char* host = "wifitest.adafruit.com";
 
@@ -33,9 +36,9 @@ void setup() {
   Serial.println();
   Serial.print("Connecting to ");
   Serial.println(ssid);
-  
-  WiFi.begin(ssid, password);
-  
+
+  WiFi.begin(ssid, pass);
+
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
@@ -53,7 +56,7 @@ void loop() {
 
   Serial.print("connecting to ");
   Serial.println(host);
-  
+
   // Use WiFiClient class to create TCP connections
   WiFiClient client;
   const int httpPort = 80;
@@ -61,7 +64,7 @@ void loop() {
     Serial.println("connection failed");
     return;
   }
-  
+
   // We now create a URI for the request
   String url = "/testwifi/index.html";
   Serial.print("Requesting URL: ");
