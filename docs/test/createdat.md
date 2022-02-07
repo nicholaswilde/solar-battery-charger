@@ -30,17 +30,25 @@ WIP
 
 ### Output
 
-WIP
+```shell title="Typical Output"
+test: createdat
+Connecting to SSID: MySSID
+...connected
+IP Address: 192.168.1.77
+Hostname: Feather
+2022-02-07
+2022-02-07 is newer than 2002-02-02
+2022-02-07
+2022-02-07 is newer than 2002-02-02
+2022-02-07
+2022-02-07 is newer than 2002-02-02
+```
 
 ## Analysis
 
 WIP
 
 ## Conclusion
-
-WIP
-
-## Troubleshooting
 
 WIP
 

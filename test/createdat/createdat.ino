@@ -48,11 +48,12 @@ void loop() {
   int splitted = val.indexOf("T");
   String datestr = val.substring(0, splitted);
   Serial.println(datestr);
-  if (strcmp("2022-02-01", "2022-02-02") < 0) {
-		Serial.println(val + " is older than d2");
+  char* d2 = "2002-02-02";
+  if (strcmp(datestr.c_str(), d2) < 0) {
+		Serial.println(datestr + " is older than " + d2);
 	}
 	else {
-		Serial.println("d1 is newer than d2");
+		Serial.println(datestr + " is newer than " + d2);
 	}
   delay(DELAY_LOOP);
 }
