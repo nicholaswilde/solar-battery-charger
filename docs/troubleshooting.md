@@ -39,4 +39,31 @@ arduino-cli lib install --zip-path v1.9.1.zip
 Error during build: Missing FQBN (Fully Qualified Board Name)
 ```
 
-Fix: Add the board (`-b`) parameter to compile or upload or add a [`sketch.json`](https://nicholaswilde.io/solar-battery-charger/configuration/#metadata).
+Fix: Add the board (`-b`) parameter to compile or upload or add a [`sketch.json`](../configuration/#metadata).
+
+### fatal error: secrets.h: No such file or directory
+
+```shell
+solar-battery-charger/solar-battery-charger.ino:20:10: fatal error: secrets.h: No such file or directory
+   20 | #include "secrets.h"
+      |          ^~~~~~~~~~~
+compilation terminated.
+
+Error during build: exit status 1
+```
+
+Fix: The `secrets.h` file needs to be generated. See [secrets](../configuration#secrets) to how to generate it.
+
+### Won't connect to Wi-Fi
+
+There currently is not a timeout for the wifi connection and so the Feather will continue to try to connect in
+and endless loop.
+
+Internal LED continues to blink in intervals.
+
+```shell
+Connecting to SSID: MySSID
+..............................
+```
+
+Fix: Ensure that the wifi credentials are correct. See [secrets](../configuration#secrets).
