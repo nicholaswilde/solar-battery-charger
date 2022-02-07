@@ -17,6 +17,30 @@
 - 1X [JST-PH 2.0 Male and Female Connector Cable](https://www.amazon.com/gp/product/B07NWD5NTN)
 - 1X [DPDT 2 Position 6 Terminals Panel Mount Horizontal Slide Switch](https://www.amazon.com/gp/product/B01N6ROMW3)
 
+### :zap: Electronics
+
+<figure Markdown>
+  ![](./assets/images/front.jpg){width=480}
+</figure>
+
+<figure Markdown>
+  ![](./assets/images/back-v4.jpg){width=480}
+</figure>
+
+<figure Markdown>
+  ![](./assets/images/top-v4.jpg){width=480}
+</figure>
+
+### :sunny: Panel
+
+<figure Markdown>
+  ![](./assets/images/charger.jpg){width=480}
+</figure>
+
+<figure Markdown>
+  ![](./assets/images/panel-back.jpg){width=480}
+</figure>
+
 ## :robot: Services
 - [IFTTT](https://ifttt.com/)
 - [ThingSpeak](https://thingspeak.com/)
@@ -37,7 +61,9 @@
 
 ![](./assets/images/circuit.png)
 
-Circuit made with [Circuit Diagram](https://www.circuit-diagram.org/)
+![](./assets/images/circuit-panel.png)
+
+Circuits made with [Circuit Diagram](https://www.circuit-diagram.org/)
 
 !!! note
     The li-ion batteries are wired in parallel even though the 2 battery holder
