@@ -30,17 +30,27 @@ WIP
 
 ### Output
 
-WIP
+```shell title="Typical Output"
+test: date
+Connecting to SSID: MySSID
+...connected
+IP Address: 192.168.1.77
+Hostname: ESP-2DCE0D
+Starting UDP
+Local port: 8888
+Waiting for sync
+Transmitting NTP Request
+us.pool.ntp.org: 64.79.100.197
+Receiving NTP Response
+date: 2022-02-07T03:50:59Z
+Going to sleep for 1 minutes
+```
 
 ## Analysis
 
 WIP
 
 ## Conclusion
-
-WIP
-
-## Troubleshooting
 
 WIP
 
