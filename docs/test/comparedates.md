@@ -30,17 +30,29 @@ WIP
 
 ### Output
 
-WIP
+```shell title="Typical Output"
+test: comparedates
+Connecting to SSID: MySSID
+.connected
+IP Address: 192.168.1.77
+Hostname: Feather
+Starting UDP
+Local port: 8888
+Waiting for sync
+Transmitting NTP Request
+us.pool.ntp.org: 44.190.6.254
+Receiving NTP Response
+CurrentDate: 2022-02-07
+CreatedAt: 2022-02-07
+2022-02-07 is the same day as 2022-02-07
+going to sleep
+```
 
 ## Analysis
 
 WIP
 
 ## Conclusion
-
-WIP
-
-## Troubleshooting
 
 WIP
 
