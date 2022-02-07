@@ -11,6 +11,7 @@
 - [ ] Create I-V curve for cell.
 - [ ] Adafruit [bq24074](https://www.adafruit.com/product/4755)
 - [ ] Adafruit [PowerBoost 1000 Charger](https://www.adafruit.com/product/2465)
+- [ ] Adafruit [ESP32-S2 Feather with BME280 Sensor](https://www.adafruit.com/product/5303)
 
 ## :hammer_and_wrench: Tools
 - [ ] Implement `pre-commit`.
