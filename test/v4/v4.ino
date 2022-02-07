@@ -1,8 +1,8 @@
 /*--------------------------------------------------------------
-  Program:      v4
+  Program:      solar-battery-charger
 
   Description:  Reads value on analog input A0 and calculates
-                the the percent level of a lipo battery and
+                the the percent level of a li-ion battery and
                 upload the value to ThingSpeak.
 
   Hardware:     Adafruit Feather Huzzah with 3.7V lipo battery
@@ -10,7 +10,7 @@
 
   Software:     Developed using arduino-cli 0.20.2.
 
-  Date:         27JAN2022
+  Date:         01FEB2022
 
   Author:       Nicholas Wilde 0x08b7d7a3
 --------------------------------------------------------------*/
@@ -20,46 +20,46 @@
 #include "secrets.h"
 #include "ThingSpeak.h"         // always include thingspeak header file after other header files and custom macros
 
-#define NUM_SAMPLES 10          // number of analog samples to take per reading
-#define BAUD_RATE 115200        // baud rate used for Serial console
+// Change these parameters
 #define ANALOG_PIN_NO A0        // analog pin number
-#define R1 1000000              // resistor 1 on the voltage divider
-#define R2 220000               // resistor 2 on the voltage divider
-#define VOLTAGE_MAX 4.2         // max voltage of lipo battery
-#define VOLTAGE_MIN 3.14        // min voltage of lipo battery
-#define DELAY_SAMPLE 10         // delay between samples
-#define DELAY_WIFI 5            // delay between samples (s)
-#define SLEEP_TIME 15           // sleep time (m)
+#define BAUD_RATE 115200        // baud rate used for Serial console
+#define R1 1000000              // resistor 1 on the voltage divider (Ω)
+#define R2 220000               // resistor 2 on the voltage divider (Ω)
 #define FIELD_NO_PERCENTAGE 1   // field number of battery percentage
-#define FIELD_NO_LEVEL 2        // field number of battery percentage
+#define FIELD_NO_LEVEL 2        // field number of battery level
+#define FIELD_NO_VOLTAGE 3      // field number of battery voltage
+#define SLEEP_TIME 15           // the time the Feather goes into a deep sleep (m)
+#define VOLTAGE_MAX 4.2         // max voltage of lipo battery (V)
+#define VOLTAGE_MIN 2.64        // min voltage of lipo battery (V)
+
+// Don't have to change these
+#define DELAY_SAMPLE 10         // delay between samples (ms)
+#define DELAY_WIFI 5            // delay between samples (s)
+#define NUM_SAMPLES 10          // number of analog samples to take per reading
 #define INTERVAL_BLINK 100      // blink interval (ms)
 
-WiFiClient  client;
+WiFiClient client;
 Ticker blinker;
 
-char ssid[] = SECRET_SSID;      // your network SSID (name)
-char pass[] = SECRET_PASS;      // your network password
-
+// Pulled from secrets.h
+const char ssid[] = SECRET_SSID; // your network SSID (name)
+const char pass[] = SECRET_PASS; // your network password
 unsigned long myChannelNumber = SECRET_CH_ID;
 const char * myWriteAPIKey = SECRET_WRITE_APIKEY;
 const char * myHostName = SECRET_HOSTNAME;
 
-unsigned long previousMillis = 0;    // will store last time LED was updated
-const long interval = 100;           // interval at which to blink (milliseconds)
+const int ledPin = LED_BUILTIN;
 
-int sum = 0;                    // sum of samples taken
-unsigned char sample_count = 0; // current sample number
-int level = 0;                  // calculated battery level
-int percentage = 0;             // calculated battery level
 int battery_min = 0;            // min battery level
 int battery_max = 0;            // max battery level
-float resistor_ratio = 0;       // resistor ratio
 
 void setup() {
   Serial.begin(BAUD_RATE);
+  while(!Serial);
+  Serial.println();
 
   // calculate the voltage divider ratio
-  resistor_ratio=(float)R2/((float)R1+(float)R2);
+  float resistor_ratio=(float)R2/((float)R1+(float)R2);
 
   // calculate the min battery number using the resistor ratio
   battery_min=(float)resistor_ratio*(float)VOLTAGE_MIN*1024;
@@ -69,59 +69,48 @@ void setup() {
   battery_max=(float)resistor_ratio*(float)VOLTAGE_MAX*1024;
   // battery_max=774;
 
-  pinMode(LED_BUILTIN, OUTPUT);
-
-  WiFi.mode(WIFI_STA);
-
-  WiFi.hostname(myHostName);
-
   ThingSpeak.begin(client);
-
-  blinker.attach_ms(INTERVAL_BLINK, changeState);
-
-  Serial.println();
+  pinMode(ledPin, OUTPUT);
+  conntectToWifi();
 }
 
 void loop() {
-  conntectToWifi();
 
-  digitalWrite(LED_BUILTIN, LOW);
+  int level = getBatteryLevel();
 
-  sum = getSum();
+  int percentage = getBatteryPercentage(level);
 
-  level = getBatteryLevel(sum);
+  float voltage = getBatteryVoltage(level);
 
-  percentage = getBatteryPercentage(level);
-
-  writeToThingSpeak(percentage, level);
-
-  digitalWrite(LED_BUILTIN, HIGH);
+  writeToThingSpeak(percentage, level, voltage);
 
   goToSleep();
 }
 
 void conntectToWifi(){
-   // Connect or reconnect to WiFi
-  if(WiFi.status() != WL_CONNECTED){
-    Serial.print("Connecting to SSID: ");
-    Serial.println(SECRET_SSID);
-    while(WiFi.status() != WL_CONNECTED){
-      WiFi.begin(ssid, pass);  // Connect to WPA/WPA2 network. Change this line if using open or WEP network
-      Serial.print(".");
-      //digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
-      delay(DELAY_WIFI*1e3);
-    }
-    blinker.detach();
-    Serial.println("connected");
-    Serial.print("IP Address: ");
-    Serial.println(WiFi.localIP());
-    Serial.print("Hostname: ");
-    Serial.println(WiFi.hostname());
+  // Connect or reconnect to WiFi
+  WiFi.mode(WIFI_STA);
+  WiFi.hostname(myHostName);
+  Serial.print("Connecting to SSID: ");
+  Serial.println(SECRET_SSID);
+  blinker.attach_ms(INTERVAL_BLINK, changeState);
+  while(WiFi.status() != WL_CONNECTED){
+    WiFi.begin(ssid, pass);
+    Serial.print(".");
+    delay(DELAY_WIFI*1e3);
   }
+  blinker.detach();
+  Serial.println("connected");
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.localIP());
+  Serial.print("Hostname: ");
+  Serial.println(WiFi.hostname());
 }
 
 int getSum(){
   // take a number of analog samples and add them up
+  int sum;
+  unsigned char sample_count;
   while (sample_count < NUM_SAMPLES) {
     sum += analogRead(ANALOG_PIN_NO);
     sample_count++;
@@ -130,9 +119,10 @@ int getSum(){
   return sum;
 }
 
-int getBatteryLevel(int sum){
+int getBatteryLevel(){
   // calculate the average level
-  level = (float)sum / (float)NUM_SAMPLES;
+  int sum = getSum();
+  int level = (float)sum / (float)NUM_SAMPLES;
   Serial.print("Battery level: ");
   Serial.println(level);
   return level;
@@ -140,25 +130,33 @@ int getBatteryLevel(int sum){
 
 int getBatteryPercentage(int level){
   // convert battery level to percent
-  percentage = map(level, battery_min, battery_max, 0, 100);
+  int percentage = map(level, battery_min, battery_max, 0, 100);
   Serial.print("Battery percentage: ");
   Serial.print(percentage);
   Serial.println("%");
   return percentage;
 }
 
-void writeToThingSpeak(int percentage, int level){
+float getBatteryVoltage(int level){
+  // convert battery level to voltage
+  float voltage = (float)map(level, battery_min, battery_max, VOLTAGE_MIN*100, VOLTAGE_MAX*100)/100;
+  Serial.print("Battery voltage: ");
+  Serial.print(voltage);
+  Serial.println("V");
+  return voltage;
+}
+
+void writeToThingSpeak(int percentage, int level, float voltage){
   ThingSpeak.setField(FIELD_NO_PERCENTAGE, percentage);
   ThingSpeak.setField(FIELD_NO_LEVEL, level);
-  ThingSpeak.setStatus(String("Charging"));
+  ThingSpeak.setField(FIELD_NO_VOLTAGE, voltage);
 
   Serial.print("Channel number: ");
   Serial.println(myChannelNumber);
   int x = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
   if (x == 200){
     Serial.println("Channel update successful");
-  }
-  else {
+  } else {
     Serial.println("Problem updating channel. HTTP error code " + String(x));
   }
 }
@@ -170,15 +168,6 @@ void goToSleep(){
   ESP.deepSleep(SLEEP_TIME * 60 * 1e6);
 }
 
-void blink(){
-  unsigned long currentMillis = millis();
-
-  if (currentMillis - previousMillis >= interval) {
-    previousMillis = currentMillis;
-    digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
-  }
-}
-
 void changeState(){
-  digitalWrite(LED_BUILTIN, !(digitalRead(LED_BUILTIN)));
+  digitalWrite(ledPin, !(digitalRead(ledPin)));
 }
