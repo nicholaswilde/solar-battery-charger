@@ -11,6 +11,8 @@ A solar battery charger to charge lithium ion (li-ion) 18650, 9V, and coin batte
 
 <img src="./assets/images/back.jpg" width="480">
 
+<img src="./assets/images/thingspeak.png" width="480">
+
 ---
 
 ## :rocket:&nbsp; TL;DR;
