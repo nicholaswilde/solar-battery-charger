@@ -26,7 +26,15 @@ Circuit made with [Circuit Diagram](https://www.circuit-diagram.org/)
 
 ### Code
 
-WIP
+```shell title="Install the time library"
+arduino-cli lib install time
+```
+
+```shell title="Install the Timezone_Generic library"
+arduino-cli lib install Timezone_Generic
+```
+
+See [section below](#trouble-installing-timezone_generic-library) if having trouble installing [Timezone_Generic](https://www.arduino.cc/reference/en/libraries/timezone_generic/).
 
 ### Output
 
