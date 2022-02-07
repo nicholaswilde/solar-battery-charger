@@ -19,7 +19,7 @@ WIP
 
 ### Circuit
 
-!{}(../assets/images/circuit-battery.png)
+![](../assets/images/circuit-battery.png)
 
 ### Code
 
