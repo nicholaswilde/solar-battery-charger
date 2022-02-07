@@ -61,8 +61,6 @@
 
 ![](./assets/images/circuit.png)
 
-![](./assets/images/circuit-panel.png)
-
 Circuits made with [Circuit Diagram](https://www.circuit-diagram.org/)
 
 !!! note
