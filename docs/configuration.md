@@ -144,11 +144,37 @@ credentials that aren't updated in GitHub. The file is ignored in `.gitignore`.
 The nomenclature used in this project is different than what [arduino-cli](https://arduino.github.io/arduino-cli/0.20/sketch-specification/#secrets)
 specifies (`arduino_secrets.h`) because this project does not use an Arduino.
 
+### secrets task
+
 [Task](#task) may also be used to generate `secrets.h`.
 
 ```shell
 task secrets SSID=MySSID PASS=MyPassword CH_ID=0000000 WRITE_APIKEY=XYZ
 ```
+
+### Overwrite Sketch Header
+
+Instead of using the `secrets.h` file, the include may be commented out at the top of the sketch and the variable values may be manually written in.
+
+```C++ title="somesketch.ino"
+
+//#include "secrets.h"
+
+// Pulled from secrets.h
+//const char ssid[] = SECRET_SSID; // your network SSID (name)
+const char ssid[] = MySSID;
+//const char pass[] = SECRET_PASS; // your network password
+const char pass[] = MyPassword;
+//unsigned long myChannelNumber = SECRET_CH_ID;
+unsigned long myChannelNumber = 0000000;
+//const char * myWriteAPIKey = SECRET_WRITE_APIKEY;
+const char * myWriteAPIKey = "XYZ"
+//const char * myHostName = SECRET_HOSTNAME;
+const char * myHostName = "Feather";
+```
+
+!!!warning
+    This method is not recommended if the sketch is going to be uploaded to a repository!
 
 ## Metadata
 
@@ -184,17 +210,27 @@ The documentation doesn't show what a typical `sketch.json` looks like so here i
 
 The results are exported to a [ThingSpeak](https://thingspeak.com/) public channel which can be seen [here](https://thingspeak.com/channels/1642208).
 
-The `User API Key` (`SECRET_WRITE_APIKEY`) can be found under the [ThingSpeak profile page](https://thingspeak.com/account/profile).
+The channel `Write API Key` (`SECRET_WRITE_APIKEY`) can be found in the API Keys tab on the channel page.
 
 The `Channel ID` (`SECRET_CH_ID`) can be found on at the top of the channel page.
 
 <img src="../assets/images/thingspeak.png" width="480">
 
-### :robot: Notification from IFTTT
+### :satellite: Fields
+
+On the `Channel Settings` tab of the channel, create 3 fields for the battery percentage, level, and voltage.
+
+![](./assets/images/thingspeak-fields.png)
+
+### :chart_with_upwards_trend: Visualizations & Widgets
+
+Add whichever visualizations and widgets you'd like.
+
+### :pager: Notification from IFTTT
 
 Notifications from [IFTTT](https://ifttt.com/) can be setup by connecting ThingSpeak to IFTTT. See [these instructions](https://www.mathworks.com/help/thingspeak/use-ifttt-to-send-text-message-notification.html).
 
-## Task
+## :robot: Task
 
 [go-task](https://github.com/go-task/task) may be used to automate some of the commands.
 
