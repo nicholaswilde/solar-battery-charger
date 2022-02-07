@@ -7,6 +7,8 @@
 - [ ] Notifications for Amazon Alexa and mobile phone.
 - [ ] Determine the optimal number of 18650 li-ion batteries to charge.
 - [ ] Optimize solar panel.
+- [ ] Create I-V curve for panel.
+- [ ] Create I-V curve for cell.
 
 ## :hammer_and_wrench: Tools
 - [ ] Implement `pre-commit`.

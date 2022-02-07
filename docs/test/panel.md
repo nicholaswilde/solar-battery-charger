@@ -116,7 +116,13 @@ $$
 
 ## Conclusion
 
-WIP
+The overall efficiency seems really low. Perhaps some reasons are that the epoxy surfaces of
+the cell are dirty or that the circuit isn't optmized for low voltage.
+
+The design may be able to be changed for 2 rows of 10 cells (I have 5 extra cells) rather than 3 rows of 5 cells to
+increase the overall current but it'll decrease the working voltage.
+
+Plotting an I-V curve for the panel may be helpful in comparing the two designs.
 
 ## Troubleshooting
 
