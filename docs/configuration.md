@@ -127,6 +127,15 @@ Kill the monitoring screen by pressing <kbd>Ctrl</kbd> + <kbd>a</kbd> <kbd>k</kb
 `secrets.h` is a file used to store secrets such as API tokens and wifi
 credentials that aren't updated in GitHub. The file is ignored in `.gitignore`.
 
+```C++ title="secrets.h"
+#define SECRET_SSID "MySSID"                   // replace MySSID with your WiFi network name
+#define SECRET_PASS "MyPassword"               // replace MyPassword with your WiFi password
+
+#define SECRET_CH_ID 0000000                   // replace 0000000 with your channel number
+#define SECRET_WRITE_APIKEY "XYZ"              // replace XYZ with your channel write API Key
+
+#define SECRET_HOSTNAME "Feather"
+```
 
 ```C++ title="Secrets can be used in sketches"
 #include "secrets.h"
