@@ -144,6 +144,12 @@ credentials that aren't updated in GitHub. The file is ignored in `.gitignore`.
 The nomenclature used in this project is different than what [arduino-cli](https://arduino.github.io/arduino-cli/0.20/sketch-specification/#secrets)
 specifies (`arduino_secrets.h`) because this project does not use an Arduino.
 
+[Task](#task) may also be used to generate `secrets.h`.
+
+```shell
+task secrets SSID=MySSID PASS=MyPassword CH_ID=0000000 WRITE_APIKEY=XYZ
+```
+
 ## Metadata
 
 Instead of specifying `-b` and `-p` for every command, a [sketch.json](https://arduino.github.io/arduino-cli/0.20/sketch-specification/#metadata) may be stored in the sketch directory
