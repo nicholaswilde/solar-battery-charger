@@ -9,6 +9,8 @@
 - [ ] Optimize solar panel.
 - [ ] Create I-V curve for panel.
 - [ ] Create I-V curve for cell.
+- [ ] Adafruit [bq24074](https://www.adafruit.com/product/4755)
+- [ ] Adafruit [PowerBoost 1000 Charger](https://www.adafruit.com/product/2465)
 
 ## :hammer_and_wrench: Tools
 - [ ] Implement `pre-commit`.

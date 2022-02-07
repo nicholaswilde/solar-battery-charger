@@ -22,3 +22,4 @@
 - https://www.mathworks.com/help/thingspeak/use-ifttt-to-send-text-message-notification.html?searchHighlight=ifttt&s_tid=srchtitle_ifttt_1
 - https://www.mathworks.com/help/thingspeak/read-data-for-regression-analysis.html
 - https://electronics.stackexchange.com/questions/307586/need-help-calibrating-adc-input-using-a-voltage-divider
+- https://learn.adafruit.com/adafruit-bq24074-universal-usb-dc-solar-charger-breakout
