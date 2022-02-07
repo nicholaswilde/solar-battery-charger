@@ -23,3 +23,13 @@ Error during Upload: Failed uploading: uploading error: exit status 1
 
 Fix: The serial port is open and reading the output of the Feather. Close the connection
 
+### Trouble installing Timezone_Generic library
+
+Manually install by [changing config](https://arduino.github.io/arduino-cli/0.20/configuration/#configuration-keys) of `enable_unsafe_install` to true
+
+Download the [latest release](https://github.com/khoih-prog/Timezone_Generic/releases/latest) zip file.
+
+```shell
+arduino-cli lib install --zip-path v1.9.1.zip
+```
+
