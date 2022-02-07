@@ -1,6 +1,6 @@
 # adjusttime
 
-WIP
+Sketch to verify operation of Timezone library.
 
 ## Documentation
 
