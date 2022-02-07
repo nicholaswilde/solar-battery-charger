@@ -33,3 +33,10 @@ Download the [latest release](https://github.com/khoih-prog/Timezone_Generic/rel
 arduino-cli lib install --zip-path v1.9.1.zip
 ```
 
+### Error during build: Missing FQBN (Fully Qualified Board Name)
+
+```shell
+Error during build: Missing FQBN (Fully Qualified Board Name)
+```
+
+Fix: Add the board (`-b`) parameter to compile or upload or add a [`sketch.json`](https://nicholaswilde.io/solar-battery-charger/configuration/#metadata).
