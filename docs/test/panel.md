@@ -129,5 +129,4 @@ Plotting an I-V curve for the panel may be helpful in comparing the two designs.
 WIP
 
 ## References
-
-WIP
+- https://learn.adafruit.com/adafruit-bq24074-universal-usb-dc-solar-charger-breakout/design-notes
