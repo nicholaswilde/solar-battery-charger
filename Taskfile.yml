@@ -54,6 +54,22 @@ tasks:
     cmds:
       - 'arduino-cli lib install {{ .LIBS }}'
 
+  secrets:
+    desc: Export parameters to secrets.h ⚠️ WARNING! This task overwrites secrets.h
+    cmds:
+      - test ! -z "{{.SSID}}" || (echo "Please define SSID parameter"; exit 1)
+      - test ! -z "{{.PASS}}" || (echo "Please define PASS parameter"; exit 1)
+      - test ! -z "{{.CH_ID}}" || (echo "Please define CH_ID parameter"; exit 1)
+      - test ! -z "{{.WRITE_APIKEY}}" || (echo "Please define WRITE_APIKEY parameter"; exit 1)
+      - echo "#define SECRET_SSID \"{{ .SSID }}\"" > secrets.h
+      - echo "#define SECRET_PASS \"{{ .PASS }}\"" >> secrets.h
+      - echo "#define SECRET_CH_ID {{ .CH_ID }}" >> secrets.h
+      - echo "#define SECRET_WRITE_APIKEY \"{{ .WRITE_APIKEY }}\"" >> secrets.h
+      - echo "#define SECRET_HOSTNAME \"{{ .HOSTNAME }}\"" >> secrets.h
+    vars:
+      HOSTNAME: Feather
+    silent: true
+
   serve:
     desc: Run the builtin mkdocs development server.
     cmds:
