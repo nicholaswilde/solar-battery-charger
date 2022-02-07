@@ -32,17 +32,13 @@ WIP
 
 ### Output
 
-WIP
+The built in red LED blinks continuously for in the specifed interval.
 
 ## Analysis
 
 WIP
 
 ## Conclusion
-
-WIP
-
-## Troubleshooting
 
 WIP
 
