@@ -26,6 +26,7 @@ nav:
     - createdat: test/createdat.md
     - date: test/date.md
     - eeprom: test/eeprom.md
+    - oled: test/oled.md
     - panel: test/panel.md
     - sleep: test/sleep.md
     - sunset: test/sunset.md
