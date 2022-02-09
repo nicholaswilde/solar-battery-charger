@@ -28,7 +28,7 @@ the solar panel to make more portable to recharge other devices and batteries.
 
 Monitoring is handled by an Adafruit Feather Huzzah (Feather) that has built in wifi support which makes it easy to
 monitor remotely as well as collect data. The board will monitor when the li-ion battery is charging and when
-charging is complete. It can also send notifications when the charge is complete via IFTTT.
+charging is complete. It can also send notifications when the charge is complete via ThingSpeak and IFTTT.
 
 ## :raised_hand: Current Limitations
 
