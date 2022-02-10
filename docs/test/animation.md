@@ -26,7 +26,13 @@ Circuit made with [Circuit Diagram](https://www.circuit-diagram.org/)
 
 ### Code
 
-WIP
+```shell title="Install Adafruit SH110X library"
+arduino-cli lib install "Adafruit SH110X"
+```
+
+```shell title="Install Adafruit GFX Library"
+arduino-cli lib install "Adafruit GFX Library"
+```
 
 ### Output
 
@@ -37,10 +43,6 @@ WIP
 WIP
 
 ## Conclusion
-
-WIP
-
-## Troubleshooting
 
 WIP
 
