@@ -48,3 +48,4 @@ WIP
 - https://create.arduino.cc/projecthub/mdraber/create-animation-for-128x32-oled-ssd1306-with-arduino-5cf5f5
 - http://adafruit.github.io/Adafruit-GFX-Library/html/index.html
 - https://adafruit.github.io/Adafruit_SH110x/html/index.html
+- https://javl.github.io/image2cpp/
