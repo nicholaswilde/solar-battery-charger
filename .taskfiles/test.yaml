@@ -1,0 +1,58 @@
+---
+version: '3'
+
+tasks:
+  create:
+    desc: Create a test from the template folder.
+    vars:
+      VERSION:
+        sh: arduino-cli version | awk '{print $3}'
+      DATE:
+        sh: date +%d%^b%Y
+    cmds:
+      - test ! -z "{{ .NAME }}" || (echo "Please define NAME parameter"; exit 1)
+      - cp -r {{ .GIT_ROOT }}/test/template "{{ .GIT_ROOT }}/test/{{ .NAME }}"
+      - mv "{{ .GIT_ROOT }}/test/{{ .NAME }}/template.ino" "{{ .GIT_ROOT }}/test/{{ .NAME }}/{{ .NAME }}.ino"
+      - mv "{{ .GIT_ROOT }}/test/{{ .NAME }}/template.md" "{{ .GIT_ROOT }}/docs/test/{{ .NAME }}.md"
+      - go-replace -s '${NAME}' -r "{{.NAME}}" --path="{{ .GIT_ROOT }}/test/{{ .NAME }}/README.md" --path-pattern='*.*'
+      - go-replace -s '${NAME}' -r "{{.NAME}}" --path="{{ .GIT_ROOT }}/docs/test/{{ .NAME }}.md" --path-pattern='*.*'
+      - go-replace -s '${NAME}' -r "{{.NAME}}" --path="{{ .GIT_ROOT }}/test/{{ .NAME }}/{{ .NAME }}.ino" --path-pattern='*.*'
+      - go-replace -s '${DATE}' -r "{{ .DATE }}" --path="{{ .GIT_ROOT }}/test/{{ .NAME }}/{{ .NAME }}.ino" --path-pattern='*.*'
+      - go-replace -s '${VERSION}' -r "{{ .VERSION }}" --path="{{ .GIT_ROOT }}/test/{{ .NAME }}/{{ .NAME }}.ino" --path-pattern='*.*'
+      - test ! -f "{{ .GIT_ROOT }}/sketch.json" || cp "{{ .GIT_ROOT }}/sketch.json" "{{ .GIT_ROOT }}/test/{{ .NAME }}/sketch.json"
+      - test ! -f "{{ .GIT_ROOT }}/secrets.h" || cp "{{ .GIT_ROOT }}/secrets.h" "{{ .GIT_ROOT }}/test/{{ .NAME }}/secrets.h"
+    silent: true
+
+  compile:
+    desc: Compile a test
+    dir: ./test/{{ .NAME }}
+    cmds:
+      - test ! -z "{{ .NAME }}" || (echo "Please define NAME parameter"; exit 1)
+      - arduino-cli compile .
+    silent: true
+
+  compile-upload:
+    desc: Compile and upload a test
+    dir: ./test/{{ .NAME }}
+    cmds:
+      - test ! -z "{{ .NAME }}" || (echo "Please define NAME parameter"; exit 1)
+      - task: compile
+      - task: upload
+      - task: console
+    silent: true
+
+  upload:
+    desc: Compile a test
+    dir: ./test/{{ .NAME }}
+    cmds:
+      - test ! -z "{{ .NAME }}" || (echo "Please define NAME parameter"; exit 1)
+      - arduino-cli upload .
+    silent: true
+
+  console:
+    desc: Compile a test
+    dir: ./test/{{ .NAME }}
+    cmds:
+      - test ! -z "{{ .NAME }}" || (echo "Please define NAME parameter"; exit 1)
+      - screen {{ .PORT }} $BAUD_RATE
+    silent: true
