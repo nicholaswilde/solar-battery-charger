@@ -19,6 +19,7 @@ nav:
   - Configuration: configuration.md
   - Test:
     - adjusttime: test/adjusttime.md
+    - animation: test/animation.md
     - battery: test/battery.md
     - blink: test/blink.md
     - cell: test/cell.md
