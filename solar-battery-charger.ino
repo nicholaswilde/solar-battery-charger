@@ -10,7 +10,7 @@
 
   Software:     Developed using arduino-cli 0.21.0.
 
-  Date:         01FEB2022
+  Date:         12FEB2022
 
   Author:       Nicholas Wilde 0x08b7d7a3
 --------------------------------------------------------------*/
@@ -90,8 +90,7 @@ void setup() {
 void loop() {
   display.clearDisplay();
   display.setCursor(0,0);
-  Serial.println("Battery:");
-  display.println("Battery:");
+  println("Battery:");
   int level = getBatteryLevel();
 
   int percentage = getBatteryPercentage(level);
@@ -119,36 +118,23 @@ void conntectToWifi(){
   // Connect or reconnect to WiFi
   WiFi.mode(WIFI_STA);
   WiFi.hostname(myHostName);
-  Serial.print("SSID: ");
-  display.print("SSID: ");
-  Serial.println(SECRET_SSID);
-  display.println(SECRET_SSID);
-  Serial.print("Connecting");
-  display.print("Connecting");
+  print("SSID: ");
+  println(SECRET_SSID);
+  print("Connecting");
   display.display();
   blinker.attach_ms(INTERVAL_BLINK, changeState);
   while(WiFi.status() != WL_CONNECTED){
     WiFi.begin(ssid, pass);
-    Serial.print(".");
-    display.print(".");
-    display.display();
+    print(".");
     delay(DELAY_WIFI*1e3);
   }
   blinker.detach();
-  Serial.println();
-  display.println();
-  Serial.println("Connected!");
-  display.println("Connected!");
-  display.display();
-  Serial.print("IP: ");
-  display.print("IP: ");
-  Serial.println(WiFi.localIP());
-  display.println(WiFi.localIP());
-  Serial.print("Hostname: ");
-  display.print("Hostname: ");
-  Serial.println(WiFi.hostname());
-  display.println(WiFi.hostname());
-  display.display();
+  println();
+  println("Connected!");
+  print("IP: ");
+  println(WiFi.localIP().toString().c_str());
+  print("Hostname: ");
+  println(WiFi.hostname().c_str());
 }
 
 int getSum(){
@@ -167,37 +153,26 @@ int getBatteryLevel(){
   // calculate the average level
   int sum = getSum();
   int level = (float)sum / (float)NUM_SAMPLES;
-  Serial.print(" Level: ");
-  display.print(" Level: ");
-  Serial.println(level);
-  display.println(level);
-  display.display();
+  print(" Level: ");
+  println(String(level).c_str());
   return level;
 }
 
 int getBatteryPercentage(int level){
   // convert battery level to percent
   int percentage = map(level, battery_min, battery_max, 0, 100);
-  Serial.print(" Percentage: ");
-  display.print(" Percentage: ");
-  Serial.print(percentage);
-  display.print(percentage);
-  Serial.println("%");
-  display.println("%");
-  display.display();
+  print(" Percentage: ");
+  print(String(percentage).c_str());
+  println("%");
   return percentage;
 }
 
 float getBatteryVoltage(int level){
   // convert battery level to voltage
   float voltage = (float)map(level, battery_min, battery_max, VOLTAGE_MIN*100, VOLTAGE_MAX*100)/100;
-  Serial.print(" Voltage: ");
-  display.print(" Voltage: ");
-  Serial.print(voltage);
-  display.print(voltage);
-  Serial.println("V");
-  display.println("V");
-  display.display();
+  print(" Voltage: ");
+  print(String(voltage).c_str());
+  println("V");
   return voltage;
 }
 
@@ -206,36 +181,45 @@ void writeToThingSpeak(int percentage, int level, float voltage){
   ThingSpeak.setField(FIELD_NO_LEVEL, level);
   ThingSpeak.setField(FIELD_NO_VOLTAGE, voltage);
 
-  Serial.println("Channel: ");
-  display.println("Channel: ");
-  Serial.print(" Number: ");
-  display.print(" Number: ");
-  Serial.println(myChannelNumber);
-  display.println(myChannelNumber);
-  Serial.print(" Status: ");
-  display.print(" Status: ");
+  println("Channel: ");
+  print(" Number: ");
+  println(String(myChannelNumber).c_str());
+  print(" Status: ");
   int x = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
   if (x == 200){
-    Serial.println("success");
-    display.println("success");
+    println("success");
   } else {
-    Serial.println("error " +String(x));
-    display.println("error " + String(x));
+    print("error ");
+    println(String(x).c_str());
   }
   display.display();
 }
 
 void goToSleep(){
-  Serial.print("Sleep time: ");
-  display.print("Sleep time: ");
-  Serial.print(SLEEP_TIME);
-  display.print(SLEEP_TIME);
-  Serial.println("m");
-  display.println("m");
-  display.display();
+  print("Sleep time: ");
+  print(String(SLEEP_TIME).c_str());
+  println("m");
   delay(DELAY_SCREEN2 * 1e3);
   display.oled_command(OLED_DISPLAYOFF);
   ESP.deepSleep(SLEEP_TIME * 60 * 1e6);
+}
+
+void print(const char* value){
+  Serial.print(value);
+  display.print(value);
+  display.display();
+}
+
+void println(){
+  Serial.println();
+  display.println();
+  display.display();
+}
+
+void println(const char* value){
+  Serial.println(value);
+  display.println(value);
+  display.display();
 }
 
 void changeState(){
