@@ -23,3 +23,4 @@
 - https://www.mathworks.com/help/thingspeak/read-data-for-regression-analysis.html
 - https://electronics.stackexchange.com/questions/307586/need-help-calibrating-adc-input-using-a-voltage-divider
 - https://learn.adafruit.com/adafruit-bq24074-universal-usb-dc-solar-charger-breakout
+- https://www.velleman.eu/downloads/29/infosheets/sh1106_datasheet.pdf
