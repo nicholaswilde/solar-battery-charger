@@ -3,6 +3,7 @@
 ## :desktop_computer: Hardware
 - 15X [Energizer LED Solar pathway Lights](https://outdoorsolaroutlet.com/products/new-led-energizer-10pack-solar-pathway-lights-outdoor-stainless-steel-bronze)
 - 1X [Adafruit Feather Huzzah ESP8266](https://learn.adafruit.com/adafruit-feather-huzzah-esp8266/)
+- 1X [Adafruit 128x64 OLED FeatherWing](https://www.adafruit.com/product/4650)
 - 2X [IMREN 3.7v 18650 Rechargeable Battery 3000mAh](https://www.amazon.com/gp/product/B09L5M1WN6/)
 - 1X [NITECORE UMS2 Charger](https://www.amazon.com/gp/product/B07JN49XYM/)
 - 1X [HiLetgo TP4056 Type-C USB 5V 1A 18650 Lithium Battery Charger Module](https://www.amazon.com/gp/product/B07PKND8KG/)
@@ -14,7 +15,7 @@
 - 1X [Lithium Ion Polymer Battery - 3.7v 500mAh](https://www.adafruit.com/product/1578)
 - 1X [220kΩ Resistor](https://www.amazon.com/gp/product/B072BL2VX1/)
 - 1X [1MΩ Resistor](https://www.amazon.com/gp/product/B072BL2VX1/)
-- 1X [JST-PH 2.0 Male and Female Connector Cable](https://www.amazon.com/gp/product/B07NWD5NTN)
+- 2X [JST-PH 2.0 Male and Female Connector Cable](https://www.amazon.com/gp/product/B07NWD5NTN)
 - 1X [DPDT 2 Position 6 Terminals Panel Mount Horizontal Slide Switch](https://www.amazon.com/gp/product/B01N6ROMW3)
 
 ### :zap: Electronics

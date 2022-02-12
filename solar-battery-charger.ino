@@ -15,6 +15,10 @@
   Author:       Nicholas Wilde 0x08b7d7a3
 --------------------------------------------------------------*/
 
+#include <SPI.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SH110X.h>
 #include <ESP8266WiFi.h>
 #include <Ticker.h>
 #include "secrets.h"
@@ -28,18 +32,25 @@
 #define FIELD_NO_PERCENTAGE 1   // field number of battery percentage
 #define FIELD_NO_LEVEL 2        // field number of battery level
 #define FIELD_NO_VOLTAGE 3      // field number of battery voltage
-#define SLEEP_TIME 15           // the time the Feather goes into a deep sleep (m)
+#define SLEEP_TIME 1           // the time the Feather goes into a deep sleep (m)
 #define VOLTAGE_MAX 4.2         // max voltage of lipo battery (V)
 #define VOLTAGE_MIN 2.64        // min voltage of lipo battery (V)
 
 // Don't have to change these
 #define DELAY_SAMPLE 10         // delay between samples (ms)
 #define DELAY_WIFI 5            // delay between samples (s)
+#define DELAY_SCREEN1 2         // delay after screen 1 (s)
+#define DELAY_SCREEN2 3         // delay after screen 2 (s)
 #define NUM_SAMPLES 10          // number of analog samples to take per reading
 #define INTERVAL_BLINK 100      // blink interval (ms)
 
+
+#define OLED_DISPLAYOFF 0xAE    // turn OLED off
+#define OLED_DISPLAYONN 0xAF
+
 WiFiClient client;
 Ticker blinker;
+Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);
 
 // Pulled from secrets.h
 const char ssid[] = SECRET_SSID; // your network SSID (name)
@@ -71,11 +82,16 @@ void setup() {
 
   ThingSpeak.begin(client);
   pinMode(ledPin, OUTPUT);
+  setupDisplay();
   conntectToWifi();
+  delay(DELAY_SCREEN1*1e3);
 }
 
 void loop() {
-
+  display.clearDisplay();
+  display.setCursor(0,0);
+  Serial.println("Battery:");
+  display.println("Battery:");
   int level = getBatteryLevel();
 
   int percentage = getBatteryPercentage(level);
@@ -83,28 +99,56 @@ void loop() {
   float voltage = getBatteryVoltage(level);
 
   writeToThingSpeak(percentage, level, voltage);
-
   goToSleep();
+}
+
+void setupDisplay(){
+  display.begin(0x3C, true); // Address 0x3C default
+
+  // Clear the buffer.
+  display.clearDisplay();
+  display.display();
+
+  display.setRotation(1);
+  display.setTextSize(1);
+  display.setTextColor(SH110X_WHITE);
+  display.setCursor(0,0);
 }
 
 void conntectToWifi(){
   // Connect or reconnect to WiFi
   WiFi.mode(WIFI_STA);
   WiFi.hostname(myHostName);
-  Serial.print("Connecting to SSID: ");
+  Serial.print("SSID: ");
+  display.print("SSID: ");
   Serial.println(SECRET_SSID);
+  display.println(SECRET_SSID);
+  Serial.print("Connecting");
+  display.print("Connecting");
+  display.display();
   blinker.attach_ms(INTERVAL_BLINK, changeState);
   while(WiFi.status() != WL_CONNECTED){
     WiFi.begin(ssid, pass);
     Serial.print(".");
+    display.print(".");
+    display.display();
     delay(DELAY_WIFI*1e3);
   }
   blinker.detach();
-  Serial.println("connected");
-  Serial.print("IP Address: ");
+  Serial.println();
+  display.println();
+  Serial.println("Connected!");
+  display.println("Connected!");
+  display.display();
+  Serial.print("IP: ");
+  display.print("IP: ");
   Serial.println(WiFi.localIP());
+  display.println(WiFi.localIP());
   Serial.print("Hostname: ");
+  display.print("Hostname: ");
   Serial.println(WiFi.hostname());
+  display.println(WiFi.hostname());
+  display.display();
 }
 
 int getSum(){
@@ -123,26 +167,37 @@ int getBatteryLevel(){
   // calculate the average level
   int sum = getSum();
   int level = (float)sum / (float)NUM_SAMPLES;
-  Serial.print("Battery level: ");
+  Serial.print(" Level: ");
+  display.print(" Level: ");
   Serial.println(level);
+  display.println(level);
+  display.display();
   return level;
 }
 
 int getBatteryPercentage(int level){
   // convert battery level to percent
   int percentage = map(level, battery_min, battery_max, 0, 100);
-  Serial.print("Battery percentage: ");
+  Serial.print(" Percentage: ");
+  display.print(" Percentage: ");
   Serial.print(percentage);
+  display.print(percentage);
   Serial.println("%");
+  display.println("%");
+  display.display();
   return percentage;
 }
 
 float getBatteryVoltage(int level){
   // convert battery level to voltage
   float voltage = (float)map(level, battery_min, battery_max, VOLTAGE_MIN*100, VOLTAGE_MAX*100)/100;
-  Serial.print("Battery voltage: ");
+  Serial.print(" Voltage: ");
+  display.print(" Voltage: ");
   Serial.print(voltage);
+  display.print(voltage);
   Serial.println("V");
+  display.println("V");
+  display.display();
   return voltage;
 }
 
@@ -151,20 +206,35 @@ void writeToThingSpeak(int percentage, int level, float voltage){
   ThingSpeak.setField(FIELD_NO_LEVEL, level);
   ThingSpeak.setField(FIELD_NO_VOLTAGE, voltage);
 
-  Serial.print("Channel number: ");
+  Serial.println("Channel: ");
+  display.println("Channel: ");
+  Serial.print(" Number: ");
+  display.print(" Number: ");
   Serial.println(myChannelNumber);
+  display.println(myChannelNumber);
+  Serial.print(" Status: ");
+  display.print(" Status: ");
   int x = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
   if (x == 200){
-    Serial.println("Channel update successful");
+    Serial.println("success");
+    display.println("success");
   } else {
-    Serial.println("Problem updating channel. HTTP error code " + String(x));
+    Serial.println("error " +String(x));
+    display.println("error " + String(x));
   }
+  display.display();
 }
 
 void goToSleep(){
-  Serial.print("Going to sleep for ");
+  Serial.print("Sleep time: ");
+  display.print("Sleep time: ");
   Serial.print(SLEEP_TIME);
-  Serial.println(" minutes");
+  display.print(SLEEP_TIME);
+  Serial.println("m");
+  display.println("m");
+  display.display();
+  delay(DELAY_SCREEN2 * 1e3);
+  display.oled_command(OLED_DISPLAYOFF);
   ESP.deepSleep(SLEEP_TIME * 60 * 1e6);
 }
 
