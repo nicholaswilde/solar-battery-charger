@@ -26,9 +26,28 @@ arduino-cli config init
 arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
 arduino-cli core update-index
 arduino-cli core install esp8266:esp8266
+arduino-cli lib install ThingSpeak "Adafruit SH110X" "Adafruit GFX Library"
 arduino-cli compile -b esp8266:esp8266:huzzah .
 arduino-cli upload -b esp8266:esp8266:huzzah . -p /dev/ttyUSB0 .
 screen /dev/ttyUSB0 115200
+```
+
+## :computer: Output
+
+```shell
+SSID: MySSID
+Connecting.........
+Connected!
+IP: 192.168.1.77
+Hostname: Feather
+Battery:
+ Level: 745
+ Percentage: 90%
+ Voltage: 4.04V
+Channel:
+ Number: 1642208
+ Status: success
+Sleep time: 15m
 ```
 
 ---
