@@ -8,7 +8,7 @@
   Hardware:     Adafruit Feather Huzzah with 3.7V lipo battery
                 and voltage divider on A0.
 
-  Software:     Developed using arduino-cli 0.20.2.
+  Software:     Developed using arduino-cli 0.21.0.
 
   Date:         01FEB2022
 
@@ -32,7 +32,7 @@
 #define FIELD_NO_PERCENTAGE 1   // field number of battery percentage
 #define FIELD_NO_LEVEL 2        // field number of battery level
 #define FIELD_NO_VOLTAGE 3      // field number of battery voltage
-#define SLEEP_TIME 1           // the time the Feather goes into a deep sleep (m)
+#define SLEEP_TIME 15           // the time the Feather goes into a deep sleep (m)
 #define VOLTAGE_MAX 4.2         // max voltage of lipo battery (V)
 #define VOLTAGE_MIN 2.64        // min voltage of lipo battery (V)
 
