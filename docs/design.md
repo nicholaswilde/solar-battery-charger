@@ -67,3 +67,14 @@ Circuits made with [Circuit Diagram](https://www.circuit-diagram.org/)
 !!! note
     The li-ion batteries are wired in parallel even though the 2 battery holder
     come wired in series.
+
+!!! note
+    The JST pins, depending on where they are purchased, may be backwards in terms of
+    the wiring. See [this link](https://docs.particle.io/tutorials/learn-more/batteries/) to determine the correct wiring according to IoT
+    convention.
+
+IoT devices must use batteries wired like this: With the key facing down and the wires toward you, the red is on the right.
+
+<figure Markdown>
+  ![](https://docs.particle.io/assets/images/battery/close-up.jpg){width=480}
+</figure>
