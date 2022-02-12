@@ -20,7 +20,7 @@ WIP
 
 ### Circuit
 
-![](./images/circuit.png)
+WIP
 
 Circuit made with [Circuit Diagram](https://www.circuit-diagram.org/)
 

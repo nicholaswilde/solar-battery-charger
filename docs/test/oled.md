@@ -20,7 +20,7 @@ WIP
 
 ### Circuit
 
-![](../assets/images/circuit-oled.png)
+WIP
 
 Circuit made with [Circuit Diagram](https://www.circuit-diagram.org/)
 
