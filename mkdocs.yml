@@ -18,25 +18,25 @@ nav:
   - Design: design.md
   - Configuration: configuration.md
   - Test:
-    - adjusttime: test/adjusttime.md
-    - animation: test/animation.md
-    - battery: test/battery.md
-    - blink: test/blink.md
-    - cell: test/cell.md
-    - comparedates: test/comparedates.md
-    - createdat: test/createdat.md
-    - date: test/date.md
-    - eeprom: test/eeprom.md
-    - oled: test/oled.md
-    - panel: test/panel.md
-    - pgood: test/pgood.md
-    - sleep: test/sleep.md
-    - sunset: test/sunset.md
-    - thingspeak: test/thingspeak.md
-    - v2: test/v2.md
-    - v3: test/v3.md
-    - v4: test/v4.md
-    - wifi: test/wifi.md
+      - adjusttime: test/adjusttime.md
+      - animation: test/animation.md
+      - battery: test/battery.md
+      - blink: test/blink.md
+      - cell: test/cell.md
+      - comparedates: test/comparedates.md
+      - createdat: test/createdat.md
+      - date: test/date.md
+      - eeprom: test/eeprom.md
+      - oled: test/oled.md
+      - panel: test/panel.md
+      - pgood: test/pgood.md
+      - sleep: test/sleep.md
+      - sunset: test/sunset.md
+      - thingspeak: test/thingspeak.md
+      - v2: test/v2.md
+      - v3: test/v3.md
+      - v4: test/v4.md
+      - wifi: test/wifi.md
   - To Do: todo.md
   - Troubleshooting: troubleshooting.md
   - References: references.md
