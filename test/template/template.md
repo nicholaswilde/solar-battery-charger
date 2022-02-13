@@ -4,7 +4,7 @@ WIP
 
 ## Sketch
 
-The sketch can be found [here](https://github.com/nicholaswilde/solar-battery-charger/tree/main/test/${NAME}).
+The sketch can be found [here][1].
 
 ## Hypothesis
 
@@ -16,13 +16,11 @@ WIP
 
 ## Procedure
 
-WIP
-
 ### Circuit
 
-![](./images/circuit.png)
+![](./images/circuit-${NAME}.png)
 
-Circuit made with [Circuit Diagram](https://www.circuit-diagram.org/)
+Circuit made with [Circuit Diagram][2].
 
 ### Code
 
@@ -43,3 +41,6 @@ WIP
 ## References
 
 WIP
+
+[1]: https://github.com/nicholaswilde/solar-battery-charger/tree/main/test/${NAME}
+[2]: https://www.circuit-diagram.org/
