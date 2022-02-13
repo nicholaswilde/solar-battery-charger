@@ -62,6 +62,16 @@ tasks:
     cmds:
       - 'arduino-cli lib install {{ .LIBS }}'
 
+  pre-commit:
+    desc: Install pre-commit hooks
+    cmds:
+      - "pre-commit install"
+      - "pre-commit install-hooks"
+    preconditions:
+      - sh: type pre-commit
+        msg: "pre-commit is not installed. Run 'task deps:pre-commit'"
+    silent: true
+
   secrets:
     desc: Export parameters to secrets.h ⚠️ WARNING! This task overwrites secrets.h
     cmds:
