@@ -24,3 +24,4 @@
 - https://electronics.stackexchange.com/questions/307586/need-help-calibrating-adc-input-using-a-voltage-divider
 - https://learn.adafruit.com/adafruit-bq24074-universal-usb-dc-solar-charger-breakout
 - https://www.velleman.eu/downloads/29/infosheets/sh1106_datasheet.pdf
+- https://arduino.stackexchange.com/a/78773/82803
