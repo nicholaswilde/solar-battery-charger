@@ -51,6 +51,12 @@ tasks:
       - arduino-cli core update-index
       - arduino-cli core install {{ .CORES }}
 
+  deploy:
+    desc: Deploy gh-pages using mkdocs
+    cmds:
+      - mkdocs gh-deploy --force
+    silent: true
+
   lib-install:
     desc: Install arduino-cli libraries
     cmds:
