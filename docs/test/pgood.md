@@ -8,15 +8,22 @@ The sketch can be found [here][1].
 
 ## Hypothesis
 
-WIP
+The `PGOOD` pin is pulled to `GND` when the LiPo battery on the bq24074 is
+fully charged. The Feather can be used to read the state of that pin to
+determine if the battery is fully charged.
+
+One potential problem is that the pulled high resistor on `pin 14` can cause
+issues to the `PGOOD` pin.
+
+This method theoretically can use the Feather to also read the state of the
+`CHG` pin on the bq24074 which indicates when the LiPo battery is charging.
 
 ## Assumptions
 
-WIP
+- The pulled high resistor on `pin 14` does not cause an issue with the
+  `PGOOD` pin. 
 
 ## Procedure
-
-WIP
 
 ### Circuit
 
@@ -61,11 +68,14 @@ built in red LED on the Feather is blinking.
 
 ## Analysis
 
-WIP
+Everything worked as expected. The value of `pin 14` was correct when the green LED
+was on or off. The built in red LED on the Feather blinked when the green LED was on
+and off when the green LED was off.
 
 ## Conclusion
 
-WIP
+The Feather can be used to read the state of `PGOOD` pin and therefore the state of
+the `CHG` pin as well.
 
 ## References
 - https://www.arduino.cc/en/Tutorial/BuiltInExamples/Button
