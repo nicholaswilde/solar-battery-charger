@@ -17,6 +17,7 @@
 - 1X [1MΩ Resistor][13]
 - 2X [JST-PH 2.0 Male and Female Connector Cable][14]
 - 1X [DPDT 2 Position 6 Terminals Panel Mount Horizontal Slide Switch][15]
+- 1X [400 Point Breadboard][17]
 
 ### :zap: Electronics
 
@@ -95,3 +96,4 @@ IoT devices must use batteries wired like this: With the key facing down and the
 [14]: https://www.amazon.com/gp/product/B07NWD5NTN/
 [15]: https://www.amazon.com/gp/product/B01N6ROMW3/
 [16]: https://learnarduinonow.com/2018/07/05/esp8266-deep-sleep-mode.html
+[17]: https://www.amazon.com/dp/B07PCJP9DY/
