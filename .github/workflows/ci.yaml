@@ -10,28 +10,15 @@ on:  # yamllint disable-line rule:truthy
   workflow_dispatch:
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+  build:
+    name: Deploy docs
+    runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: 3.x
-      - run: pip install mkdocs-material
-      - run: pip install mkdocs-minify-plugin
-      - run: pip install fontawesome-markdown
-      - run: mkdocs gh-deploy --force
+      - name: Checkout main
+        uses: actions/checkout@v2.4.0
 
-#jobs:
-#  build:
-#    name: Deploy docs
-#    runs-on: ubuntu-20.04
-#    steps:
-#      - name: Checkout main
-#        uses: actions/checkout@v2.4.0
-#
-#      - name: Deploy docs
-#        uses: mhausenblas/mkdocs-deploy-gh-pages@master
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          CONFIG_FILE: mkdocs.yml
+      - name: Deploy docs
+        uses: mhausenblas/mkdocs-deploy-gh-pages@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CONFIG_FILE: mkdocs.yml
