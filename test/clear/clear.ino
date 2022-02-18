@@ -16,7 +16,7 @@
 #include <ESP8266HTTPClient.h>
 #include <Ticker.h>
 #include "secrets.h"
-#include <WiFiClientSecureBearSSL.h>
+#include <WiFiClientSecure.h>
 
 #define BAUD_RATE 115200        // baud rate used for Serial console
 #define DELAY_LOOP 20000         // loop delay time (ms)
@@ -25,6 +25,7 @@
 #define INTERVAL_BLINK 100      // blink interval (ms)
 #define THINGSPEAK_URL "api.thingspeak.com"
 
+WiFiClientSecure client;
 Ticker blinker;
 
 const char ssid[] = SECRET_SSID;      // your network SSID (name)
@@ -32,13 +33,11 @@ const char pass[] = SECRET_PASS;      // your network password
 const int ledPin = LED_BUILTIN;
 
 unsigned long myChannelNumber = SECRET_CH_ID;
-const char * myWriteAPIKey = SECRET_WRITE_APIKEY;
 const char * myHostName = SECRET_HOSTNAME;
 const char * myUserAPIKey = SECRET_USER_APIKEY;
 
-const uint8_t fingerprint[20] = {
-  0x27, 0x18, 0x92, 0xdd, 0xa4, 0x26, 0xc3, 0x07, 0x09, 0xb9, 0x7a, 0xe6, 0xc5, 0x21, 0xb9, 0x5b, 0x48, 0xf7, 0x16, 0xe1
-};
+//const char * fingerprint = SECRET_SHA1_FINGERPRINT; // uncomment for secure connection
+const char * fingerprint = NULL;                      // comment for secure connection
 
 void setup() {
   Serial.begin(BAUD_RATE);
@@ -47,35 +46,42 @@ void setup() {
   Serial.println("test: clear");
   pinMode(ledPin, OUTPUT);
   conntectToWifi();
+  setClient();
 }
 
 void loop() {
- // wait for WiFi connection
-  if ((WiFi.status() == WL_CONNECTED)) {
-    std::unique_ptr<BearSSL::WiFiClientSecure>client(new BearSSL::WiFiClientSecure);
-    client->setFingerprint(fingerprint);
-
-    HTTPClient https;
-
-    Serial.println("[HTTPS] begin...");
-    String url = getUrl();
-    https.begin(*client, url.c_str());
-    https.addHeader("Host", THINGSPEAK_URL);
-    https.addHeader("content-type", "application/x-www-form-urlencoded");
-    String key = getKey();
-    int httpCode = https.sendRequest("DELETE", key.c_str());
-    Serial.print("http code: ");
-    Serial.println(httpCode);
-    Serial.print("status: ");
-    if (httpCode>0){
-      Serial.println("success");
-    } else {
-      Serial.print("error ");
-      Serial.println(https.errorToString(httpCode).c_str());
-    }
-    https.end();
-  }
+  clearChannel();
   delay(DELAY_LOOP);
+}
+
+void clearChannel(){
+  HTTPClient https;
+
+  Serial.println("[HTTPS] begin...");
+  String url = getUrl();
+  https.begin(client, url.c_str());
+  https.addHeader("Host", THINGSPEAK_URL);
+  https.addHeader("content-type", "application/x-www-form-urlencoded");
+  String key = getKey();
+  int httpCode = https.sendRequest("DELETE", key.c_str());
+  Serial.print("http code: ");
+  Serial.println(httpCode);
+  Serial.print("status: ");
+  if (httpCode>0){
+    Serial.println("success");
+  } else {
+    Serial.print("error ");
+    Serial.println(https.errorToString(httpCode).c_str());
+  }
+  https.end();
+}
+
+void setClient(){
+  if (fingerprint !=NULL){
+    client.setFingerprint(fingerprint);
+  } else {
+    client.setInsecure();
+  }
 }
 
 String getUrl(){

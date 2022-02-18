@@ -141,6 +141,11 @@ credentials that aren't updated in GitHub. The file is ignored in `.gitignore`.
 #define SECRET_WRITE_APIKEY "XYZ"              // replace XYZ with your channel write API Key
 
 #define SECRET_HOSTNAME "Feather"
+
+#define SECRET_USER_APIKEY "ABC"               // replace ABC with ThingSpeak User API Key
+
+// ThingSpeak Certificate Fingerprint, Expiration Date: August 3, 2022 at 8:00:00 AM EST
+#define SECRET_SHA1_FINGERPRINT "27 18 92 DD A4 26 C3 07 09 B9 7A E6 C5 21 B9 5B 48 F7 16 E1"
 ```
 
 ```C++ title="Secrets can be used in sketches"
@@ -149,6 +154,15 @@ credentials that aren't updated in GitHub. The file is ignored in `.gitignore`.
 
 The nomenclature used in this project is different than what [arduino-cli][3]
 specifies (`arduino_secrets.h`) because this project does not use an Arduino.
+
+Task may be used to get the latest `SECRET_SHA1_FINGERPRINT` of ThingSpeak by running:
+```shell
+task get-fingerprint
+27 18 92 DD A4 26 C3 07 09 B9 7A E6 C5 21 B9 5B 48 F7 16 E1
+```
+
+The recent ThingSpeak fingerprint can be obtained by
+[looking the certificate in Google Chrome][11].
 
 ### secrets task
 
@@ -277,3 +291,4 @@ task
 [8]: https://ifttt.com/
 [9]: https://www.mathworks.com/help/thingspeak/use-ifttt-to-send-text-message-notification.html
 [10]: https://github.com/go-task/task
+[11]: https://www.a2hosting.com/kb/security/ssl/a2-hostings-ssl-certificate-fingerprints
