@@ -62,6 +62,11 @@ tasks:
     cmds:
       - 'arduino-cli lib install {{ .LIBS }}'
 
+  get-fingerprint:
+    desc: Get the SHA-1 fingerprint of ThingSpeak's website
+    cmds:
+      - openssl s_client -connect api.thingspeak.com:443 < /dev/null 2>/dev/null | openssl x509 -fingerprint -noout -in /dev/stdin | cut -d"=" -f2
+
   pre-commit:
     desc: Install pre-commit hooks
     cmds:
@@ -79,13 +84,18 @@ tasks:
       - test ! -z "{{.PASS}}" || (echo "Please define PASS parameter"; exit 1)
       - test ! -z "{{.CH_ID}}" || (echo "Please define CH_ID parameter"; exit 1)
       - test ! -z "{{.WRITE_APIKEY}}" || (echo "Please define WRITE_APIKEY parameter"; exit 1)
+      - test ! -z "{{.USER_APIKEY}}" || (echo "Please define USER_APIKEY parameter"; exit 1)
       - echo "#define SECRET_SSID \"{{ .SSID }}\"" > secrets.h
       - echo "#define SECRET_PASS \"{{ .PASS }}\"" >> secrets.h
       - echo "#define SECRET_CH_ID {{ .CH_ID }}" >> secrets.h
       - echo "#define SECRET_WRITE_APIKEY \"{{ .WRITE_APIKEY }}\"" >> secrets.h
       - echo "#define SECRET_HOSTNAME \"{{ .HOSTNAME }}\"" >> secrets.h
+      - echo "#define SECRET_USER_APIKEY \"{{ .USER_APIKEY }}\"" >> secrets.h
+      - echo "#define SECRET_SHA1_FINGERPRINT \"{{ .FINGERPRINT }}\"" >> secrets.h
     vars:
       HOSTNAME: Feather
+      FINGERPRINT:
+        sh: openssl s_client -connect api.thingspeak.com:443 < /dev/null 2>/dev/null | openssl x509 -fingerprint -noout -in /dev/stdin | cut -d"=" -f2
     silent: true
 
   serve:
