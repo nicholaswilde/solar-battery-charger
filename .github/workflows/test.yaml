@@ -31,6 +31,12 @@ jobs:
       - name: Install platform
         run: |
           touch secrets.h
+          echo "#define SECRET_SSID \"MySSID\"" > secrets.h
+          echo "#define SECRET_PASS \"MyPass\"" >> secrets.h
+          echo "#define SECRET_CH_ID 0000000" >> secrets.h
+          echo "#define SECRET_WRITE_APIKEY \"123\"" >> secrets.h
+          echo "#define SECRET_HOSTNAME \"Feather\"" >> secrets.h
+          echo "#define SECRET_USER_APIKEY \"XYZ\"" >> secrets.h
           arduino-cli config init
           arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
           arduino-cli core update-index
