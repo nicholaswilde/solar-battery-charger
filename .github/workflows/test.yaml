@@ -43,4 +43,4 @@ jobs:
           arduino-cli core install ${{ matrix.arduino-platform }}
           arduino-cli lib install ThingSpeak "Adafruit SH110X" "Adafruit GFX Library" Time Timezone
       - name: Compile Sketch
-        run: arduino-cli compile --fqbn ${{ matrix.fqbn }} .
+        run: arduino-cli compile -b ${{ matrix.fqbn }} .
