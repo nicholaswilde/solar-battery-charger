@@ -3,12 +3,12 @@ name: test
 on:  # yamllint disable-line rule:truthy
   push:
     paths:
-      - 'solar-battery-charger.ino'
+      - '**.ino'
     branches:
       - main
   pull_request:
     paths:
-      - 'solar-battery-charger.ino'
+      - '**.ino'
     branches:
       - main
   workflow_dispatch:
