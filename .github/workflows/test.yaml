@@ -39,7 +39,7 @@ jobs:
           #echo "#define SECRET_WRITE_APIKEY \"123\"" >> secrets.h
           #echo "#define SECRET_HOSTNAME \"Feather\"" >> secrets.h
           #echo "#define SECRET_USER_APIKEY \"XYZ\"" >> secrets.h
-          task secrets SSID=MySSID PASSWORD=MyPassword CH_ID=0000000 WRITE_APIKEY=XYZ USER_APIKEY=ABC
+          task secrets SSID=MySSID PASS=MyPassword CH_ID=0000000 WRITE_APIKEY=XYZ USER_APIKEY=ABC
           task bootstrap
       - name: Compile Sketch
         run: arduino-cli compile -b ${{ matrix.fqbn }} .
