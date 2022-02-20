@@ -91,11 +91,11 @@ tasks:
       - echo "#define SECRET_WRITE_APIKEY \"{{ .WRITE_APIKEY }}\"" >> secrets.h
       - echo "#define SECRET_HOSTNAME \"{{ .HOSTNAME }}\"" >> secrets.h
       - echo "#define SECRET_USER_APIKEY \"{{ .USER_APIKEY }}\"" >> secrets.h
-      - echo "#define SECRET_SHA1_FINGERPRINT \"{{ .FINGERPRINT }}\"" >> secrets.h
+      #- echo "#define SECRET_SHA1_FINGERPRINT \"{{ .FINGERPRINT }}\"" >> secrets.h
     vars:
       HOSTNAME: Feather
-      FINGERPRINT:
-        sh: openssl s_client -connect api.thingspeak.com:443 < /dev/null 2>/dev/null | openssl x509 -fingerprint -noout -in /dev/stdin | cut -d"=" -f2
+      #FINGERPRINT:
+        #sh: openssl s_client -connect api.thingspeak.com:443 < /dev/null 2>/dev/null | openssl x509 -fingerprint -noout -in /dev/stdin | cut -d"=" -f2
     silent: true
 
   serve:
