@@ -24,7 +24,7 @@ jobs:
           - arduino-platform: "arduino:avr"
             fqbn: "arduino:avr:unowifi"
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
