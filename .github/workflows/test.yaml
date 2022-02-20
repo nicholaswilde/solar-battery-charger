@@ -32,18 +32,14 @@ jobs:
         uses: 'lukeshay/setup-task@v1'
       - name: Install platform
         run: |
-          touch secrets.h
-          echo "#define SECRET_SSID \"MySSID\"" > secrets.h
-          echo "#define SECRET_PASS \"MyPass\"" >> secrets.h
-          echo "#define SECRET_CH_ID 0000000" >> secrets.h
-          echo "#define SECRET_WRITE_APIKEY \"123\"" >> secrets.h
-          echo "#define SECRET_HOSTNAME \"Feather\"" >> secrets.h
-          echo "#define SECRET_USER_APIKEY \"XYZ\"" >> secrets.h
+          #touch secrets.h
+          #echo "#define SECRET_SSID \"MySSID\"" > secrets.h
+          #echo "#define SECRET_PASS \"MyPass\"" >> secrets.h
+          #echo "#define SECRET_CH_ID 0000000" >> secrets.h
+          #echo "#define SECRET_WRITE_APIKEY \"123\"" >> secrets.h
+          #echo "#define SECRET_HOSTNAME \"Feather\"" >> secrets.h
+          #echo "#define SECRET_USER_APIKEY \"XYZ\"" >> secrets.h
+          task secrets SSID=MySSID PASSWORD=MyPassword CH_ID=0000000 WRITE_APIKEY=XYZ USER_APIKEY=ABC
           task bootstrap
-          #arduino-cli config init
-          #arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
-          #arduino-cli core update-index
-          #arduino-cli core install ${{ matrix.arduino-platform }}
-          #arduino-cli lib install ThingSpeak "Adafruit SH110X" "Adafruit GFX Library" Time Timezone
       - name: Compile Sketch
         run: arduino-cli compile -b ${{ matrix.fqbn }} .
