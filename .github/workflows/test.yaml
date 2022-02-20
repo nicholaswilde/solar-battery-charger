@@ -28,8 +28,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Setup Arduino CLI
         uses: arduino/setup-arduino-cli@v1
-      - name: Setup go-task/task
-        uses: 'lagren/setup-task@v1'
+      - name: Setup go-task
+        uses: 'lukeshay/setup-task@v1'
       - name: Install platform
         run: |
           touch secrets.h
