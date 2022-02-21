@@ -53,6 +53,9 @@
 - [go-task](https://github.com/go-task/task)
 - [GNU Screen](https://www.gnu.org/software/screen/)
 - [jq](https://stedolan.github.io/jq) (for go-task)
+- [pre-commit](https://pre-commit.com/)
+- [arduino-lint](https://arduino.github.io/arduino-lint/)
+- [yamllint](https://github.com/adrienverge/yamllint)
 
 ## :electric_plug: Circuit
 
