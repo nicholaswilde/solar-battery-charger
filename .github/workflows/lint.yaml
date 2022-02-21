@@ -3,12 +3,14 @@ name: lint
 on:  # yamllint disable-line rule:truthy
   push:
     paths:
-      - '**.ino'
+      - '**.yaml'
+      - '**.yml'
     branches:
       - main
   pull_request:
     paths:
-      - '**.ino'
+      - '**.yaml'
+      - '**.yml'
     branches:
       - main
   workflow_dispatch:
@@ -17,5 +19,11 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: arduino/arduino-lint-action@v1
+      - name: 'Checkout'
+        uses: actions/checkout@v2
+      - name: 'arduino-lint'
+        uses: arduino/arduino-lint-action@v1
+      - name: 'yamllint'
+        uses: karancode/yamllint-github-action@master
+        with:
+          yamllint_config_filepath: ./.yamllint
