@@ -3,12 +3,14 @@ name: lint
 on:  # yamllint disable-line rule:truthy
   push:
     paths:
-      - '**.ino'
+      - '**.yaml'
+      - '**.yml'
     branches:
       - main
   pull_request:
     paths:
-      - '**.ino'
+      - '**.yaml'
+      - '**.yml'
     branches:
       - main
   workflow_dispatch:
