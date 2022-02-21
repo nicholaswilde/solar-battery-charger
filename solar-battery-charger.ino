@@ -67,8 +67,6 @@ const int timeZone = -8;  // Pacific Standard Time (USA)
 #define NUM_SAMPLES 10          // number of analog samples to take per reading
 #define INTERVAL_BLINK 100      // blink interval (ms)
 #define SYNC_INTERVAL 300
-#define OLED_DISPLAYOFF 0xAE    // turn OLED off
-#define OLED_DISPLAYON 0xAF     // turn OLED on
 
 // Pulled from secrets.h
 const char ssid[] = SECRET_SSID; // your network SSID (name)
@@ -337,7 +335,8 @@ void goToSleep(){
   print(String(SLEEP_TIME).c_str());
   println("m");
   delay(DELAY_SCREEN2 * 1e3);
-  display.oled_command(OLED_DISPLAYOFF);
+  //display.oled_command(OLED_DISPLAYOFF);
+  display.oled_command(SH110X_DISPLAYOFF);
   ESP.deepSleep(SLEEP_TIME * 60 * 1e6);
 }
 
