@@ -12,12 +12,13 @@
 - 1X [1N4007 Schottky Diode][9]
 - 1X [EBL 9V Li-ion Battery Charger][10]
 - 1X [CT-Energy Lithium Coin Button Batteries Charger][11]
-- 1X [Lithium Ion Polymer Battery - 3.7v 500mAh][12]
 - 1X [220kΩ Resistor][13]
 - 1X [1MΩ Resistor][13]
-- 2X [JST-PH 2.0 Male and Female Connector Cable][14]
-- 1X [DPDT 2 Position 6 Terminals Panel Mount Horizontal Slide Switch][15]
-- 1X [400 Point Breadboard][17]
+- 1X [Adafruit Feather Stacking Headers - 12-pin and 16-pin female headers][18]
+- 1X [DEYUE PCB 7cm x 9cm][19]
+- 2X [Cylewet 5mm High Knob Vertical Slide Switch 3 Pin 2 Position 1P2T SPDT Panel][20]
+- 4X [Sutemribor M2.5 x 10mm F-F Hex Brass Spacer Standoff & Screw][21]
+- 1X [AiTrip 3 Pin DC Power Connector PCB Mount Female Plug Jack 5.5mm][22]
 
 ### :zap: Electronics
 
@@ -56,9 +57,18 @@
 ## :electric_plug: Circuit
 
 - Connect the `RST` pin to pin `16` to allow the [Feather to wake from deep sleep][16].
-- Create a voltage divider and connect the `A0` analog pin to the connection point.
-- Connect a DPDT switch which allows power from the solar panel and no power to the output and vice versa.
+- Create a voltage divider and connect the `A0` analog pin to the connection
+  point.
+- Connect a 1P2T switch which allows power from the solar panel and no power to
+  the output and vice versa. File the legs to be narrow enough to fit into the
+  board holes.
+- Connect a 1P2T switch which allows the grounding of the Feather to turn it
+  off. File the legs to be narrow enough to fit into the board holes.
 - Insert a schottky diode between the solar panel and the `TP4056` input.
+- Drill two 0.109" holes in the circuit board to mount the battery holder.
+- Clip off the outset leg of the power connector and file the edges of the
+  remaining two legs until they are narrow enough to fit inside of the
+  PCB mounting holes.
 
 ![](./assets/images/circuit.png)
 
@@ -69,11 +79,12 @@ Circuits made with [Circuit Diagram](https://www.circuit-diagram.org/)
     come wired in series.
 
 !!! note
-    The JST pins, depending on where they are purchased, may be backwards in terms of
-    the wiring. See [this link](https://docs.particle.io/tutorials/learn-more/batteries/) to determine the correct wiring according to IoT
-    convention.
+    The JST pins, depending on where they are purchased, may be backwards in
+    terms of the wiring. See [this link][23] to determine the correct wiring
+    according to IoT convention.
 
-IoT devices must use batteries wired like this: With the key facing down and the wires toward you, the red is on the right.
+IoT devices must use batteries wired like this: With the key facing down and
+the wires toward you, the red is on the right.
 
 <figure Markdown>
   ![](https://docs.particle.io/assets/images/battery/close-up.jpg){width=480}
@@ -96,3 +107,9 @@ IoT devices must use batteries wired like this: With the key facing down and the
 [15]: https://www.amazon.com/gp/product/B01N6ROMW3/
 [16]: https://learnarduinonow.com/2018/07/05/esp8266-deep-sleep-mode.html
 [17]: https://www.amazon.com/dp/B07PCJP9DY/
+[18]: https://www.amazon.com/dp/B01ABIT8FI/
+[19]: https://www.amazon.com/dp/B07FFDFLZ3/
+[20]: https://www.amazon.com/dp/B07FVM3XYR/
+[21]: https://www.amazon.com/dp/B075K3QBMX/
+[22]: https://www.amazon.com/dp/B081DYQSC9/
+[23]: https://docs.particle.io/tutorials/learn-more/batteries/
