@@ -26,11 +26,7 @@
 </figure>
 
 <figure Markdown>
-  ![](./assets/images/back-v4.jpg){width=480}
-</figure>
-
-<figure Markdown>
-  ![](./assets/images/top-v4.jpg){width=480}
+  ![](./assets/images/back.jpg){width=480}
 </figure>
 
 ### :sunny: Panel
