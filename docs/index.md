@@ -24,7 +24,7 @@ arduino-cli config init
 arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
 arduino-cli core update-index
 arduino-cli core install esp8266:esp8266
-arduino-cli lib install ThingSpeak "Adafruit SH110X" "Adafruit GFX Library"
+arduino-cli lib install ThingSpeak "Adafruit SH110X" "Adafruit GFX Library" Timezone Time
 arduino-cli compile -b esp8266:esp8266:huzzah .
 arduino-cli upload -b esp8266:esp8266:huzzah . -p /dev/ttyUSB0 .
 screen /dev/ttyUSB0 115200
