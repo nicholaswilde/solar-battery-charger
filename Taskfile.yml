@@ -52,7 +52,9 @@ tasks:
   core-install:
     desc: Install core
     cmds:
-      - arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
+      - >
+        arduino-cli config add board_manager.additional_urls
+        http://arduino.esp8266.com/stable/package_esp8266com_index.json
       - arduino-cli core update-index
       - arduino-cli core install {{ .CORES }}
 
@@ -62,15 +64,23 @@ tasks:
       - mkdocs gh-deploy --force
     silent: true
 
+  get-fingerprint:
+    desc: Get the SHA-1 fingerprint of ThingSpeak's website
+    cmds:
+      - >
+        openssl s_client -connect api.thingspeak.com:443 < /dev/null 2>/dev/null |
+        openssl x509 -fingerprint -noout -in /dev/stdin | cut -d"=" -f2
+
   lib-install:
     desc: Install arduino-cli libraries
     cmds:
       - 'arduino-cli lib install {{ .LIBS }}'
 
-  get-fingerprint:
-    desc: Get the SHA-1 fingerprint of ThingSpeak's website
+  lint:
+    desc: Lint the files
     cmds:
-      - openssl s_client -connect api.thingspeak.com:443 < /dev/null 2>/dev/null | openssl x509 -fingerprint -noout -in /dev/stdin | cut -d"=" -f2
+      - yamllint .
+      - arduino-lint --compliance specification --project-type all
 
   pre-commit:
     desc: Install pre-commit hooks
@@ -96,11 +106,13 @@ tasks:
       - echo "#define SECRET_WRITE_APIKEY \"{{ .WRITE_APIKEY }}\"" >> secrets.h
       - echo "#define SECRET_HOSTNAME \"{{ .HOSTNAME }}\"" >> secrets.h
       - echo "#define SECRET_USER_APIKEY \"{{ .USER_APIKEY }}\"" >> secrets.h
-      #- echo "#define SECRET_SHA1_FINGERPRINT \"{{ .FINGERPRINT }}\"" >> secrets.h
+      # - echo "#define SECRET_SHA1_FINGERPRINT \"{{ .FINGERPRINT }}\"" >> secrets.h
     vars:
       HOSTNAME: Feather
-      #FINGERPRINT:
-        #sh: openssl s_client -connect api.thingspeak.com:443 < /dev/null 2>/dev/null | openssl x509 -fingerprint -noout -in /dev/stdin | cut -d"=" -f2
+      # FINGERPRINT:
+      #   sh: >
+      #       openssl s_client -connect api.thingspeak.com:443 < /dev/null 2>/dev/null |
+      #       openssl x509 -fingerprint -noout -in /dev/stdin | cut -d"=" -f2
     silent: true
 
   serve:
