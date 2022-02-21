@@ -12,6 +12,11 @@ includes:
   test: ./.taskfiles/test.yaml
 
 tasks:
+  arduino-lint:
+    desc: Lint using arduino-lint
+    cmds:
+      - arduino-lint
+
   attach:
     desc: Export board and port to sketch.json file
     cmds:

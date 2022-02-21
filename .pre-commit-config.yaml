@@ -6,3 +6,7 @@ repos:
       - id: yamllint
         name: Run yamllint
         description: Lint yaml files
+  - repo: https://github.com/creatingnull/arduino-hooks
+    rev: v0.1.0
+    hooks:
+      - id: arduino-lint
