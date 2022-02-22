@@ -17,11 +17,14 @@ jobs:
   test-matrix:
     strategy:
       matrix:
-        arduino-platform: 
+        arduino-platform:
           - "esp8266:esp8266"
+          - "esp32:esp32"
         include:
           - arduino-platform: "esp8266:esp8266"
             fqbn: "esp8266:esp8266:huzzah"
+          - arduino-platform: "esp32:esp32"
+            fqbn: "esp32:esp32:featheresp32"
 
     runs-on: ubuntu-latest
     steps:
@@ -30,7 +33,7 @@ jobs:
       - name: Setup Arduino CLI
         uses: arduino/setup-arduino-cli@v1
       - name: Setup go-task
-        uses: 'lukeshay/setup-task@v1'
+        uses: lukeshay/setup-task@v1
       - name: Install platform
         run: |
           task secrets SSID=MySSID PASS=MyPassword CH_ID=0000000 WRITE_APIKEY=XYZ USER_APIKEY=ABC

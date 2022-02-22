@@ -67,3 +67,16 @@ Connecting to SSID: MySSID
 ```
 
 Fix: Ensure that the wifi credentials are correct. See [secrets](../configuration#secrets).
+
+### ModuleNoteFoundError: No module named 'serial'
+
+```shell
+Traceback (most recent call last):
+  File "~/.arduino15/packages/esp32/tools/esptool_py/3.1.0/esptool.py", line 38, in <module>
+    import serial
+ModuleNotFoundError: No module named 'serial'
+```
+
+```shell
+sudo apt install python3-serial
+```

@@ -6,11 +6,12 @@
                 upload the value to ThingSpeak.
 
   Hardware:     Adafruit Feather Huzzah with 3.7V lipo battery
-                and voltage divider on A0.
+                and voltage divider on A0 or Adafruit Huzzah32
+                with 3.7V lipo battery only.
 
   Software:     Developed using arduino-cli 0.21.0.
 
-  Date:         20FEB2022
+  Date:         22FEB2022
 
   Author:       Nicholas Wilde 0x08b7d7a3
 --------------------------------------------------------------*/
@@ -19,8 +20,13 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SH110X.h>
-#include <ESP8266WiFi.h>
-#include <ESP8266HTTPClient.h>
+#if defined(ESP8266)
+  #include <ESP8266WiFi.h>
+  #include <ESP8266HTTPClient.h>
+#elif defined(ESP32)
+  #include <WiFi.h>
+  #include <HTTPClient.h>
+#endif
 #include <TimeLib.h>
 #include <WiFiUdp.h>
 #include <Timezone.h>           // https://github.com/JChristensen/Timezone
@@ -29,7 +35,11 @@
 #include "ThingSpeak.h"         // always include thingspeak header file after other header files and custom macros
 
 // Change these parameters
-#define ANALOG_PIN_NO A0        // analog pin number
+#if defined(ESP8266)
+  #define ANALOG_PIN_NO A0      // analog pin number
+#elif defined(ESP32)
+  #define ANALOG_PIN_NO A13     // analog pin number
+#endif
 #define BAUD_RATE 115200        // baud rate used for Serial console
 #define R1 1000000              // resistor 1 on the voltage divider (Ω)
 #define R2 220000               // resistor 2 on the voltage divider (Ω)
@@ -78,7 +88,6 @@ const char * myUserAPIKey = SECRET_USER_APIKEY;
 
 unsigned int localPort = 8888;  // local port to listen for UDP packets
 const int ledPin = LED_BUILTIN;
-
 
 // calculate the voltage divider ratio
 float resistor_ratio=(float)R2/((float)R1+(float)R2);
@@ -256,7 +265,11 @@ void conntectToWifi(){
   print("IP: ");
   println(WiFi.localIP().toString().c_str());
   print("Hostname: ");
-  println(WiFi.hostname().c_str());
+  #if defined(ESP8266)
+    println(WiFi.hostname().c_str());
+  #elif defined(ESP32)
+    println(WiFi.getHostname());
+  #endif
 }
 
 String getUrl(){
@@ -295,7 +308,11 @@ int getBatteryLevel(){
 
 int getBatteryPercentage(int level){
   // convert battery level to percent
-  int percentage = map(level, battery_min, battery_max, 0, 100);
+  #if defined(ESP8266)
+    int percentage = map(level, battery_min, battery_max, 0, 100);
+  #elif defined(ESP32)
+    int percentage = level*2/1000/(float)VOLTAGE_MAX*100;
+  #endif
   print(" Percentage: ");
   print(String(percentage).c_str());
   println("%");
@@ -304,7 +321,11 @@ int getBatteryPercentage(int level){
 
 float getBatteryVoltage(int level){
   // convert battery level to voltage
-  float voltage = (float)map(level, battery_min, battery_max, VOLTAGE_MIN*100, VOLTAGE_MAX*100)/100;
+  #if defined(ESP8266)
+    float voltage = (float)map(level, battery_min, battery_max, VOLTAGE_MIN*100, VOLTAGE_MAX*100)/100;
+  #elif defined(ESP32)
+    float voltage = level*2/1000;
+  #endif
   print(" Voltage: ");
   print(String(voltage).c_str());
   println("V");
@@ -335,7 +356,6 @@ void goToSleep(){
   print(String(SLEEP_TIME).c_str());
   println("m");
   delay(DELAY_SCREEN2 * 1e3);
-  //display.oled_command(OLED_DISPLAYOFF);
   display.oled_command(SH110X_DISPLAYOFF);
   ESP.deepSleep(SLEEP_TIME * 60 * 1e6);
 }
