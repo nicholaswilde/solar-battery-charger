@@ -21,15 +21,36 @@ A solar battery charger to charge lithium ion (li-ion) 18650, 9V, and coin batte
 Create [`secrets.h`](https://nicholaswilde.io/solar-battery-charger/configuration/#secrets) and update parameters in header of `solar-battery-charger.ino`.
 
 ```shell
-brew install arduino-cli
-arduino-cli config init
-arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
-arduino-cli core update-index
-arduino-cli core install esp8266:esp8266
-arduino-cli lib install ThingSpeak "Adafruit SH110X" "Adafruit GFX Library" Timezone Time
-arduino-cli compile -b esp8266:esp8266:huzzah .
-arduino-cli upload -b esp8266:esp8266:huzzah . -p /dev/ttyUSB0 .
-screen /dev/ttyUSB0 115200
+(
+  brew install arduino-cli
+  arduino-cli config init
+  arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
+  arduino-cli config add board_manager.additional_urls https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+  arduino-cli core update-index
+  arduino-cli core install esp8266:esp8266 esp32:esp32
+  arduino-cli lib install ThingSpeak "Adafruit SH110X" "Adafruit GFX Library" Timezone Time
+)
+```
+
+### ESP8266
+
+```shell
+(
+  arduino-cli compile -b esp8266:esp8266:huzzah .
+  arduino-cli upload -b esp8266:esp8266:huzzah . -p /dev/ttyUSB0 .
+  screen /dev/ttyUSB0 115200
+)
+```
+
+### ESP32
+
+```shell
+(
+  sudo apt install python3-serial
+  arduino-cli compile -b esp32:esp32:featheresp32 .
+  arduino-cli upload -b esp32:esp32:featheresp32 . -p /dev/ttyUSB0 .
+  screen /dev/ttyUSB0 115200
+)
 ```
 
 ## :computer: Output
