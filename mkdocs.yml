@@ -39,7 +39,6 @@ nav:
       - v3: test/v3.md
       - v4: test/v4.md
       - wifi: test/wifi.md
-  - To Do: todo.md
   - Troubleshooting: troubleshooting.md
   - References: references.md
 
