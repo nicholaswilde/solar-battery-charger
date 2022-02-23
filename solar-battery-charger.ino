@@ -134,7 +134,6 @@ void loop() {
   display.clearDisplay();
   display.setCursor(0,0);
   if (doClear && shouldClearChannel()) clearChannel();
-  delay(15000);
   println("Battery:");
   int level = getBatteryLevel();
 
@@ -230,6 +229,7 @@ void clearChannel(){
     Serial.println(https.errorToString(httpCode).c_str());
   }
   https.end();
+  delay(15000);
 }
 
 void setupDisplay(){
@@ -311,7 +311,7 @@ int getBatteryPercentage(int level){
   #if defined(ESP8266)
     int percentage = map(level, battery_min, battery_max, 0, 100);
   #elif defined(ESP32)
-    int percentage = level*2/1000/(float)VOLTAGE_MAX*100;
+    int percentage = (float)level*2/1000/(float)VOLTAGE_MAX*100;
   #endif
   print(" Percentage: ");
   print(String(percentage).c_str());
@@ -324,7 +324,7 @@ float getBatteryVoltage(int level){
   #if defined(ESP8266)
     float voltage = (float)map(level, battery_min, battery_max, VOLTAGE_MIN*100, VOLTAGE_MAX*100)/100;
   #elif defined(ESP32)
-    float voltage = level*2/1000;
+    float voltage = (float)level*2/1000;
   #endif
   print(" Voltage: ");
   print(String(voltage).c_str());
