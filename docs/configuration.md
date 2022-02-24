@@ -8,58 +8,106 @@ the [Arduino IDE][2].
 arduino-cli config init
 ```
 
-```shell title="Add the esp8266 package library"
-arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
+=== "ESP8266"
+    ```shell title="Add the ESP8266 package library"
+    arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
+    ```
+
+    ```shell title="Check that the update addition was successful."
+    cat ~/.arduino15/arduino-cli.yaml
+    ```
+    !!! note
+        This is assuming that `arduino-cli` was installed in the home directory (`~/.arduino15`)
+
+    ```yaml title="~/.arduino15/arduino-cli.yaml"
+    board_manager:
+      additional_urls:
+        - https://arduino.esp8266.com/stable/package_esp8266com_index.json
+    ...
+    ```
+
+    ```shell title="Update the core index"
+    arduino-cli core update-index
+    ```
+
+    ```shell title="Install the ESP8266 core"
+    arduino-cli core install esp8266:esp8266
+    ```
+
+    ```shell title="Search for the huzzah board"
+    arduino-cli board search huzzah
+    ```
+
+    ```shell title="Typical Output"
+    Board Name                      FQBN                   Platform ID
+    Adafruit Feather HUZZAH ESP8266 esp8266:esp8266:huzzah esp8266:esp8266
+    ```
+
+    Take note of the output under `FQBN` because that is what will need to be passed
+    as the `board` (`-b`) parameter with the `arduino-cli` command. In this example,
+    the board to be used will be `esp8266:esp8266:huzzah`.
+
+=== "ESP32"
+    ```shell title="Add the ESP32 package library"
+    arduino-cli config add board_manager.additional_urls https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+    ```
+
+    ```shell title="Check that the update addition was successful."
+    cat ~/.arduino15/arduino-cli.yaml
+    ```
+
+    !!! note
+        This is assuming that `arduino-cli` was installed in the home directory (`~/.arduino15`)
+
+    ```yaml title="~/.arduino15/arduino-cli.yaml"
+    board_manager:
+      additional_urls:
+        - https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+    ...
+    ```
+
+    ```shell title="Update the core index"
+    arduino-cli core update-index
+    ```
+
+    ```shell title="Install the ESP32 core"
+    arduino-cli core install esp32:esp32
+    ```
+
+    ```shell title="Search for the featheresp32 board"
+    arduino-cli board search featheresp32
+    ```
+
+    ```shell title="Typical Output"
+    Board Name              FQBN                     Platform ID
+    Adafruit ESP32 Feather  esp32:esp32:featheresp32 esp32:esp32
+    ```
+
+    Take note of the output under `FQBN` because that is what will need to be passed
+    as the `board` (`-b`) parameter with the `arduino-cli` command. In this example,
+    the board to be used will be `esp32:esp32:featheresp32`.
+
+```shell title="Install the required libraries"
+arduino-cli lib install ThingSpeak "Adafruit SH110X" "Adafruit GFX Library" Time Timezone
 ```
 
-```shell title="Check that the update addition was successful."
-cat ~/.arduino15/arduino-cli.yaml
-```
-!!! note
-    This is assuming that `arduino-cli` was installed in the home directory (`~/.arduino15`)
-
-```yaml title="~/.arduino15/arduino-cli.yaml"
-board_manager:
-  additional_urls:
-    - https://arduino.esp8266.com/stable/package_esp8266com_index.json
-...
-```
-
-```shell title="Update the core index"
-arduino-cli core update-index
-```
-
-```shell title="Install the esp8266 core"
-arduino-cli core install esp8266:esp8266
-```
-
-```shell title="Search for the huzzah board"
-arduino-cli board search huzzah
-```
-
-```shell title="Typical Output"
-Board Name                      FQBN                   Platform ID
-Adafruit Feather HUZZAH ESP8266 esp8266:esp8266:huzzah esp8266:esp8266
-```
-
-Take note of the output under `FQBN` because that is what will need to be passed
-as the `board` (`-b`) parameter with the `arduino-cli` command. In this example,
-the board to be used will be `esp8266:esp8266:huzzah`.
-
-```shell title="Install the ThingSpeak library"
-arduino-cli lib install ThingSpeak
-```
-
-Create a channel on [ThingSpeak](#thingspeak) and take note of the channel ID
-and API key.
+Create a channel on [ThingSpeak](#thingspeak) and take note of the `Channel ID`,
+channel `Write API Key`, and `User API Key`.
 
 Update the variables in [`secret.h`](#key-secrets) and the header of
 `solar-battery-charger.ino`.
 
+=== "ESP8266"
 
-```shell title="Compile the sketch"
-arduino-cli compile -b esp8266:esp8266:huzzah .
-```
+    ```shell title="Compile"
+    arduino-cli compile -b esp8266:esp8266:huzzah .
+    ```
+
+=== "ESP32"
+    ```shell title="Compile"
+    arduino-cli compile -b esp32:esp32:featheresp32 .
+    ```
+
 !!! note
     The dot at the end of the command tells `arduino-cli` to use the sketch in
     the current directory. The name of the sketch may also be used.
@@ -112,17 +160,19 @@ screen /dev/ttyUSB0 115200
     Make sure the baud rate matches the `BAUDE_RATE` in the sketch!
 
 ```shell title="Typical Output"
-Connecting to SSID: MySSID
-.connected
-IP Address: 192.168.1.77
+SSID: MySSID
+Connecting.........
+Connected!
+IP: 192.168.1.77
 Hostname: Feather
-Battery level: 644
-Battery percentage: 55%
-Battery voltage: 3.49V
-Channel number: 1642208
-Channel update successful
-Going to sleep for 15 minutes
-...
+Battery:
+ Level: 745
+ Percentage: 90%
+ Voltage: 4.04V
+Channel:
+ Number: 1642208
+ Status: success
+Sleep time: 15m
 ```
 
 Kill the monitoring screen by pressing <kbd>Ctrl</kbd> + <kbd>a</kbd>
@@ -157,7 +207,7 @@ specifies (`arduino_secrets.h`) because this project does not use an Arduino.
 [Task](#task) may also be used to generate `secrets.h`.
 
 ```shell
-task secrets SSID=MySSID PASS=MyPassword CH_ID=0000000 WRITE_APIKEY=XYZ
+task secrets SSID=MySSID PASS=MyPassword CH_ID=0000000 WRITE_APIKEY=XYZ USER_APIKEY=ABC
 ```
 
 ### Overwrite Sketch Header
@@ -165,7 +215,7 @@ task secrets SSID=MySSID PASS=MyPassword CH_ID=0000000 WRITE_APIKEY=XYZ
 Instead of using the `secrets.h` file, the include may be commented out at the top of
 the sketch and the variable values may be manually written in.
 
-```C++ title="somesketch.ino"
+```C++ title="solar-battery-charger.ino"
 
 //#include "secrets.h"
 
@@ -178,6 +228,8 @@ const char pass[] = MyPassword;
 unsigned long myChannelNumber = 0000000;
 //const char * myWriteAPIKey = SECRET_WRITE_APIKEY;
 const char * myWriteAPIKey = "XYZ"
+//const char * myUserAPIKey = SECRET_USER_APIKEY;
+const char * myUserAPIKey = "ABC"
 //const char * myHostName = SECRET_HOSTNAME;
 const char * myHostName = "Feather";
 ```
@@ -200,10 +252,16 @@ be stored in the sketch directory that sets the defaults for that sketch.
 The `sketch.json` file may be generated by using the
 [arduino-cli board attach][5] command.
 
-```shell
-arduino-cli board attach -b esp8266:esp8266:huzzah .
-arduino-cli board attach -p /dev/ttyUSB0 .
-```
+=== "ESP8266"
+    ```shell
+    arduino-cli board attach -b esp8266:esp8266:huzzah .
+    arduino-cli board attach -p /dev/ttyUSB0 .
+    ```
+=== "ESP32"
+    ```shell
+    arduino-cli board attach -b esp32:esp32:featheresp32 .
+    arduino-cli board attach -p /dev/ttyUSB0 .
+    ```
 
 Attaching the board didn't work for me because `arduino-cli` didn't recognize
 the Feather attached to my port for some reason and so I had to manually add
@@ -214,14 +272,25 @@ the port.
 
 The documentation doesn't show what a typical `sketch.json` looks like so here is one:
 
-```json title="sketch.json"
-{
-  "cpu": {
-    "fqbn": "esp8266:esp8266:huzzah",
-    "port": "serial:///dev/ttyUSB0"
-  }
-}
-```
+=== "ESP8266"
+    ```json title="sketch.json"
+    {
+      "cpu": {
+        "fqbn": "esp8266:esp8266:huzzah",
+        "port": "serial:///dev/ttyUSB0"
+      }
+    }
+    ```
+
+=== "ESP32"
+    ```json title="sketch.json"
+    {
+      "cpu": {
+        "fqbn": "es32:esp32:featheresp32",
+        "port": "serial:///dev/ttyUSB0"
+      }
+    }
+    ```
 
 ## :speech_balloon: ThingSpeak
 

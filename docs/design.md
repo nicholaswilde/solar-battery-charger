@@ -2,7 +2,7 @@
 
 ## :desktop_computer: Hardware
 - 15X [Energizer LED Solar pathway Lights][1]
-- 1X [Adafruit Feather Huzzah ESP8266][2]
+- 1X [Adafruit Feather HUZZAH ESP8266][2] or [Adafruit Feather HUZZAH32 ESP32][24]
 - 1X [Adafruit 128x64 OLED FeatherWing][3]
 - 2X [IMREN 3.7v 18650 Rechargeable Battery 3000mAh][4]
 - 1X [NITECORE UMS2 Charger][5]
@@ -19,6 +19,11 @@
 - 2X [Cylewet 5mm High Knob Vertical Slide Switch 3 Pin 2 Position 1P2T SPDT Panel][20]
 - 4X [Sutemribor M2.5 x 10mm F-F Hex Brass Spacer Standoff & Screw][21]
 - 1X [AiTrip 3 Pin DC Power Connector PCB Mount Female Plug Jack 5.5mm][22]
+
+!!! warning
+    The current design uses a boost converter that only has rear pins which
+    causes the boost converter to pivot when plugging in a charging USB cable
+    into it.
 
 ### :zap: Electronics
 
@@ -113,3 +118,4 @@ the wires toward you, the red is on the right.
 [21]: https://www.amazon.com/dp/B075K3QBMX/
 [22]: https://www.amazon.com/dp/B081DYQSC9/
 [23]: https://docs.particle.io/tutorials/learn-more/batteries/
+[24]: https://www.adafruit.com/product/3405
