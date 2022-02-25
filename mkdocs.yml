@@ -39,6 +39,7 @@ nav:
       - v3: test/v3.md
       - v4: test/v4.md
       - wifi: test/wifi.md
+      - wifimanager: test/wifimanager.md
   - Troubleshooting: troubleshooting.md
   - References: references.md
 
