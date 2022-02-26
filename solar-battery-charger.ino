@@ -11,7 +11,7 @@
 
   Software:     Developed using arduino-cli 0.21.0.
 
-  Date:         22FEB2022
+  Date:         26FEB2022
 
   Author:       Nicholas Wilde 0x08b7d7a3
 --------------------------------------------------------------*/
@@ -32,6 +32,7 @@
 #include <Timezone.h>           // https://github.com/JChristensen/Timezone
 #include <Ticker.h>
 #include "secrets.h"
+#include "src/Battery.h"
 #include "ThingSpeak.h"         // always include thingspeak header file after other header files and custom macros
 
 // Change these parameters
@@ -77,11 +78,9 @@ const int timeZone = -8;  // Pacific Standard Time (USA)
 /* -------------------------------------------------------------------------- */
 
 // Don't have to change these
-#define DELAY_SAMPLE 10         // delay between samples (ms)
 #define DELAY_WIFI 5            // delay between samples (s)
 #define DELAY_SCREEN1 2         // delay after screen 1 (s)
 #define DELAY_SCREEN2 3         // delay after screen 2 (s)
-#define NUM_SAMPLES 10          // number of analog samples to take per reading
 #define INTERVAL_BLINK 100      // blink interval (ms)
 #define SYNC_INTERVAL 300
 
@@ -118,12 +117,14 @@ TimeChangeRule *tcr;        // pointer to the time change rule, use to get TZ ab
 WiFiClient client;
 Ticker blinker;
 Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);
+Battery bat;
 
 WiFiUDP Udp;
 time_t getNtpTime();
 void sendNTPpacket(IPAddress &address);
 
 void setup() {
+  bat.begin(ANALOG_PIN_NO, VOLTAGE_MIN, VOLTAGE_MAX, R1, R2);
   Serial.begin(BAUD_RATE);
   while(!Serial);
   pinMode(BUTTON_A, INPUT_PULLUP);
@@ -157,11 +158,13 @@ void setup() {
 
 void loop() {
   if (doClear && shouldClearChannel()) clearChannel();
-  int level = getBatteryLevel();
 
-  int percentage = getBatteryPercentage(level);
+  int level = bat.level();
 
-  float voltage = getBatteryVoltage(level);
+  int percentage = bat.percentage();
+
+  float voltage = bat.voltage();
+
   updateDisplay(level, percentage, voltage);
   if(!doDischarge){
     writeToThingSpeak(percentage, level, voltage);
@@ -322,53 +325,6 @@ String getKey(){
   String key = String("api_key=");
   key.concat(myUserAPIKey);
   return key;
-}
-
-int getSum(){
-  // take a number of analog samples and add them up
-  int sum;
-  unsigned char sample_count;
-  while (sample_count < NUM_SAMPLES) {
-    sum += analogRead(ANALOG_PIN_NO);
-    sample_count++;
-    delay(DELAY_SAMPLE);
-  }
-  return sum;
-}
-
-int getBatteryLevel(){
-  // calculate the average level
-  int sum = getSum();
-  int level = (float)sum / (float)NUM_SAMPLES;
-  //print(" Level: ");
-  //println(String(level).c_str());
-  return level;
-}
-
-int getBatteryPercentage(int level){
-  // convert battery level to percent
-  #if defined(ESP8266)
-    int percentage = map(level, battery_min, battery_max, 0, 100);
-  #elif defined(ESP32)
-    int percentage = (float)level*2/1000/(float)VOLTAGE_MAX*100;
-  #endif
-  //print(" Percentage: ");
-  //print(String(percentage).c_str());
-  //println("%");
-  return percentage;
-}
-
-float getBatteryVoltage(int level){
-  // convert battery level to voltage
-  #if defined(ESP8266)
-    float voltage = (float)map(level, battery_min, battery_max, VOLTAGE_MIN*100, VOLTAGE_MAX*100)/100;
-  #elif defined(ESP32)
-    float voltage = (float)level*2/1000;
-  #endif
-  //print(" Voltage: ");
-  //print(String(voltage).c_str());
-  //println("V");
-  return voltage;
 }
 
 void writeToThingSpeak(int percentage, int level, float voltage){
