@@ -50,8 +50,15 @@
 #define VOLTAGE_MAX 4.2         // max voltage of lipo battery (V)
 #define VOLTAGE_MIN 2.64        // min voltage of lipo battery (V)
 
+#if defined(ESP8266)
+  #define BUTTON_A  0
+#elif defined(ESP32) && !defined(ARDUINO_ADAFRUIT_FEATHER_ESP32S2)
+  #define BUTTON_A 15
+#endif
+
 // clear the channel if it's a new day.
 bool doClear = false;
+bool doDischarge = false;
 
 // NTP Servers:
 static const char ntpServerName[] = "us.pool.ntp.org";
@@ -119,33 +126,65 @@ void sendNTPpacket(IPAddress &address);
 void setup() {
   Serial.begin(BAUD_RATE);
   while(!Serial);
+  pinMode(BUTTON_A, INPUT_PULLUP);
   Serial.println();
   pinMode(ledPin, OUTPUT);
   setupDisplay();
-  conntectToWifi();
-  ThingSpeak.begin(client);
-  Udp.begin(localPort);
-  setSyncProvider(getNtpTime);
-  setSyncInterval(SYNC_INTERVAL);
+  display.clearDisplay();
+  display.setCursor(0,0);
+  print("Choose mode");
+  delay(1000);
+  print(".");
+  delay(1000);
+  print(".");
+  delay(1000);
+  println(".");
+  doDischarge = !digitalRead(BUTTON_A);
+  if(!doDischarge){
+    println("Mode: recharge");
+    conntectToWifi();
+    ThingSpeak.begin(client);
+    Udp.begin(localPort);
+    setSyncProvider(getNtpTime);
+    setSyncInterval(SYNC_INTERVAL);
+  } else {
+    println("Mode: discharge");
+  }
   delay(DELAY_SCREEN1*1e3);
+  display.clearDisplay();
+  display.setCursor(0,0);
 }
 
 void loop() {
-  display.clearDisplay();
-  display.setCursor(0,0);
   if (doClear && shouldClearChannel()) clearChannel();
-  println("Battery:");
   int level = getBatteryLevel();
 
   int percentage = getBatteryPercentage(level);
 
   float voltage = getBatteryVoltage(level);
-
-  writeToThingSpeak(percentage, level, voltage);
-  goToSleep();
+  updateDisplay(level, percentage, voltage);
+  if(!doDischarge){
+    writeToThingSpeak(percentage, level, voltage);
+    goToSleep();
+  }
+  delay(1000);
 }
 
 /* -------------------------- */
+
+void updateDisplay(int level, int percentage, float voltage){
+  display.clearDisplay();
+  display.setCursor(0,0);
+  display.println("Battery:");
+  Serial.println("Battery:");
+  display.println(String(" Level: ") + String(level));
+  Serial.println(String(" Level: ") + String(level));
+  display.println(String(" Percentage: ") + String(percentage) + "%");
+  Serial.println(String(" Percentage: ") + String(percentage) + "%");
+  display.println(String(" Voltage: ") + String(voltage) + "V");
+  Serial.println(String(" Voltage: ") + String(voltage) + "V");
+  display.display();
+}
 
 // Get the current date
 String getCurrentDate(){
@@ -301,8 +340,8 @@ int getBatteryLevel(){
   // calculate the average level
   int sum = getSum();
   int level = (float)sum / (float)NUM_SAMPLES;
-  print(" Level: ");
-  println(String(level).c_str());
+  //print(" Level: ");
+  //println(String(level).c_str());
   return level;
 }
 
@@ -313,9 +352,9 @@ int getBatteryPercentage(int level){
   #elif defined(ESP32)
     int percentage = (float)level*2/1000/(float)VOLTAGE_MAX*100;
   #endif
-  print(" Percentage: ");
-  print(String(percentage).c_str());
-  println("%");
+  //print(" Percentage: ");
+  //print(String(percentage).c_str());
+  //println("%");
   return percentage;
 }
 
@@ -326,9 +365,9 @@ float getBatteryVoltage(int level){
   #elif defined(ESP32)
     float voltage = (float)level*2/1000;
   #endif
-  print(" Voltage: ");
-  print(String(voltage).c_str());
-  println("V");
+  //print(" Voltage: ");
+  //print(String(voltage).c_str());
+  //println("V");
   return voltage;
 }
 
