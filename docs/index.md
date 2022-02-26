@@ -50,21 +50,30 @@ Create [`secrets.h`](https://nicholaswilde.io/solar-battery-charger/configuratio
 
 ## :computer: Output
 
-```shell
-SSID: MySSID
-Connecting.........
-Connected!
-IP: 192.168.1.77
-Hostname: Feather
-Battery:
- Level: 745
- Percentage: 90%
- Voltage: 4.04V
-Channel:
- Number: 1642208
- Status: success
-Sleep time: 15m
-```
+=== "Mode: recharge"
+    ```shell
+    SSID: MySSID
+    Connecting.........
+    Connected!
+    IP: 192.168.1.77
+    Hostname: Feather
+    Battery:
+     Level: 745
+     Percentage: 90%
+     Voltage: 4.04V
+    Channel:
+     Number: 1642208
+     Status: success
+    Sleep time: 15m
+    ```
+
+=== "Mode: discharge"
+    ```shell
+    Battery:
+     Level: 745
+     Percentage: 90%
+     Voltage: 4.04V
+    ```
 
 ## :scales: License
 

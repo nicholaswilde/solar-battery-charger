@@ -159,21 +159,35 @@ screen /dev/ttyUSB0 115200
 !!! note
     Make sure the baud rate matches the `BAUDE_RATE` in the sketch!
 
-```shell title="Typical Output"
-SSID: MySSID
-Connecting.........
-Connected!
-IP: 192.168.1.77
-Hostname: Feather
-Battery:
- Level: 745
- Percentage: 90%
- Voltage: 4.04V
-Channel:
- Number: 1642208
- Status: success
-Sleep time: 15m
-```
+The `recharge` mode is the default mode during boot.
+
+The `A` button on the OLED may be held down during boot to choose the `discharge` mode which
+will keep the OLED on and display the battery measurements.
+
+=== "Mode: recharge"
+
+    ```shell title="Typical Output"
+    SSID: MySSID
+    Connecting.........
+    Connected!
+    IP: 192.168.1.77
+    Hostname: Feather
+    Battery:
+     Level: 745
+     Percentage: 90%
+     Voltage: 4.04V
+    Channel:
+     Number: 1642208
+     Status: success
+    Sleep time: 15m
+    ```
+=== "Mode: discharge"
+    ```shell title="Typical Output"
+    Battery:
+     Level: 745
+     Percentage: 90%
+     Voltage: 4.04V
+    ```
 
 Kill the monitoring screen by pressing <kbd>Ctrl</kbd> + <kbd>a</kbd>
 <kbd>k</kbd> <kbd>y</kbd>

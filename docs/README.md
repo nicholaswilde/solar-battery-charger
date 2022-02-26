@@ -55,6 +55,8 @@ Create [`secrets.h`](https://nicholaswilde.io/solar-battery-charger/configuratio
 
 ## :computer: Output
 
+Mode: recharge
+
 ```shell
 SSID: MySSID
 Connecting.........
@@ -69,6 +71,15 @@ Channel:
  Number: 1642208
  Status: success
 Sleep time: 15m
+```
+
+Mode: discharge
+
+```shell
+Battery:
+ Level: 745
+ Percentage: 90%
+ Voltage: 4.04V
 ```
 
 ---
