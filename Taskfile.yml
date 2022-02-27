@@ -124,6 +124,20 @@ tasks:
       - mkdocs serve
     silient: true
 
+  switch:
+    desc: Switch between the ESP8266 and ESP32 boards in the sketch.json file.
+    cmds:
+      - >
+        TEMP2=$(cat {{ .GIT_ROOT }}/sketch.json | jq -r '.cpu.fqbn');
+        if [[ "$TEMP2" == "esp32:esp32:featheresp32" ]]; then
+          jq -n --arg board "esp8266:esp8266:huzzah" --arg port {{ .PROTOCOL }}://{{ .PORT}} \
+          '{"cpu":{"fqbn":$board,"port":$port}}' > sketch.json
+        else
+          jq -n --arg board "esp32:esp32:featheresp32" --arg port {{ .PROTOCOL }}://{{ .PORT}} \
+          '{"cpu":{"fqbn":$board,"port":$port}}' > sketch.json
+        fi
+    silent: true
+
   upload:
     desc: Upload the main sketch
     cmds:
