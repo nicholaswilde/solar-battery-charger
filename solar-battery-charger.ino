@@ -39,7 +39,7 @@
 #if defined(ESP8266)
   #define ANALOG_PIN_NO A0      // analog pin number
 #elif defined(ESP32)
-  #define ANALOG_PIN_NO A13     // analog pin number
+  #define ANALOG_PIN_NO A2     // analog pin number
 #endif
 #define BAUD_RATE 115200        // baud rate used for Serial console
 #define R1 1000000              // resistor 1 on the voltage divider (Ω)
@@ -96,14 +96,14 @@ unsigned int localPort = 8888;  // local port to listen for UDP packets
 const int ledPin = LED_BUILTIN;
 
 // calculate the voltage divider ratio
-float resistor_ratio=(float)R2/((float)R1+(float)R2);
+//float resistor_ratio=(float)R2/((float)R1+(float)R2);
 
 // calculate the min battery number using the resistor ratio
-int battery_min=(float)resistor_ratio*(float)VOLTAGE_MIN*1024;
+//int battery_min=(float)resistor_ratio*(float)VOLTAGE_MIN*1024;
 //int battery_min=580;
 
 // calculate the max battery number using the resistor ratio
-int battery_max=(float)resistor_ratio*(float)VOLTAGE_MAX*1024;
+//int battery_max=(float)resistor_ratio*(float)VOLTAGE_MAX*1024;
 //int battery_max=774;
 
 const int dst = timeZone+1;

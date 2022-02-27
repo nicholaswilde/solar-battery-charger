@@ -58,21 +58,12 @@ class Battery{
 
     int percentage(){
       // convert battery level to percent
-      #if defined(ESP8266)
-        int percentage = map(level(), _level_min, _level_max, 0, 100);
-      #elif defined(ESP32)
-        int percentage = (float)level()*2/1000/(float)_voltage_max*100;
-      #endif
+      int percentage = map(level(), _level_min, _level_max, 0, 100);
       return percentage;
     }
 
     float voltage(){
-      // convert battery level to voltage
-      #if defined(ESP8266)
-        float voltage = (float)map(level(), _level_min, _level_max, _voltage_min*100, _voltage_max*100)/100;
-      #elif defined(ESP32)
-        float voltage = (float)level()*2/1000;
-      #endif
+      float voltage = (float)map(level(), _level_min, _level_max, _voltage_min*100, _voltage_max*100)/100;
       return voltage;
     }
 };
