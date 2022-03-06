@@ -12,7 +12,7 @@
 #define VOLTAGE_MIN 2.64        // min voltage of lipo battery (V)
 
 #if defined(ESP8266)
-  #define BUTTON_A  0
+  #define BUTTON_A  2
   #define ANALOG_PIN_NO A0      // analog pin number
 #elif defined(ESP32) && !defined(ARDUINO_ADAFRUIT_FEATHER_ESP32S2)
   #define BUTTON_A 15
@@ -20,7 +20,7 @@
 #endif
 
 // clear the channel if it's a new day.
-bool doClear = false;
+bool doClear = true;
 bool doDischarge = false;
 
 // NTP Servers:
