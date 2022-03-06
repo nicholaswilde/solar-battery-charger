@@ -101,8 +101,7 @@ Timezone               1.2.4
 Create a channel on [ThingSpeak](#thingspeak) and take note of the `Channel ID`,
 channel `Write API Key`, and `User API Key`.
 
-Update the variables in [`secret.h`](#key-secrets) and the header of
-`solar-battery-charger.ino`.
+Create [`secret.h`](#key-secrets) and update variables in `config.h`.
 
 === "ESP8266"
 

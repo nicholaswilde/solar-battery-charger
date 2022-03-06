@@ -16,7 +16,7 @@ A solar battery charger to charge lithium ion (li-ion) 18650, 9V, and coin batte
 
 ## :rocket: TL;DR
 
-Create [`secrets.h`](https://nicholaswilde.io/solar-battery-charger/configuration/#secrets) and update parameters in header of `solar-battery-charger.ino`.
+Create [`secrets.h`](https://nicholaswilde.io/solar-battery-charger/configuration/#secrets) and update parameters in `config.h`.
 
 ```shell
 (
