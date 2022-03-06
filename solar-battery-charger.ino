@@ -48,20 +48,10 @@ void setup() {
   bat.begin(ANALOG_PIN_NO, VOLTAGE_MIN, VOLTAGE_MAX, R1, R2);
   Serial.begin(BAUD_RATE);
   while(!Serial);
-  pinMode(BUTTON_A, INPUT_PULLUP);
   Serial.println();
-  pinMode(ledPin, OUTPUT);
+  setupPins();
   setupDisplay();
-  display.clearDisplay();
-  display.setCursor(0,0);
-  print("Choose mode");
-  delay(1000);
-  print(".");
-  delay(1000);
-  print(".");
-  delay(1000);
-  println(".");
-  doDischarge = !digitalRead(BUTTON_A);
+  doDischarge = chooseMode();
   if(!doDischarge){
     println("Mode: recharge");
     conntectToWifi();
@@ -97,6 +87,23 @@ void loop() {
 }
 
 /* -------------------------- */
+
+bool chooseMode(){
+  print("Choose mode");
+  unsigned char count;
+  while(count < 4){
+    print(".");
+    delay(1000);
+    count++;
+  }
+  println();
+  return !digitalRead(BUTTON_A);
+}
+
+void setupPins(){
+  pinMode(BUTTON_A, INPUT_PULLUP);
+  pinMode(ledPin, OUTPUT);
+}
 
 void updateDisplay(int level, int percentage, float voltage){
   display.clearDisplay();
