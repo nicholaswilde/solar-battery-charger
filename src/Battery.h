@@ -1,3 +1,6 @@
+#ifndef _Battery_H_
+#define _Battery_H_
+
 #define DELAY_SAMPLE 10         // delay between samples (ms)
 #define NUM_SAMPLES 10          // number of analog samples to take per reading
 
@@ -25,6 +28,8 @@ class Battery{
     }
 
   public:
+    // Default constructor
+    Battery(){};
     void begin(int analogPin, float voltage_min, float voltage_max, int r1, int r2){
       _analogPin = analogPin;
       _r1=r1;
@@ -67,3 +72,4 @@ class Battery{
       return voltage;
     }
 };
+#endif // _Battery_H_
