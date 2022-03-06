@@ -28,7 +28,7 @@ Create [`secrets.h`](https://nicholaswilde.io/solar-battery-charger/configuratio
   arduino-cli config add board_manager.additional_urls https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
   arduino-cli core update-index
   arduino-cli core install esp8266:esp8266 esp32:esp32
-  arduino-cli lib install ThingSpeak "Adafruit SH110X" "Adafruit GFX Library" Timezone Time
+  arduino-cli lib install ThingSpeak "Adafruit SH110X" Timezone
 )
 ```
 

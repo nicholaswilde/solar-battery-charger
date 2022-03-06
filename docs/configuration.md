@@ -88,7 +88,14 @@ arduino-cli config init
     the board to be used will be `esp32:esp32:featheresp32`.
 
 ```shell title="Install the required libraries"
-arduino-cli lib install ThingSpeak "Adafruit SH110X" "Adafruit GFX Library" Time Timezone
+arduino-cli lib install ThingSpeak "Adafruit SH110X" Timezone
+```
+
+```shell title="Tested Library Versions"
+Name                   Version
+Adafruit_SH110X        2.1.6
+ThingSpeak             2.0.1
+Timezone               1.2.4
 ```
 
 Create a channel on [ThingSpeak](#thingspeak) and take note of the `Channel ID`,
