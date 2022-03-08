@@ -32,6 +32,7 @@ nav:
       - oled: test/oled.md
       - panel: test/panel.md
       - pgood: test/pgood.md
+      - powerboost: test/powerboost.md
       - sleep: test/sleep.md
       - sunset: test/sunset.md
       - thingspeak: test/thingspeak.md
