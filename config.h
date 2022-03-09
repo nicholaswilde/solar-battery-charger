@@ -20,7 +20,7 @@
 #endif
 
 // clear the channel if it's a new day.
-bool doClear = true;
+bool doClear = false;
 bool doDischarge = false;
 
 // NTP Servers:
