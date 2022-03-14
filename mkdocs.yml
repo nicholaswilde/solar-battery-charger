@@ -29,6 +29,7 @@ nav:
       - date: test/date.md
       - eeprom: test/eeprom.md
       - https: test/https.md
+      - ina260: test/ina260.md
       - lbo: test/lbo.md
       - oled: test/oled.md
       - panel: test/panel.md
