@@ -47,59 +47,60 @@ void setup() {
   setupPins();
   setupDisplay();
   setupIna260();
-  doDischarge = chooseMode();
-  //doDischarge = true;
-  if(!doDischarge){
-    println("Mode: recharge");
-    conntectToWifi();
-    ThingSpeak.begin(client);
-    cc.begin(localPort, client, timeZone);
-    setSyncProvider(getNtpTime);
-    setSyncInterval(SYNC_INTERVAL);
-  } else {
-    println("Mode: discharge");
-  }
-  delay(DELAY_SCREEN1*1e3);
-  display.clearDisplay();
-  display.setCursor(0,0);
 }
 
 void loop() {
-
   unsigned long currentMillis = millis();
 
   if (checkButton()) digitalWrite(BUTTON_POWERBOOST, !digitalRead(BUTTON_POWERBOOST));
 
   if (currentMillis - previousMillis >= interval*1e3) {
-
     previousMillis = currentMillis;
 
-    //String date = ThingSpeak.readCreatedAt(myChannelNumber, myWriteAPIKey);
+    display.clearDisplay();
+    display.setCursor(0,0);
+    display.display();
 
-    //if (doClear && cc.shouldClearChannel(date)) cc.clearChannel(myUserAPIKey);
+    int current = ina260.readCurrent();
+
+    print("Mode: ");
+
+    // Determine the mode
+    if (current<0){
+      println("recharge");
+      current = -1*current;
+      doDischarge = false;
+    } else {
+      println("discharge");
+      doDischarge = true;
+    }
 
     int voltage = ina260.readBusVoltage();
 
     int percentage;
 
-    int current = ina260.readCurrent();
-
     int power = ina260.readPower();
 
-    updateDisplay(percentage, voltage, current, power);
-
     if(!doDischarge){
+      conntectToWifi();
+      ThingSpeak.begin(client);
+      cc.begin(localPort, client, timeZone);
+      setSyncProvider(getNtpTime);
+      setSyncInterval(SYNC_INTERVAL);
+      String date = ThingSpeak.readCreatedAt(myChannelNumber, myWriteAPIKey);
+
+      if (doClear && cc.shouldClearChannel(date)) cc.clearChannel(myUserAPIKey);
+
+      updateDisplay(percentage, voltage, current, power);
+
       writeToThingSpeak(percentage, voltage, current, power);
       goToSleep();
     }
+    updateDisplay(percentage, voltage, current, power);
   }
 }
 
 /* -------------------------- */
-
-bool chooseMode(){
-  return (ina260.readCurrent()>=0);
-}
 
 String formatValue(int val){
   String buffer;
