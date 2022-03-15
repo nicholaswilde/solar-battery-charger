@@ -18,40 +18,37 @@
 
 #include <SPI.h>
 #include <Wire.h>
+#include <Adafruit_INA260.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SH110X.h>
-#if defined(ESP8266)
-  #include <ESP8266WiFi.h>
-  #include <ESP8266HTTPClient.h>
-#elif defined(ESP32)
-  #include <WiFi.h>
-  #include <HTTPClient.h>
-#endif
+#include <WiFi.h>
+#include <HTTPClient.h>
 #include <TimeLib.h>
 #include <Timezone.h>           // https://github.com/JChristensen/Timezone
 #include <Ticker.h>
 #include "secrets.h"
 #include "config.h"
-#include "src/Battery.h"
 #include "src/ClearChannel.h"
 #include "ThingSpeak.h"         // always include thingspeak header file after other header files and custom macros
 
 WiFiClient client;
 Ticker blinker;
+Adafruit_INA260 ina260 = Adafruit_INA260();
 Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);
-Battery bat;
 ClearChannel cc;
 
+unsigned long previousMillis = 0;
 time_t getNtpTime();
 
 void setup() {
-  bat.begin(ANALOG_PIN_NO, VOLTAGE_MIN, VOLTAGE_MAX, R1, R2);
   Serial.begin(BAUD_RATE);
   while(!Serial);
   Serial.println();
   setupPins();
   setupDisplay();
+  setupIna260();
   doDischarge = chooseMode();
+  //doDischarge = true;
   if(!doDischarge){
     println("Mode: recharge");
     conntectToWifi();
@@ -68,54 +65,86 @@ void setup() {
 }
 
 void loop() {
-  String date = ThingSpeak.readCreatedAt(myChannelNumber, myWriteAPIKey);
 
-  if (doClear && cc.shouldClearChannel(date)) cc.clearChannel(myUserAPIKey);
+  unsigned long currentMillis = millis();
 
-  int level = bat.level();
+  if (checkButton()) digitalWrite(BUTTON_POWERBOOST, !digitalRead(BUTTON_POWERBOOST));
 
-  int percentage = bat.percentage();
+  if (currentMillis - previousMillis >= interval*1e3) {
 
-  float voltage = bat.voltage();
+    previousMillis = currentMillis;
 
-  updateDisplay(level, percentage, voltage);
-  if(!doDischarge){
-    writeToThingSpeak(percentage, level, voltage);
-    goToSleep();
+    //String date = ThingSpeak.readCreatedAt(myChannelNumber, myWriteAPIKey);
+
+    //if (doClear && cc.shouldClearChannel(date)) cc.clearChannel(myUserAPIKey);
+
+    int voltage = ina260.readBusVoltage();
+
+    int percentage;
+
+    int current = ina260.readCurrent();
+
+    int power = ina260.readPower();
+
+    updateDisplay(percentage, voltage, current, power);
+
+    if(!doDischarge){
+      writeToThingSpeak(percentage, voltage, current, power);
+      goToSleep();
+    }
   }
-  delay(1000);
 }
 
 /* -------------------------- */
 
 bool chooseMode(){
-  print("Choose mode");
-  unsigned char count;
-  while(count < 4){
-    print(".");
-    delay(1000);
-    count++;
+  return (ina260.readCurrent()>=0);
+}
+
+String formatValue(int val){
+  String buffer;
+  if (val < 0) val = val*-1;
+  if (val >= 1000){
+    float volts = (float)val/1000;
+    buffer = String(volts) + " ";
+  } else {
+    buffer = String(val) + " m";
   }
-  println();
-  return !digitalRead(BUTTON_A);
+  return buffer;
 }
 
 void setupPins(){
   pinMode(BUTTON_A, INPUT_PULLUP);
+  pinMode(BUTTON_POWERBOOST, OUTPUT);
   pinMode(ledPin, OUTPUT);
 }
 
-void updateDisplay(int level, int percentage, float voltage){
+void setupIna260(){
+  if (!ina260.begin()) {
+    Serial.println("Couldn't find INA260 chip");
+    while (1);
+  }
+  Serial.println("Found INA260 chip");
+  ina260.setAveragingCount(INA260_COUNT_16);
+}
+
+void updateDisplay(int percentage, int voltage, int current, int power){
   display.clearDisplay();
   display.setCursor(0,0);
+  String temp;
   display.println("Battery:");
   Serial.println("Battery:");
-  display.println(String(" Level: ") + String(level));
-  Serial.println(String(" Level: ") + String(level));
   display.println(String(" Percentage: ") + String(percentage) + "%");
   Serial.println(String(" Percentage: ") + String(percentage) + "%");
-  display.println(String(" Voltage: ") + String(voltage) + "V");
-  Serial.println(String(" Voltage: ") + String(voltage) + "V");
+  temp = formatValue(voltage);
+  display.println(String(" Voltage: ") + temp + "V");
+  Serial.println(String(" Voltage: ") + temp + "V");
+  temp = formatValue(current);
+  display.println(String(" Current: ") + temp + "A");
+  Serial.println(String(" Current: ") + temp + "A");
+  temp = formatValue(power);
+  display.println(String(" Power: ") + temp + "W");
+  Serial.println(String(" Power: ") + temp + "W");
   display.display();
 }
 
@@ -152,17 +181,25 @@ void conntectToWifi(){
   print("IP: ");
   println(WiFi.localIP().toString().c_str());
   print("Hostname: ");
-  #if defined(ESP8266)
-    println(WiFi.hostname().c_str());
-  #elif defined(ESP32)
-    println(WiFi.getHostname());
-  #endif
+  println(WiFi.getHostname());
 }
 
-void writeToThingSpeak(int percentage, int level, float voltage){
+bool checkButton() {
+	static bool oldButton;
+	bool but = !digitalRead(BUTTON_A);
+	delay(40);	// simple debounce button
+	if( but != oldButton){
+		oldButton = but;
+		return true && !oldButton;
+	}
+	return false;
+}
+
+void writeToThingSpeak(int percentage, int voltage, int current, int power){
   ThingSpeak.setField(FIELD_NO_PERCENTAGE, percentage);
-  ThingSpeak.setField(FIELD_NO_LEVEL, level);
   ThingSpeak.setField(FIELD_NO_VOLTAGE, voltage);
+  ThingSpeak.setField(FIELD_NO_CURRENT, current);
+  ThingSpeak.setField(FIELD_NO_POWER, power);
   println("Channel: ");
   print(" Number: ");
   println(String(myChannelNumber).c_str());
