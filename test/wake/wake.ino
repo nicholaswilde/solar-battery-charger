@@ -10,6 +10,7 @@ This code is under Public Domain License.
 Author:
 Pranav Cherukupalli <cherukupallip@gmail.com>
 */
+// https://github.com/RuiSantosdotme/ESP32-Course/blob/fdc20f81abea74e976b9a3334a18deebac496d6b/code/DeepSleep/TouchWakeUp/TouchWakeUp.ino
 
 #define Threshold 40 /* Greater the value, more the sensitivity */
 
