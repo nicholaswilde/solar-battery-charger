@@ -79,21 +79,8 @@ void loop() {
     int percentage;
     int power = ina260.readPower();
 
-    if(!doDischarge){
-      connectToWifi();
-      ThingSpeak.begin(client);
-      cc.begin(localPort, client, timeZone);
-      setSyncProvider(getNtpTime);
-      setSyncInterval(SYNC_INTERVAL);
-      String date = ThingSpeak.readCreatedAt(myChannelNumber, myWriteAPIKey);
-      if (doClear && cc.shouldClearChannel(date)) cc.clearChannel(myUserAPIKey);
-      display.clearDisplay();
-      display.setCursor(0,0);
-      delay(DELAY_SCREEN1*1e3);
-      updateDisplay(percentage, voltage, current, power);
-      writeToThingSpeak(percentage, voltage, current, power);
-      goToSleep();
-    }
+    if(!doDischarge)executeRecharge(power, voltage, current, power);
+
     updateDisplay(percentage, voltage, current, power);
   }
 }
@@ -129,6 +116,22 @@ void setupDisplay(){
 }
 
 /* ------------------------------------------------------------------------- */
+
+void executeRecharge(int percentage, int voltage, int current, int power){
+  connectToWifi();
+  ThingSpeak.begin(client);
+  cc.begin(localPort, client, timeZone);
+  setSyncProvider(getNtpTime);
+  setSyncInterval(SYNC_INTERVAL);
+  String date = ThingSpeak.readCreatedAt(myChannelNumber, myWriteAPIKey);
+  if (doClear && cc.shouldClearChannel(date)) cc.clearChannel(myUserAPIKey);
+  display.clearDisplay();
+  display.setCursor(0,0);
+  delay(DELAY_SCREEN1*1e3);
+  updateDisplay(percentage, voltage, current, power);
+  writeToThingSpeak(percentage, voltage, current, power);
+  goToSleep();
+}
 
 void updateDisplay(int percentage, int voltage, int current, int power){
   String temp;
