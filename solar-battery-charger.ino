@@ -59,7 +59,7 @@ void loop() {
 
     display.clearDisplay();
     display.setCursor(0,0);
-    display.display();
+    //display.display();
 
     int current = ina260.readCurrent();
 
@@ -88,11 +88,11 @@ void loop() {
       setSyncProvider(getNtpTime);
       setSyncInterval(SYNC_INTERVAL);
       String date = ThingSpeak.readCreatedAt(myChannelNumber, myWriteAPIKey);
-
       if (doClear && cc.shouldClearChannel(date)) cc.clearChannel(myUserAPIKey);
-
+      display.clearDisplay();
+      display.setCursor(0,0);
+      delay(DELAY_SCREEN1*1e3);
       updateDisplay(percentage, voltage, current, power);
-
       writeToThingSpeak(percentage, voltage, current, power);
       goToSleep();
     }
@@ -130,8 +130,6 @@ void setupIna260(){
 }
 
 void updateDisplay(int percentage, int voltage, int current, int power){
-  display.clearDisplay();
-  display.setCursor(0,0);
   String temp;
   display.println("Battery:");
   Serial.println("Battery:");
@@ -174,6 +172,7 @@ void conntectToWifi(){
   while(WiFi.status() != WL_CONNECTED){
     WiFi.begin(ssid, pass);
     print(".");
+    display.display();
     delay(DELAY_WIFI*1e3);
   }
   blinker.detach();
@@ -183,6 +182,7 @@ void conntectToWifi(){
   println(WiFi.localIP().toString().c_str());
   print("Hostname: ");
   println(WiFi.getHostname());
+  display.display();
 }
 
 bool checkButton() {
@@ -227,19 +227,19 @@ void goToSleep(){
 void print(const char* value){
   Serial.print(value);
   display.print(value);
-  display.display();
+  //display.display();
 }
 
 void println(){
   Serial.println();
   display.println();
-  display.display();
+  //display.display();
 }
 
 void println(const char* value){
   Serial.println(value);
   display.println(value);
-  display.display();
+  //display.display();
 }
 
 void changeState(){

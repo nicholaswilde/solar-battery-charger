@@ -48,7 +48,7 @@ const char * myUserAPIKey = SECRET_USER_APIKEY;
 
 unsigned int localPort = 8888;  // local port to listen for UDP packets
 const int ledPin = LED_BUILTIN;
-const long interval = 5;        // interval for updating discharge loop
+const long interval = 1;        // interval for updating discharge loop
 
 #define DELAY_WIFI 5            // delay between samples (s)
 #define DELAY_SCREEN1 2         // delay after screen 1 (s)
