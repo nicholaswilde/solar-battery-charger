@@ -1,17 +1,15 @@
 /*-----------------------------------------------------------------------------
   Program:      solar-battery-charger
 
-  Description:  Reads value on analog input A0 and calculates
-                the the percent level of a li-ion battery and
-                upload the value to ThingSpeak.
+  Description:  Reads the voltage, current, and power of a li-ion battery and
+                and upload the values to ThingSpeak.
 
-  Hardware:     Adafruit Feather Huzzah with 3.7V lipo battery
-                and voltage divider on A0 or Adafruit Huzzah32
-                with 3.7V lipo battery only.
+  Hardware:     Adafruit Feather HUZZAH32 with 3.7V lipo battery, Adafruit
+                Powerboost 1000 Basic, Adafruit bq24074, and Adafruit INA260.
 
   Software:     Developed using arduino-cli 0.21.1.
 
-  Date:         06MAR2022
+  Date:         16MAR2022
 
   Author:       Nicholas Wilde 0x08b7d7a3
 -----------------------------------------------------------------------------*/
