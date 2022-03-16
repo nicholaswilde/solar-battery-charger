@@ -1,4 +1,4 @@
-/*--------------------------------------------------------------
+/*-----------------------------------------------------------------------------
   Program:      solar-battery-charger
 
   Description:  Reads value on analog input A0 and calculates
@@ -14,7 +14,7 @@
   Date:         06MAR2022
 
   Author:       Nicholas Wilde 0x08b7d7a3
---------------------------------------------------------------*/
+-----------------------------------------------------------------------------*/
 
 #include <SPI.h>
 #include <Wire.h>
@@ -52,6 +52,7 @@ void setup() {
 void loop() {
   unsigned long currentMillis = millis();
 
+  // toggle Powerboost
   if (checkButton()) digitalWrite(BUTTON_POWERBOOST, !digitalRead(BUTTON_POWERBOOST));
 
   if (currentMillis - previousMillis >= interval*1e3) {
@@ -59,13 +60,12 @@ void loop() {
 
     display.clearDisplay();
     display.setCursor(0,0);
-    //display.display();
 
     int current = ina260.readCurrent();
 
     print("Mode: ");
 
-    // Determine the mode
+    // Determine the mode by sign of current
     if (current<0){
       println("recharge");
       current = -1*current;
@@ -76,13 +76,11 @@ void loop() {
     }
 
     int voltage = ina260.readBusVoltage();
-
     int percentage;
-
     int power = ina260.readPower();
 
     if(!doDischarge){
-      conntectToWifi();
+      connectToWifi();
       ThingSpeak.begin(client);
       cc.begin(localPort, client, timeZone);
       setSyncProvider(getNtpTime);
@@ -100,19 +98,7 @@ void loop() {
   }
 }
 
-/* -------------------------- */
-
-String formatValue(int val){
-  String buffer;
-  if (val < 0) val = val*-1;
-  if (val >= 1000){
-    float volts = (float)val/1000;
-    buffer = String(volts) + " ";
-  } else {
-    buffer = String(val) + " m";
-  }
-  return buffer;
-}
+/* --------------------------------- Setup --------------------------------- */
 
 void setupPins(){
   pinMode(BUTTON_A, INPUT_PULLUP);
@@ -128,6 +114,21 @@ void setupIna260(){
   Serial.println("Found INA260 chip");
   ina260.setAveragingCount(INA260_COUNT_16);
 }
+
+void setupDisplay(){
+  display.begin(0x3C, true); // Address 0x3C default
+
+  // Clear the buffer.
+  display.clearDisplay();
+  display.display();
+
+  display.setRotation(1);
+  display.setTextSize(1);
+  display.setTextColor(SH110X_WHITE);
+  display.setCursor(0,0);
+}
+
+/* ------------------------------------------------------------------------- */
 
 void updateDisplay(int percentage, int voltage, int current, int power){
   String temp;
@@ -147,21 +148,9 @@ void updateDisplay(int percentage, int voltage, int current, int power){
   display.display();
 }
 
-void setupDisplay(){
-  display.begin(0x3C, true); // Address 0x3C default
-
-  // Clear the buffer.
-  display.clearDisplay();
-  display.display();
-
-  display.setRotation(1);
-  display.setTextSize(1);
-  display.setTextColor(SH110X_WHITE);
-  display.setCursor(0,0);
-}
-
-void conntectToWifi(){
+void connectToWifi(){
   // Connect or reconnect to WiFi
+  int tries = 0;
   WiFi.mode(WIFI_STA);
   WiFi.hostname(myHostName);
   print("SSID: ");
@@ -174,6 +163,15 @@ void conntectToWifi(){
     print(".");
     display.display();
     delay(DELAY_WIFI*1e3);
+    tries++;
+    if (tries >= 10) break;
+  }
+  // goto sleep if couldn't connect
+  if (WiFi.status() != WL_CONNECTED){
+    println();
+    println("Could not connect");
+    display.display();
+    goToSleep();
   }
   blinker.detach();
   println();
@@ -183,17 +181,6 @@ void conntectToWifi(){
   print("Hostname: ");
   println(WiFi.getHostname());
   display.display();
-}
-
-bool checkButton() {
-	static bool oldButton;
-	bool but = !digitalRead(BUTTON_A);
-	delay(40);	// simple debounce button
-	if( but != oldButton){
-		oldButton = but;
-		return true && !oldButton;
-	}
-	return false;
 }
 
 void writeToThingSpeak(int percentage, int voltage, int current, int power){
@@ -219,33 +206,58 @@ void goToSleep(){
   print("Sleep time: ");
   print(String(SLEEP_TIME).c_str());
   println("m");
+  display.display();
   delay(DELAY_SCREEN2 * 1e3);
   display.oled_command(SH110X_DISPLAYOFF);
   ESP.deepSleep(SLEEP_TIME * 60 * 1e6);
 }
 
+/* ------------------------------- Functions ------------------------------- */
+
+bool checkButton() {
+  static bool oldButton;
+  bool but = !digitalRead(BUTTON_A);
+  delay(40);	// simple debounce button
+  if( but != oldButton){
+    oldButton = but;
+    return true && !oldButton;
+  }
+  return false;
+}
+
+String formatValue(int val){
+  String buffer;
+  if (val < 0) val = val*-1;
+  if (val >= 1000){
+    float volts = (float)val/1000;
+    buffer = String(volts) + " ";
+  } else {
+    buffer = String(val) + " m";
+  }
+  return buffer;
+}
+
+time_t getNtpTime(){
+  return cc.getNtpTime();
+}
+
+/* --------------------------------- Print --------------------------------- */
+
 void print(const char* value){
   Serial.print(value);
   display.print(value);
-  //display.display();
 }
 
 void println(){
   Serial.println();
   display.println();
-  //display.display();
 }
 
 void println(const char* value){
   Serial.println(value);
   display.println(value);
-  //display.display();
 }
 
 void changeState(){
   digitalWrite(ledPin, !(digitalRead(ledPin)));
-}
-
-time_t getNtpTime(){
-  return cc.getNtpTime();
 }
