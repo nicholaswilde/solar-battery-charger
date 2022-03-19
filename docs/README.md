@@ -31,7 +31,8 @@ Create [`secrets.h`](https://nicholaswilde.io/solar-battery-charger/configuratio
   arduino-cli lib install ThingSpeak "Adafruit SH110X" "Adafruit INA260 Library" Timezone
   arduino-cli compile -b esp32:esp32:featheresp32 .
   arduino-cli upload -b esp32:esp32:featheresp32 . -p /dev/ttyUSB0 .
-  screen /dev/ttyUSB0 115200)
+  screen /dev/ttyUSB0 115200
+)
 ```
 
 ## :computer: Output

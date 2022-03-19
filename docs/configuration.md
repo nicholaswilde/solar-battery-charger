@@ -8,94 +8,55 @@ the [Arduino IDE][2].
 arduino-cli config init
 ```
 
-=== "ESP8266"
-    ```shell title="Add the ESP8266 package library"
-    arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
-    ```
+```shell title="Add the ESP32 package library"
+arduino-cli config add board_manager.additional_urls https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+```
 
-    ```shell title="Check that the update addition was successful."
-    cat ~/.arduino15/arduino-cli.yaml
-    ```
-    !!! note
-        This is assuming that `arduino-cli` was installed in the home directory (`~/.arduino15`)
+```shell title="Check that the update addition was successful."
+cat ~/.arduino15/arduino-cli.yaml
+```
 
-    ```yaml title="~/.arduino15/arduino-cli.yaml"
-    board_manager:
-      additional_urls:
-        - https://arduino.esp8266.com/stable/package_esp8266com_index.json
-    ...
-    ```
+!!! note
+    This is assuming that `arduino-cli` was installed in the home directory (`~/.arduino15`)
 
-    ```shell title="Update the core index"
-    arduino-cli core update-index
-    ```
+```yaml title="~/.arduino15/arduino-cli.yaml"
+board_manager:
+  additional_urls:
+    - https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+...
+```
 
-    ```shell title="Install the ESP8266 core"
-    arduino-cli core install esp8266:esp8266
-    ```
+```shell title="Update the core index"
+arduino-cli core update-index
+```
 
-    ```shell title="Search for the huzzah board"
-    arduino-cli board search huzzah
-    ```
+```shell title="Install the ESP32 core"
+arduino-cli core install esp32:esp32
+```
 
-    ```shell title="Typical Output"
-    Board Name                      FQBN                   Platform ID
-    Adafruit Feather HUZZAH ESP8266 esp8266:esp8266:huzzah esp8266:esp8266
-    ```
+```shell title="Search for the featheresp32 board"
+arduino-cli board search featheresp32
+```
 
-    Take note of the output under `FQBN` because that is what will need to be passed
-    as the `board` (`-b`) parameter with the `arduino-cli` command. In this example,
-    the board to be used will be `esp8266:esp8266:huzzah`.
+```shell title="Typical Output"
+Board Name              FQBN                     Platform ID
+Adafruit ESP32 Feather  esp32:esp32:featheresp32 esp32:esp32
+```
 
-=== "ESP32"
-    ```shell title="Add the ESP32 package library"
-    arduino-cli config add board_manager.additional_urls https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
-    ```
-
-    ```shell title="Check that the update addition was successful."
-    cat ~/.arduino15/arduino-cli.yaml
-    ```
-
-    !!! note
-        This is assuming that `arduino-cli` was installed in the home directory (`~/.arduino15`)
-
-    ```yaml title="~/.arduino15/arduino-cli.yaml"
-    board_manager:
-      additional_urls:
-        - https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
-    ...
-    ```
-
-    ```shell title="Update the core index"
-    arduino-cli core update-index
-    ```
-
-    ```shell title="Install the ESP32 core"
-    arduino-cli core install esp32:esp32
-    ```
-
-    ```shell title="Search for the featheresp32 board"
-    arduino-cli board search featheresp32
-    ```
-
-    ```shell title="Typical Output"
-    Board Name              FQBN                     Platform ID
-    Adafruit ESP32 Feather  esp32:esp32:featheresp32 esp32:esp32
-    ```
-
-    Take note of the output under `FQBN` because that is what will need to be passed
-    as the `board` (`-b`) parameter with the `arduino-cli` command. In this example,
-    the board to be used will be `esp32:esp32:featheresp32`.
+Take note of the output under `FQBN` because that is what will need to be passed
+as the `board` (`-b`) parameter with the `arduino-cli` command. In this example,
+the board to be used will be `esp32:esp32:featheresp32`.A
 
 ```shell title="Install the required libraries"
-arduino-cli lib install ThingSpeak "Adafruit SH110X" Timezone
+arduino-cli lib install ThingSpeak "Adafruit SH110X" "Adafruit INA260 Library" Timezone
 ```
 
 ```shell title="Tested Library Versions"
-Name                   Version
-Adafruit_SH110X        2.1.6
-ThingSpeak             2.0.1
-Timezone               1.2.4
+Name                    Version
+Adafruit_SH110X         2.1.6A
+Adafruit_INA260_Library 1.5.0
+ThingSpeak              2.0.1
+Timezone                1.2.4
 ```
 
 Create a channel on [ThingSpeak](#thingspeak) and take note of the `Channel ID`,
@@ -103,55 +64,56 @@ channel `Write API Key`, and `User API Key`.
 
 Create [`secret.h`](#key-secrets) and update variables in `config.h`.
 
-=== "ESP8266"
-
-    ```shell title="Compile"
-    arduino-cli compile -b esp8266:esp8266:huzzah .
-    ```
-
-=== "ESP32"
-    ```shell title="Compile"
-    arduino-cli compile -b esp32:esp32:featheresp32 .
-    ```
+```shell title="Compile"
+arduino-cli compile -b esp32:esp32:featheresp32 .
+```
 
 !!! note
     The dot at the end of the command tells `arduino-cli` to use the sketch in
     the current directory. The name of the sketch may also be used.
 
 ```shell title="Typical Output"
-Executable segment sizes:
-ICACHE : 32768           - flash instruction cache
-IROM   : 236116          - code in flash         (default or ICACHE_FLASH_ATTR)
-IRAM   : 27273   / 32768 - code in IRAM          (IRAM_ATTR, ISRs...)
-DATA   : 1496  )         - initialized variables (global, static) in RAM/HEAP
-RODATA : 908   ) / 81920 - constants             (global, static) in RAM/HEAP
-BSS    : 25680 )         - zeroed variables      (global, static) in RAM/HEAP
-Sketch uses 265793 bytes (25%) of program storage space. Maximum is 1044464 bytes.
-Global variables use 28084 bytes (34%) of dynamic memory, leaving 53836 bytes for local variables. Maximum is 81920 bytes.
+WARNING: library Timezone claims to run on avr architecture(s) and may be incompatible with your current board which runs on esp32 architecture(s).
+Sketch uses 742601 bytes (56%) of program storage space. Maximum is 1310720 bytes.
+Global variables use 40648 bytes (12%) of dynamic memory, leaving 287032 bytes for local variables. Maximum is 327680 bytes.
 ```
 
 Be sure to compile your code before uploading it if changes have been made to
 the sketch!
 
 ```shell title="Upload the sketch to the Feather"
-arduino-cli upload -p /dev/ttyUSB0 -b esp8266:esp8266:huzzah .
+arduino-cli upload -p /dev/ttyUSB0 -b esp32:esp32:featheresp32 .
 ```
 
 ```shell title="Typical Output"
-esptool.py v3.0
+esptool.py v3.1
 Serial port /dev/ttyUSB0
-Connecting........_____.
-Chip is ESP8266EX
-Features: WiFi
-Crystal is 26MHz
-MAC: bc:dd:c2:2d:ce:0d
+Connecting....
+Chip is ESP32-D0WD-V3 (revision 3)
+Features: WiFi, BT, Dual Core, 240MHz, VRef calibration in efuse, Coding Scheme None
+Crystal is 40MHz
+MAC: 7c:87:ce:f0:88:0c
 Uploading stub...
 Running stub...
 Stub running...
+Changing baud rate to 921600
+Changed.
 Configuring flash size...
-Auto-detected Flash size: 4MB
-Compressed 269952 bytes to 198163...
-Wrote 269952 bytes (198163 compressed) at 0x00000000 in 17.5 seconds (effective 123.5 kbit/s)...
+Flash will be erased from 0x0000e000 to 0x0000ffff...
+Flash will be erased from 0x00001000 to 0x00005fff...
+Flash will be erased from 0x00010000 to 0x000c6fff...
+Flash will be erased from 0x00008000 to 0x00008fff...
+Compressed 8192 bytes to 47...
+Wrote 8192 bytes (47 compressed) at 0x0000e000 in 0.1 seconds (effective 635.7 kbit/s)...
+Hash of data verified.
+Compressed 17104 bytes to 11804...
+Wrote 17104 bytes (11804 compressed) at 0x00001000 in 0.4 seconds (effective 313.6 kbit/s)...
+Hash of data verified.
+Compressed 748480 bytes to 477080...
+Wrote 748480 bytes (477080 compressed) at 0x00010000 in 8.3 seconds (effective 722.5 kbit/s)...
+Hash of data verified.
+Compressed 3072 bytes to 128...
+Wrote 3072 bytes (128 compressed) at 0x00008000 in 0.1 seconds (effective 439.5 kbit/s)...
 Hash of data verified.
 
 Leaving...
@@ -163,7 +125,7 @@ screen /dev/ttyUSB0 115200
 ```
 
 !!! note
-    Make sure the baud rate matches the `BAUDE_RATE` in the sketch!
+    Make sure the baud rate matches the `BAUDE_RATE` in the config.h!
 
 The `recharge` mode is the default mode during boot.
 
@@ -171,28 +133,32 @@ The `A` button on the OLED may be held down during boot to choose the `discharge
 will keep the OLED on and display the battery measurements.
 
 === "Mode: recharge"
-
-    ```shell title="Typical Output"
+    ```shell
+    Mode: recharge
     SSID: MySSID
     Connecting.........
     Connected!
     IP: 192.168.1.77
     Hostname: Feather
     Battery:
-     Level: 745
      Percentage: 90%
-     Voltage: 4.04V
+     Voltage: 4.04 V
+     Current: 700 mA
+     Power: 2.6 W
     Channel:
      Number: 1642208
      Status: success
     Sleep time: 15m
     ```
+
 === "Mode: discharge"
-    ```shell title="Typical Output"
+    ```shell
+    Mode: discharge
     Battery:
-     Level: 745
      Percentage: 90%
-     Voltage: 4.04V
+     Voltage: 4.04 V
+     Current: 700 mA
+     Power: 2.6 W
     ```
 
 Kill the monitoring screen by pressing <kbd>Ctrl</kbd> + <kbd>a</kbd>
@@ -272,16 +238,10 @@ be stored in the sketch directory that sets the defaults for that sketch.
 The `sketch.json` file may be generated by using the
 [arduino-cli board attach][5] command.
 
-=== "ESP8266"
-    ```shell
-    arduino-cli board attach -b esp8266:esp8266:huzzah .
-    arduino-cli board attach -p /dev/ttyUSB0 .
-    ```
-=== "ESP32"
-    ```shell
-    arduino-cli board attach -b esp32:esp32:featheresp32 .
-    arduino-cli board attach -p /dev/ttyUSB0 .
-    ```
+```shell
+arduino-cli board attach -b esp32:esp32:featheresp32 .
+arduino-cli board attach -p /dev/ttyUSB0 .
+```
 
 Attaching the board didn't work for me because `arduino-cli` didn't recognize
 the Feather attached to my port for some reason and so I had to manually add
@@ -292,25 +252,14 @@ the port.
 
 The documentation doesn't show what a typical `sketch.json` looks like so here is one:
 
-=== "ESP8266"
-    ```json title="sketch.json"
-    {
-      "cpu": {
-        "fqbn": "esp8266:esp8266:huzzah",
-        "port": "serial:///dev/ttyUSB0"
-      }
-    }
-    ```
-
-=== "ESP32"
-    ```json title="sketch.json"
-    {
-      "cpu": {
-        "fqbn": "es32:esp32:featheresp32",
-        "port": "serial:///dev/ttyUSB0"
-      }
-    }
-    ```
+```json title="sketch.json"
+{
+  "cpu": {
+    "fqbn": "es32:esp32:featheresp32",
+    "port": "serial:///dev/ttyUSB0"
+  }
+}
+```
 
 ## :speech_balloon: ThingSpeak
 

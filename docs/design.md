@@ -2,28 +2,31 @@
 
 ## :desktop_computer: Hardware
 - 15X [Energizer LED Solar pathway Lights][1]
-- 1X [Adafruit Feather HUZZAH ESP8266][2] or [Adafruit Feather HUZZAH32 ESP32][24]
+- 1X [Adafruit Feather HUZZAH32 ESP32][24]
 - 1X [Adafruit 128x64 OLED FeatherWing][3]
+- 1X [Adafruit INA260 Current + Voltage + Power Sensor Breakout][25]
+- 1X [Adafruit Universal USB / DC / Solar Lithium Ion/Polymer charger - bq24074][26]
+- 1X [Adafruit PowerBoost 1000 Basic - 5V USB Boost][28]
 - 2X [IMREN 3.7v 18650 Rechargeable Battery 3000mAh][4]
 - 1X [NITECORE UMS2 Charger][5]
-- 1X [HiLetgo TP4056 Type-C USB 5V 1A 18650 Lithium Battery Charger Module][6]
-- 1X [DC-DC 0.9V-5V to USB 5V Boost Step-up Power Supply Module Booster Circuit Board][7]
 - 1X [18650 2 Battery Holder 7.4V][8]
-- 1X [1N4007 Schottky Diode][9]
 - 1X [EBL 9V Li-ion Battery Charger][10]
 - 1X [CT-Energy Lithium Coin Button Batteries Charger][11]
-- 1X [220kΩ Resistor][13]
-- 1X [1MΩ Resistor][13]
+- 1X [10kΩ Resistor][13]
 - 1X [Adafruit Feather Stacking Headers - 12-pin and 16-pin female headers][18]
-- 1X [DEYUE PCB 7cm x 9cm][19]
 - 2X [Cylewet 5mm High Knob Vertical Slide Switch 3 Pin 2 Position 1P2T SPDT Panel][20]
 - 4X [Sutemribor M2.5 x 10mm F-F Hex Brass Spacer Standoff & Screw][21]
-- 1X [AiTrip 3 Pin DC Power Connector PCB Mount Female Plug Jack 5.5mm][22]
+- 1X [ELEGOO 3pcs Breadboard 830 Point Solderless Prototype PCB Board Kit][27]
 
 !!! warning
-    The current design uses a boost converter that only has rear pins which
-    causes the boost converter to pivot when plugging in a charging USB cable
-    into it.
+    The current design does not have any protection circuit and so the voltage might
+    dip below the rated voltage of the batteries.
+
+I opted to drop support for the `ESP8266` for a few reasons:
+- The need to short pin `16` in order to wake the Feather from deeps sleep removes the
+  ability to use button `B` on the OLED screen.
+- Button `A` on the OLED screen was tied to the Feather LED.
+- There is no way to determine the method that was uesd to wake the Feather.
 
 ### :zap: Electronics
 
@@ -61,29 +64,25 @@
 
 ## :electric_plug: Circuit
 
-- Connect the `RST` pin to pin `16` to allow the [Feather to wake from deep sleep][16].
-- Create a voltage divider and connect the `A0` analog pin to the connection
-  point.
-- Connect a 1P2T switch which allows power from the solar panel and no power to
-  the output and vice versa. File the legs to be narrow enough to fit into the
-  board holes.
-- Connect a 1P2T switch which allows the grounding of the Feather to turn it
-  off. File the legs to be narrow enough to fit into the board holes.
-- Insert a schottky diode between the solar panel and the `TP4056` input.
-- Drill two 0.109" holes in the circuit board to mount the battery holder.
-- Clip off the outset leg of the power connector and file the edges of the
-  remaining two legs until they are narrow enough to fit inside of the
-  PCB mounting holes.
+- Connect the output of the battery to the `Vin+` of the INA260.
+- Connect the `Vin-` of the INA260 to the `LIPO` pin of the bq24074.
+- Connect the `BAT` pin of the Feather to the `OUT` pin of the bq24074.
+- Connect a 1P2T switch to the `EN` pin of the Feather to ground.
+- Connect a 1P2T switch to the `EN` pin of the Powerboost and a `10kΩ` resistor.
+- Connect pin 33 of the Feather to a node between the Powerboost switch and the `10kΩ` resistor.
+- Connect all `GND` pins together.
+- Connect the `SCL` and `SCA` pins of the Feather to the `SCL` and `SCA` pins of the INA260.
+- Connect the `3V` pin of the Feather to the `VCC` pin of the INA260.
 
 ![](./assets/images/circuit.png)
 
 Circuits made with [Circuit Diagram](https://www.circuit-diagram.org/)
 
-!!! note
+!!! warning
     The li-ion batteries are wired in parallel even though the 2 battery holder
     come wired in series.
 
-!!! note
+!!! warning
     The JST pins, depending on where they are purchased, may be backwards in
     terms of the wiring. See [this link][23] to determine the correct wiring
     according to IoT convention.
@@ -119,3 +118,7 @@ the wires toward you, the red is on the right.
 [22]: https://www.amazon.com/dp/B081DYQSC9/
 [23]: https://docs.particle.io/tutorials/learn-more/batteries/
 [24]: https://www.adafruit.com/product/3405
+[25]: https://www.adafruit.com/product/4226
+[26]: https://www.adafruit.com/product/4755
+[27]: https://www.amazon.com/dp/B01EV6LJ7G/
+[28]: https://www.adafruit.com/product/2030/
