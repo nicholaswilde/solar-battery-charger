@@ -12,7 +12,8 @@
 - Visually monitor the battery voltage, current, and capacity during discharge.
 - Turn on and off the Powerboost 1000 Basic using button `A` on the OLED.
 - Display the current voltage, current, power, and percentage by pressing the
-  `B` button on the OLED without uploading to an online service.
+  `A` button on the OLED without uploading to an online service when the
+  Feather is in a deep sleep.
 
 ## :frame_with_picture: Background
 
