@@ -17,10 +17,11 @@
 - 2X [Cylewet 5mm High Knob Vertical Slide Switch 3 Pin 2 Position 1P2T SPDT Panel][20]
 - 4X [Sutemribor M2.5 x 10mm F-F Hex Brass Spacer Standoff & Screw][21]
 - 1X [ELEGOO 3pcs Breadboard 830 Point Solderless Prototype PCB Board Kit][27]
+- 1X [Anmbest 5PCS 1S 3.7V 4A 18650 Charger PCB BMS Protection Board][29]
 
-!!! warning
-    The current design does not have any protection circuit and so the voltage might
-    dip below the rated voltage of the batteries.
+!!! note
+    If the output from the battery turns off, it may be because the BMS needs to be
+    reset. This may be done by shorting the `P-` and `B-` on the BMS.
 
 I opted to drop support for the `ESP8266` for a few reasons:
 - The need to short pin `16` in order to wake the Feather from deeps sleep removes the
@@ -48,6 +49,27 @@ I opted to drop support for the `ESP8266` for a few reasons:
   ![](./assets/images/panel-back.jpg){width=480}
 </figure>
 
+### :battery: BMS
+
+The BMS is really small and can be difficult to mount and use. I thought about hot gluing
+it to the battery holder and then soldering the wires to it directly. However, I opted
+against it because I was too afraid that the wires soldered to the `P+` and `P-` and
+going to the rest of the breadboard would break off easily. Therefore, I soldered pins
+to the BMS pads and connected it to the system via the breadboard.
+
+<figure Markdown>
+  ![](./assets/images/bms-1.jpg){width=480}
+</figure>
+
+I used the standard header pins that come with a lot of the Arduino type boards and just
+removed the plastic spacer. I then added pre-tinned the pins as well as the BMS pads. I
+then inserted the pins into the breadboard at the correct locations then clamped the
+outer pins to the BMS using a set of helping hands. Then soldered the pins to the pads.
+
+<figure Markdown>
+  ![](./assets/images/bms-2.jpg){width=480}
+</figure>
+
 ## :robot: Services
 - [IFTTT](https://ifttt.com/)
 - [ThingSpeak](https://thingspeak.com/)
@@ -73,6 +95,7 @@ I opted to drop support for the `ESP8266` for a few reasons:
 - Connect all `GND` pins together.
 - Connect the `SCL` and `SCA` pins of the Feather to the `SCL` and `SCA` pins of the INA260.
 - Connect the `3V` pin of the Feather to the `VCC` pin of the INA260.
+- Connect the BMS in between the battery, ground, and `V+` of the INA260.
 
 ![](./assets/images/circuit.png)
 
@@ -122,3 +145,4 @@ the wires toward you, the red is on the right.
 [26]: https://www.adafruit.com/product/4755
 [27]: https://www.amazon.com/dp/B01EV6LJ7G/
 [28]: https://www.adafruit.com/product/2030/
+[29]: https://www.amazon.com/dp/B07KSPYMJ2/
