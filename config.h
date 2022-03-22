@@ -2,22 +2,23 @@
 
 // Change these parameters
 #define BAUD_RATE 115200        // baud rate used for Serial console
-#define R1 1000000              // resistor 1 on the voltage divider (Ω)
-#define R2 220000               // resistor 2 on the voltage divider (Ω)
+
+// ThingSpeak fields
 #define FIELD_NO_PERCENTAGE 1   // field number of battery percentage
-#define FIELD_NO_LEVEL 2        // field number of battery level
+#define FIELD_NO_CURRENT 2      // field number of battery level
 #define FIELD_NO_VOLTAGE 3      // field number of battery voltage
+#define FIELD_NO_POWER 4        // field number of battery power
+
 #define SLEEP_TIME 15           // the time the Feather goes into a deep sleep (m)
 #define VOLTAGE_MAX 4.2         // max voltage of lipo battery (V)
 #define VOLTAGE_MIN 2.64        // min voltage of lipo battery (V)
 
-#if defined(ESP8266)
-  #define BUTTON_A  2
-  #define ANALOG_PIN_NO A0      // analog pin number
-#elif defined(ESP32) && !defined(ARDUINO_ADAFRUIT_FEATHER_ESP32S2)
-  #define BUTTON_A 15
-  #define ANALOG_PIN_NO A2     // analog pin number
-#endif
+// Pins
+#define BUTTON_A 15
+#define BUTTON_POWERBOOST 33
+
+const int batteryCapacity = 3000; // Battery capacity in mAh
+const int batteryQuantity = 2;    // Quantity of batteries
 
 // clear the channel if it's a new day.
 bool doClear = false;
@@ -47,6 +48,7 @@ const char * myUserAPIKey = SECRET_USER_APIKEY;
 
 unsigned int localPort = 8888;  // local port to listen for UDP packets
 const int ledPin = LED_BUILTIN;
+const long interval = 1;        // interval for updating discharge loop
 
 #define DELAY_WIFI 5            // delay between samples (s)
 #define DELAY_SCREEN1 2         // delay after screen 1 (s)

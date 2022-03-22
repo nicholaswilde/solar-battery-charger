@@ -41,6 +41,7 @@ nav:
       - v2: test/v2.md
       - v3: test/v3.md
       - v4: test/v4.md
+      - wake: test/wake.md
       - wifi: test/wifi.md
       - wifimanager: test/wifimanager.md
   - Troubleshooting: troubleshooting.md

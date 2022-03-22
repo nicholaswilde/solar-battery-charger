@@ -6,11 +6,11 @@
 
 A solar battery charger to charge lithium ion (li-ion) 18650, 9V, and coin batteries and Ni-MH AA and AAA batteries.
 
-<img src="./assets/images/charger.jpg" width="480">
+<img src="./assets/images/panel-front.jpg" width="480">
 
 <img src="./assets/images/front.jpg" width="480">
 
-<img src="./assets/images/back.jpg" width="480">
+<img src="./assets/images/wires.jpg" width="480">
 
 <img src="./assets/images/thingspeak.png" width="480">
 
@@ -22,31 +22,13 @@ Create [`secrets.h`](https://nicholaswilde.io/solar-battery-charger/configuratio
 
 ```shell
 (
+  sudo apt install python3-serial screen
   brew install arduino-cli
   arduino-cli config init
-  arduino-cli config add board_manager.additional_urls http://arduino.esp8266.com/stable/package_esp8266com_index.json
   arduino-cli config add board_manager.additional_urls https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
   arduino-cli core update-index
-  arduino-cli core install esp8266:esp8266 esp32:esp32
-  arduino-cli lib install ThingSpeak "Adafruit SH110X" Timezone
-)
-```
-
-### ESP8266
-
-```shell
-(
-  arduino-cli compile -b esp8266:esp8266:huzzah .
-  arduino-cli upload -b esp8266:esp8266:huzzah . -p /dev/ttyUSB0 .
-  screen /dev/ttyUSB0 115200
-)
-```
-
-### ESP32
-
-```shell
-(
-  sudo apt install python3-serial
+  arduino-cli core install esp32:esp32
+  arduino-cli lib install ThingSpeak "Adafruit SH110X" "Adafruit INA260 Library" Timezone
   arduino-cli compile -b esp32:esp32:featheresp32 .
   arduino-cli upload -b esp32:esp32:featheresp32 . -p /dev/ttyUSB0 .
   screen /dev/ttyUSB0 115200
@@ -58,15 +40,17 @@ Create [`secrets.h`](https://nicholaswilde.io/solar-battery-charger/configuratio
 Mode: recharge
 
 ```shell
+Mode: recharge
 SSID: MySSID
 Connecting.........
 Connected!
 IP: 192.168.1.77
 Hostname: Feather
 Battery:
- Level: 745
  Percentage: 90%
- Voltage: 4.04V
+ Voltage: 4.04 V
+ Current: 700 mA
+ Power: 2.6 W
 Channel:
  Number: 1642208
  Status: success
@@ -76,10 +60,12 @@ Sleep time: 15m
 Mode: discharge
 
 ```shell
+Mode: discharge
 Battery:
- Level: 745
  Percentage: 90%
- Voltage: 4.04V
+ Voltage: 4.04 V
+ Current: 700 mA
+ Power: 2.6 W
 ```
 
 ---

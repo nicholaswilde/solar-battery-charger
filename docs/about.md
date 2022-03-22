@@ -9,6 +9,11 @@
 - Monitor the rate of charging via an online IOT service such as
   [ThingSpeak][1] or [Adafruit IO][2].
 - Learn about solar cells, panels, li-ion, and [Ni-MH batteries][3].
+- Visually monitor the battery voltage, current, and capacity during discharge.
+- Turn on and off the Powerboost 1000 Basic using button `A` on the OLED.
+- Display the current voltage, current, power, and percentage by pressing the
+  `A` button on the OLED without uploading to an online service when the
+  Feather is in a deep sleep.
 
 ## :frame_with_picture: Background
 
@@ -30,7 +35,7 @@ batteries and then use the charged li-ion batteries to charge Ni-MH batteries
 via existing USB chargers. The li-ion batteries are to be disconnectable from
 the solar panel to make more portable to recharge other devices and batteries.
 
-Monitoring is handled by an Adafruit Feather Huzzah (Feather) that has built in
+Monitoring is handled by an Adafruit Feather HUZZAH32 (Feather) that has built in
 wifi support which makes it easy to monitor remotely as well as collect data.
 The board will monitor when the li-ion battery is charging and when charging is
 complete. It can also send notifications when the charge is complete via
@@ -38,15 +43,16 @@ ThingSpeak and IFTTT.
 
 ## :raised_hand: Current Limitations
 
-- As of the time of this writing, charging the li-ion batteries and using the
-  USB port need to happen separately. Therefore, charging the li-ion batteries
-  and charging other things with the USB port can't happen at the same time.
-- The Feather is being powered by the charging li-ion batteries and so the
-  Feather won't turn on unless there is enough juice in the batteries.
-- The Feather is draining the charging li-ion batteries as they are charging.
-- The voltage divider used to measure the battery voltage is constantly
-  draining the battery.
+- The Feather is using some power during the charging of the li-ion batteries.
+- The Feather turns off during high current discharge. See [issue #39][4].
+- I have had issues with two bq24074 chargers where it would suddenly stop
+  charting the batteries. The voltage reading of the `LIPO` pin would
+  oscillate between 0 and 3V. I suspect the IC was damaged due to a too
+  high of voltage being output by the panel. This still needs to be
+  verified.
 
 [1]: https://thingspeak.com/
 [2]: https://io.adafruit.com/
 [3]: https://en.wikipedia.org/wiki/Nickel%E2%80%93metal_hydride_battery
+[4]: https://github.com/nicholaswilde/solar-battery-charger/issues/39
+[5]: https://github.com/nicholaswilde/solar-battery-charger/issues/40
