@@ -53,7 +53,7 @@ actually outputting more than 1A.
   ![](./assets/images/panel-back.jpg){width=480}
 </figure>
 
-### :battery: BMS
+### :satellite: BMS
 
 The BMS is really small and can be difficult to mount and use. I thought about hot gluing
 it to the battery holder and then soldering the wires to it directly. However, I opted
@@ -74,7 +74,7 @@ outer pins to the BMS using a set of helping hands. Then soldered the pins to th
   ![](./assets/images/bms-2.jpg){width=480}
 </figure>
 
-### Battery Holder
+### :battery: Battery Holder
 
 The battery holder comes wired in series but this design requires that the batteries
 be wired in parallel. Connect the positive terminals of both batteries together and
