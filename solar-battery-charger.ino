@@ -37,10 +37,9 @@ ClearChannel cc;
 
 #define Threshold 40 /* Greater the value, more the sensitivity */
 unsigned long previousMillis = 0;
+bool doWake;
 time_t getNtpTime();
 touch_pad_t touchPin;
-
-
 
 void setup() {
   Serial.begin(BAUD_RATE);
@@ -49,12 +48,8 @@ void setup() {
   setupPins();
   setupDisplay();
   setupIna260();
-  print_wakeup_reason();
-  print_wakeup_touchpad();
-  //Setup interrupt on Touch Pad 3 (GPIO15)
-  touchAttachInterrupt(T3, callback, Threshold);
-  // configure Touchpad as wakeup source
-  esp_sleep_enable_touchpad_wakeup();
+  doWake = (esp_sleep_get_wakeup_cause()==ESP_SLEEP_WAKEUP_EXT0);
+  esp_sleep_enable_ext0_wakeup(GPIO_NUM_15,LOW);
 }
 
 void loop() {
@@ -63,7 +58,8 @@ void loop() {
   // toggle Powerboost
   if (checkButton()) digitalWrite(BUTTON_POWERBOOST, !digitalRead(BUTTON_POWERBOOST));
 
-  if (currentMillis - previousMillis >= interval*1e3) {
+  if (currentMillis - previousMillis < interval*1e3) return;
+  //if (currentMillis - previousMillis >= interval*1e3) {
     previousMillis = currentMillis;
 
     display.clearDisplay();
@@ -76,21 +72,21 @@ void loop() {
     // Determine the mode by sign of current
     if (current<0){
       println("recharge");
-      current = -1*current;
       doDischarge = false;
     } else {
       println("discharge");
       doDischarge = true;
     }
+    current = abs(current);
 
     int voltage = ina260.readBusVoltage();
     int percentage;
     int power = ina260.readPower();
 
-    if(!doDischarge)executeRecharge(power, voltage, current, power);
+    if(!doDischarge && !doWake)executeRecharge(percentage, voltage, current, power);
 
     updateDisplay(percentage, voltage, current, power);
-  }
+  //}
 }
 
 /* --------------------------------- Setup --------------------------------- */
@@ -225,6 +221,7 @@ void goToSleep(){
 
 void callback(){
   //placeholder callback function
+  Serial.println("callback called");
 }
 
 void print_wakeup_reason(){
@@ -245,14 +242,29 @@ void print_wakeup_reason(){
   }
 }
 
+int getWakeupPin(){
+  Serial.println(esp_sleep_get_touchpad_wakeup_status());
+  switch(esp_sleep_get_touchpad_wakeup_status()){
+    case 0  : return 4;
+    case 1  : return 0;
+    case 2  : return 2;
+    case 3  : return 15;
+    case 4  : return 13;
+    case 5  : return 12;
+    case 6  : return 14;
+    case 7  : return 27;
+    case 8  : return 33;
+    case 9  : return 32;
+    default : return -1;
+  }
+}
+
 /*
 Method to print the touchpad by which ESP32
 has been awaken from sleep
 */
 void print_wakeup_touchpad(){
-  touchPin = esp_sleep_get_touchpad_wakeup_status();
-
-  switch(touchPin){
+  switch(esp_sleep_get_touchpad_wakeup_status()){
     case 0  : Serial.println("Touch detected on GPIO 4"); break;
     case 1  : Serial.println("Touch detected on GPIO 0"); break;
     case 2  : Serial.println("Touch detected on GPIO 2"); break;
