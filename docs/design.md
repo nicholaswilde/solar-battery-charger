@@ -15,7 +15,6 @@
 - 1X [10kΩ Resistor][13]
 - 1X [Adafruit Feather Stacking Headers - 12-pin and 16-pin female headers][18]
 - 2X [Cylewet 5mm High Knob Vertical Slide Switch 3 Pin 2 Position 1P2T SPDT Panel][20]
-- 4X [Sutemribor M2.5 x 10mm F-F Hex Brass Spacer Standoff & Screw][21]
 - 1X [ELEGOO 3pcs Breadboard 830 Point Solderless Prototype PCB Board Kit][27]
 - 1X [Anmbest 5PCS 1S 3.7V 4A 18650 Charger PCB BMS Protection Board][29]
 
@@ -24,25 +23,30 @@
     reset. This may be done by shorting the `P-` and `B-` on the BMS.
 
 I opted to drop support for the `ESP8266` for a few reasons:
-- The need to short pin `16` in order to wake the Feather from deeps sleep removes the
-  ability to use button `B` on the OLED screen.
+
+- The need to short pin `16` in order to wake the Feather from deeps sleep
+  removes the ability to use button `B` on the OLED screen.
 - Button `A` on the OLED screen was tied to the Feather LED.
 - There is no way to determine the method that was uesd to wake the Feather.
 
 ### :zap: Electronics
+
+On the bq24074, carefully cut the `1.0A` [jumper][30] and solder the `1.5A` to
+increase the current limit. This needs to be verified that the panel is
+actually outputting more than 1A.
 
 <figure Markdown>
   ![](./assets/images/front.jpg){width=480}
 </figure>
 
 <figure Markdown>
-  ![](./assets/images/back.jpg){width=480}
+  ![](./assets/images/wires.jpg){width=480}
 </figure>
 
 ### :sunny: Panel
 
 <figure Markdown>
-  ![](./assets/images/charger.jpg){width=480}
+  ![](./assets/images/panel-front.jpg){width=480}
 </figure>
 
 <figure Markdown>
@@ -68,6 +72,29 @@ outer pins to the BMS using a set of helping hands. Then soldered the pins to th
 
 <figure Markdown>
   ![](./assets/images/bms-2.jpg){width=480}
+</figure>
+
+### Battery Holder
+
+The battery holder comes wired in series but this design requires that the batteries
+be wired in parallel. Connect the positive terminals of both batteries together and
+add a negative lead wire from the end of the holder that connects the two batteries.
+Insert one of the batteries in reverse where the spring is touching the positive
+end of the battery.
+
+!!! warning
+    Inserting the batteries incorrectly will cause them to short!
+
+<figure Markdown>
+  ![](./assets/images/battery-front.jpg){width=480}
+</figure>
+
+<figure Markdown>
+  ![](./assets/images/battery-left.jpg){width=480}
+</figure>
+
+<figure Markdown>
+  ![](./assets/images/battery-right.jpg){width=480}
 </figure>
 
 ## :robot: Services
@@ -146,3 +173,4 @@ the wires toward you, the red is on the right.
 [27]: https://www.amazon.com/dp/B01EV6LJ7G/
 [28]: https://www.adafruit.com/product/2030/
 [29]: https://www.amazon.com/dp/B07KSPYMJ2/
+[30]: https://learn.adafruit.com/adafruit-bq24074-universal-usb-dc-solar-charger-breakout/pinouts#solder-jumpers-3071584-6

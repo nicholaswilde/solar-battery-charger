@@ -45,8 +45,11 @@ ThingSpeak and IFTTT.
 
 - The Feather is using some power during the charging of the li-ion batteries.
 - The Feather turns off during high current discharge. See [issue #39][4].
-- The charging current becomes high (~500 mA) only when the battery voltage is
-  above a certain threshold (~3 VDC). See [issue #40][5].
+- I have had issues with two bq24074 chargers where it would suddenly stop
+  charting the batteries. The voltage reading of the `LIPO` pin would
+  oscillate between 0 and 3V. I suspect the IC was damaged due to a too
+  high of voltage being output by the panel. This still needs to be
+  verified.
 
 [1]: https://thingspeak.com/
 [2]: https://io.adafruit.com/
