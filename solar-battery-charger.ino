@@ -24,6 +24,7 @@
 #include <TimeLib.h>
 #include <Timezone.h>           // https://github.com/JChristensen/Timezone
 #include <Ticker.h>
+#include <ESP_Google_Sheet_Client.h>
 #include "secrets.h"
 #include "config.h"
 #include "src/ClearChannel.h"
@@ -59,34 +60,33 @@ void loop() {
   if (checkButton()) digitalWrite(BUTTON_POWERBOOST, !digitalRead(BUTTON_POWERBOOST));
 
   if (currentMillis - previousMillis < interval*1e3) return;
-  //if (currentMillis - previousMillis >= interval*1e3) {
-    previousMillis = currentMillis;
 
-    display.clearDisplay();
-    display.setCursor(0,0);
+  previousMillis = currentMillis;
 
-    int current = ina260.readCurrent();
+  display.clearDisplay();
+  display.setCursor(0,0);
 
-    print("Mode: ");
+  int current = ina260.readCurrent();
 
-    // Determine the mode by sign of current
-    if (current<0){
-      println("recharge");
-      doDischarge = false;
-    } else {
-      println("discharge");
-      doDischarge = true;
-    }
-    current = abs(current);
+  print("Mode: ");
 
-    int voltage = ina260.readBusVoltage();
-    int percentage;
-    int power = ina260.readPower();
+  // Determine the mode by sign of current
+  if (current<0){
+    println("recharge");
+    doDischarge = false;
+  } else {
+    println("discharge");
+    doDischarge = true;
+  }
+  current = abs(current);
 
-    if(!doDischarge && !doWake)executeRecharge(percentage, voltage, current, power);
+  int voltage = ina260.readBusVoltage();
+  int percentage;
+  int power = ina260.readPower();
 
-    updateDisplay(percentage, voltage, current, power);
-  //}
+  if(!doDischarge && !doWake)executeRecharge(percentage, voltage, current, power);
+
+  updateDisplay(percentage, voltage, current, power);
 }
 
 /* --------------------------------- Setup --------------------------------- */
@@ -127,6 +127,10 @@ void executeRecharge(int percentage, int voltage, int current, int power){
   cc.begin(localPort, client, timeZone);
   setSyncProvider(getNtpTime);
   setSyncInterval(SYNC_INTERVAL);
+  //GSheet.setTokenCallback(tokenStatusCallback);
+
+  GSheet.begin(myClientEmail, myProjectId, myPrivateKey);
+
   String date = ThingSpeak.readCreatedAt(myChannelNumber, myWriteAPIKey);
   if (doClear && cc.shouldClearChannel(date)) cc.clearChannel(myUserAPIKey);
   display.clearDisplay();
@@ -134,6 +138,7 @@ void executeRecharge(int percentage, int voltage, int current, int power){
   delay(DELAY_SCREEN1*1e3);
   updateDisplay(percentage, voltage, current, power);
   writeToThingSpeak(percentage, voltage, current, power);
+  if (doSheets) writeToSheets(percentage, voltage, current, power);
   goToSleep();
 }
 
@@ -188,6 +193,42 @@ void connectToWifi(){
   print("Hostname: ");
   println(WiFi.getHostname());
   display.display();
+}
+
+void writeToSheets(int percentage, int voltage, int current, int power){
+  Serial.println("Sheet");
+  bool ready = GSheet.ready();
+  FirebaseJson response;
+  char timeToDisplay[30];
+  sprintf(timeToDisplay, "%02d-%02d-%02dT%02d:%02d:%02dZ", year(), month(), day(), hour(), minute(), second());
+  FirebaseJson valueRange;
+
+  valueRange.add("majorDimension", "COLUMNS");
+  valueRange.set("values/[0]/[0]", timeToDisplay);
+  valueRange.set("values/[1]/[0]", percentage);
+  valueRange.set("values/[2]/[0]", voltage);
+  valueRange.set("values/[3]/[0]", current);
+  valueRange.set("values/[4]/[0]", power);
+  Serial.print(" Sheet: ");
+  Serial.println(mySpreadsheetId);
+  Serial.print(" Status: ");
+  bool success = GSheet.values.append(&response, mySpreadsheetId, "Sheet1!A2", &valueRange);
+  if (success) {
+    Serial.println("success");
+  } else {
+    Serial.println("error");
+    response.toString(Serial, true);
+    Serial.println();
+  }
+}
+
+void tokenStatusCallback(TokenInfo info){
+  if (info.status == esp_signer_token_status_error){
+    Serial.printf("Token info: type = %s, status = %s\n", GSheet.getTokenType(info).c_str(), GSheet.getTokenStatus(info).c_str());
+    Serial.printf("Token error: %s\n", GSheet.getTokenError(info).c_str());
+  } else{
+    Serial.printf("Token info: type = %s, status = %s\n", GSheet.getTokenType(info).c_str(), GSheet.getTokenStatus(info).c_str());
+  }
 }
 
 void writeToThingSpeak(int percentage, int voltage, int current, int power){

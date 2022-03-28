@@ -179,6 +179,11 @@ credentials that aren't updated in GitHub. The file is ignored in `.gitignore`.
 #define SECRET_HOSTNAME "Feather"
 
 #define SECRET_USER_APIKEY "ABC"               // replace ABC with ThingSpeak User API Key
+
+#define PROJECT_ID "esp-signer-345301"         // taken from "project_id" key in the Google Cloud Platform JSON file.
+#define CLIENT_EMAIL "esp-signer-sa@esp-signer-xxxxxx.iam.gserviceaccount.com" // taken from "client_email" key in the Google Cloud Platform JSON file.
+#define SPREADSHEET_ID "ABCDEFG"               // Google Sheet ID.
+#define PRIVATE_KEY "-----BEGIN PRIVATE KEY-----\nxxxxxxxxxxxxx\n-----END PRIVATE KEY-----\n" // taken from "private_key" key in the Google Cloud Platform JSON file.
 ```
 
 ```C++ title="Secrets can be used in sketches"
@@ -193,32 +198,18 @@ specifies (`arduino_secrets.h`) because this project does not use an Arduino.
 [Task](#task) may also be used to generate `secrets.h`.
 
 ```shell
-task secrets SSID=MySSID PASS=MyPassword CH_ID=0000000 WRITE_APIKEY=XYZ USER_APIKEY=ABC
+task secrets SSID=MySSID PASS=MyPassword CH_ID=0000000 WRITE_APIKEY=XYZ USER_APIKEY=ABC \
+PROJECT_ID=esp-signer-345301 \
+CLIENT_EMAIL="esp-signer-sa@esp-signer-xxxxxx.iam.gserviceaccount.com" \
+SPREADSHEET_ID="1RtgkJY_LvvPQxOhoOLC8yOMEsfU8A4mKlcxptYz1Yu4" \
+PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nxxxxxxxxxxxxx\n-----END PRIVATE KEY-----\n"
 ```
 
 ### Overwrite Sketch Header
 
 Instead of using the `secrets.h` file, the include may be commented out at the top of
-the sketch and the variable values may be manually written in.
-
-```C++ title="solar-battery-charger.ino"
-
-//#include "secrets.h"
-
-// Pulled from secrets.h
-//const char ssid[] = SECRET_SSID; // your network SSID (name)
-const char ssid[] = MySSID;
-//const char pass[] = SECRET_PASS; // your network password
-const char pass[] = MyPassword;
-//unsigned long myChannelNumber = SECRET_CH_ID;
-unsigned long myChannelNumber = 0000000;
-//const char * myWriteAPIKey = SECRET_WRITE_APIKEY;
-const char * myWriteAPIKey = "XYZ"
-//const char * myUserAPIKey = SECRET_USER_APIKEY;
-const char * myUserAPIKey = "ABC"
-//const char * myHostName = SECRET_HOSTNAME;
-const char * myHostName = "Feather";
-```
+the sketch and the variable values may be manually written in the header of
+`solar-battery-charger.ino`
 
 !!!warning
     This method is not recommended if the sketch is going to be uploaded to a repository!
@@ -290,6 +281,20 @@ Add whichever visualizations and widgets you'd like.
 Notifications from [IFTTT][8] can be setup by connecting ThingSpeak to IFTTT.
 See [these instructions][9].
 
+## :page_facing_up: Google Sheets
+
+The sketch can also upload data to a Google Sheet using the [ESP-Google-Sheet-Client][13] library.
+Checkout the [documentation][14] for how to setup the library.
+
+Fill out the variables in the `secrets.h` file.
+
+Set `doSheets` in the `config.h` file to `true` to enable the uploading of values to Sheets.
+
+!!! note
+    If the Google Sheet is created in a normal Google account, you'll need to share the Sheet with
+    the email address specified in `CLIENT_EMAIL` in order to write to it using the Google Cloud
+    Platform.
+
 ## :robot: Task
 
 [go-task][10] may be used to automate some of the commands.
@@ -327,3 +332,5 @@ task
 [10]: https://github.com/go-task/task
 [11]: https://www.a2hosting.com/kb/security/ssl/a2-hostings-ssl-certificate-fingerprints
 [12]: https://www.mathworks.com/help/thingspeak/clearchannel.html
+[13]: https://github.com/mobizt/ESP-Google-Sheet-Client
+[14]: https://github.com/mobizt/ESP-Google-Sheet-Client#prerequisites
