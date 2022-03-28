@@ -48,13 +48,14 @@ as the `board` (`-b`) parameter with the `arduino-cli` command. In this example,
 the board to be used will be `esp32:esp32:featheresp32`.A
 
 ```shell title="Install the required libraries"
-arduino-cli lib install ThingSpeak "Adafruit SH110X" "Adafruit INA260 Library" Timezone
+arduino-cli lib install ThingSpeak "Adafruit SH110X" "Adafruit INA260 Library" Timezone ESP-Google-Sheet-Client
 ```
 
 ```shell title="Tested Library Versions"
 Name                    Version
 Adafruit_SH110X         2.1.6A
 Adafruit_INA260_Library 1.5.0
+ESP-Google-Sheet-Client 1.0.0
 ThingSpeak              2.0.1
 Timezone                1.2.4
 ```
