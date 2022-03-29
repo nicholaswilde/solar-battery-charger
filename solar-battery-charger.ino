@@ -38,6 +38,7 @@ ClearChannel cc;
 
 unsigned long previousMillis = 0;
 bool doWake;
+bool doDischarge;
 time_t getNtpTime();
 touch_pad_t touchPin;
 

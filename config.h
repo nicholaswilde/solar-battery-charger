@@ -22,7 +22,6 @@ const int batteryQuantity = 2;    // Quantity of batteries
 
 // clear the channel if it's a new day.
 bool doClear = false;
-bool doDischarge = false;
 
 // NTP Servers:
 static const char ntpServerName[] = "us.pool.ntp.org";
@@ -53,7 +52,7 @@ const char * myUserAPIKey = SECRET_USER_APIKEY;
 
 /*------------------------------ Google Sheets -----------------------------*/
 
-bool doSheets = true;
+bool doSheets = false;
 
 const char * myRange = "Sheet1!A2";
 
