@@ -54,10 +54,7 @@ tasks:
     cmds:
       - >
         arduino-cli config add board_manager.additional_urls
-        http://arduino.esp8266.com/stable/package_esp8266com_index.json
-      - >
-        arduino-cli config add board_manager.additional_urls
-        https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+        https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_dev_index.json
       - arduino-cli core update-index
       - arduino-cli core install {{ .CORES }}
 
@@ -103,13 +100,20 @@ tasks:
       - test ! -z "{{.CH_ID}}" || (echo "Please define CH_ID parameter"; exit 1)
       - test ! -z "{{.WRITE_APIKEY}}" || (echo "Please define WRITE_APIKEY parameter"; exit 1)
       - test ! -z "{{.USER_APIKEY}}" || (echo "Please define USER_APIKEY parameter"; exit 1)
+      - test ! -z "{{.PROJECT_ID}}" || (echo "Please define PROJECT_ID parameter"; exit 1)
+      - test ! -z "{{.CLIENT_EMAIL}}" || (echo "Please define CLIENT_EMAIL parameter"; exit 1)
+      - test ! -z "{{.SPREADSHEET_ID}}" || (echo "Please define SPREADSHEET_ID parameter"; exit 1)
+      - test ! -z "{{.PRIVATE_KEY}}" || (echo "Please define PRIVATE_KEY parameter"; exit 1)
       - echo "#define SECRET_SSID \"{{ .SSID }}\"" > secrets.h
       - echo "#define SECRET_PASS \"{{ .PASS }}\"" >> secrets.h
       - echo "#define SECRET_CH_ID {{ .CH_ID }}" >> secrets.h
       - echo "#define SECRET_WRITE_APIKEY \"{{ .WRITE_APIKEY }}\"" >> secrets.h
       - echo "#define SECRET_HOSTNAME \"{{ .HOSTNAME }}\"" >> secrets.h
       - echo "#define SECRET_USER_APIKEY \"{{ .USER_APIKEY }}\"" >> secrets.h
-      # - echo "#define SECRET_SHA1_FINGERPRINT \"{{ .FINGERPRINT }}\"" >> secrets.h
+      - echo "#define PROJECT_ID \"{{ .PROJECT_ID }}\"" >> secrets.h
+      - echo "#define CLIENT_EMAIL \"{{ .CLIENT_EMAIL }}\"" >> secrets.h
+      - echo "#define SPREADSHEET_ID \"{{ .SPREADSHEET_ID }}\"" >> secrets.h
+      - echo "#define PRIVATE_KEY \"{{ .PRIVATE_KEY }}\"" >> secrets.h
     vars:
       HOSTNAME: Feather
       # FINGERPRINT:

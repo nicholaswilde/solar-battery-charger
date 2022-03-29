@@ -22,7 +22,6 @@ const int batteryQuantity = 2;    // Quantity of batteries
 
 // clear the channel if it's a new day.
 bool doClear = false;
-bool doDischarge = false;
 
 // NTP Servers:
 static const char ntpServerName[] = "us.pool.ntp.org";
@@ -38,13 +37,35 @@ static const char ntpServerName[] = "us.pool.ntp.org";
 //const int timeZone = -7;  // Pacific Daylight Time (USA)
 const int timeZone = -8;  // Pacific Standard Time (USA)
 
+/*----------------------------------- Wifi --------------------------------*/
+
 // Pulled from secrets.h
 const char ssid[] = SECRET_SSID; // your network SSID (name)
 const char pass[] = SECRET_PASS; // your network password
+
+/*------------------------------- ThingSpeak ------------------------------*/
+
 unsigned long myChannelNumber = SECRET_CH_ID;
 const char * myWriteAPIKey = SECRET_WRITE_APIKEY;
 const char * myHostName = SECRET_HOSTNAME;
 const char * myUserAPIKey = SECRET_USER_APIKEY;
+
+/*------------------------------ Google Sheets -----------------------------*/
+
+bool doSheets = false;
+
+const char * myRange = "Sheet1!A2";
+
+const char * myProjectId = PROJECT_ID;
+
+//Service Account's client email
+const char * myClientEmail = CLIENT_EMAIL;
+
+const char myPrivateKey[] PROGMEM = PRIVATE_KEY;
+
+const char * mySpreadsheetId = SPREADSHEET_ID;
+
+/*---------------------------------------------------------------------------*/
 
 unsigned int localPort = 8888;  // local port to listen for UDP packets
 const int ledPin = LED_BUILTIN;

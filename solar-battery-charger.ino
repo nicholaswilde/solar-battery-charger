@@ -9,7 +9,7 @@
 
   Software:     Developed using arduino-cli 0.21.1.
 
-  Date:         16MAR2022
+  Date:         28MAR2022
 
   Author:       Nicholas Wilde 0x08b7d7a3
 -----------------------------------------------------------------------------*/
@@ -24,6 +24,7 @@
 #include <TimeLib.h>
 #include <Timezone.h>           // https://github.com/JChristensen/Timezone
 #include <Ticker.h>
+#include <ESP_Google_Sheet_Client.h>
 #include "secrets.h"
 #include "config.h"
 #include "src/ClearChannel.h"
@@ -35,9 +36,9 @@ Adafruit_INA260 ina260 = Adafruit_INA260();
 Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);
 ClearChannel cc;
 
-#define Threshold 40 /* Greater the value, more the sensitivity */
 unsigned long previousMillis = 0;
 bool doWake;
+bool doDischarge;
 time_t getNtpTime();
 touch_pad_t touchPin;
 
@@ -59,34 +60,33 @@ void loop() {
   if (checkButton()) digitalWrite(BUTTON_POWERBOOST, !digitalRead(BUTTON_POWERBOOST));
 
   if (currentMillis - previousMillis < interval*1e3) return;
-  //if (currentMillis - previousMillis >= interval*1e3) {
-    previousMillis = currentMillis;
 
-    display.clearDisplay();
-    display.setCursor(0,0);
+  previousMillis = currentMillis;
 
-    int current = ina260.readCurrent();
+  display.clearDisplay();
+  display.setCursor(0,0);
 
-    print("Mode: ");
+  int current = ina260.readCurrent();
 
-    // Determine the mode by sign of current
-    if (current<0){
-      println("recharge");
-      doDischarge = false;
-    } else {
-      println("discharge");
-      doDischarge = true;
-    }
-    current = abs(current);
+  print("Mode: ");
 
-    int voltage = ina260.readBusVoltage();
-    int percentage;
-    int power = ina260.readPower();
+  // Determine the mode by sign of current
+  if (current<0){
+    println("recharge");
+    doDischarge = false;
+  } else {
+    println("discharge");
+    doDischarge = true;
+  }
+  current = abs(current);
 
-    if(!doDischarge && !doWake)executeRecharge(percentage, voltage, current, power);
+  int voltage = ina260.readBusVoltage();
+  int percentage;
+  int power = ina260.readPower();
 
-    updateDisplay(percentage, voltage, current, power);
-  //}
+  if(!doDischarge && !doWake)executeRecharge(percentage, voltage, current, power);
+
+  updateDisplay(percentage, voltage, current, power);
 }
 
 /* --------------------------------- Setup --------------------------------- */
@@ -127,6 +127,10 @@ void executeRecharge(int percentage, int voltage, int current, int power){
   cc.begin(localPort, client, timeZone);
   setSyncProvider(getNtpTime);
   setSyncInterval(SYNC_INTERVAL);
+  //GSheet.setTokenCallback(tokenStatusCallback);
+
+  GSheet.begin(myClientEmail, myProjectId, myPrivateKey);
+
   String date = ThingSpeak.readCreatedAt(myChannelNumber, myWriteAPIKey);
   if (doClear && cc.shouldClearChannel(date)) cc.clearChannel(myUserAPIKey);
   display.clearDisplay();
@@ -134,6 +138,7 @@ void executeRecharge(int percentage, int voltage, int current, int power){
   delay(DELAY_SCREEN1*1e3);
   updateDisplay(percentage, voltage, current, power);
   writeToThingSpeak(percentage, voltage, current, power);
+  if (doSheets) writeToSheets(percentage, voltage, current, power);
   goToSleep();
 }
 
@@ -190,6 +195,42 @@ void connectToWifi(){
   display.display();
 }
 
+void writeToSheets(int percentage, int voltage, int current, int power){
+  Serial.println("Sheet");
+  bool ready = GSheet.ready();
+  FirebaseJson response;
+  char timeToDisplay[30];
+  sprintf(timeToDisplay, "%02d-%02d-%02dT%02d:%02d:%02dZ", year(), month(), day(), hour(), minute(), second());
+  FirebaseJson valueRange;
+
+  valueRange.add("majorDimension", "COLUMNS");
+  valueRange.set("values/[0]/[0]", timeToDisplay);
+  valueRange.set("values/[1]/[0]", percentage);
+  valueRange.set("values/[2]/[0]", voltage);
+  valueRange.set("values/[3]/[0]", current);
+  valueRange.set("values/[4]/[0]", power);
+  Serial.print(" Sheet: ");
+  Serial.println(mySpreadsheetId);
+  Serial.print(" Status: ");
+  bool success = GSheet.values.append(&response, mySpreadsheetId, myRange, &valueRange);
+  if (success) {
+    Serial.println("success");
+  } else {
+    Serial.println("error");
+    response.toString(Serial, true);
+    Serial.println();
+  }
+}
+
+void tokenStatusCallback(TokenInfo info){
+  if (info.status == esp_signer_token_status_error){
+    Serial.printf("Token info: type = %s, status = %s\n", GSheet.getTokenType(info).c_str(), GSheet.getTokenStatus(info).c_str());
+    Serial.printf("Token error: %s\n", GSheet.getTokenError(info).c_str());
+  } else{
+    Serial.printf("Token info: type = %s, status = %s\n", GSheet.getTokenType(info).c_str(), GSheet.getTokenStatus(info).c_str());
+  }
+}
+
 void writeToThingSpeak(int percentage, int voltage, int current, int power){
   ThingSpeak.setField(FIELD_NO_PERCENTAGE, percentage);
   ThingSpeak.setField(FIELD_NO_VOLTAGE, voltage);
@@ -219,31 +260,7 @@ void goToSleep(){
   ESP.deepSleep(SLEEP_TIME * 60 * 1e6);
 }
 
-void callback(){
-  //placeholder callback function
-  Serial.println("callback called");
-}
-
-void print_wakeup_reason(){
-  esp_sleep_wakeup_cause_t wakeup_reason;
-
-  wakeup_reason = esp_sleep_get_wakeup_cause();
-
-  switch(wakeup_reason){
-    case ESP_SLEEP_WAKEUP_EXT0 : Serial.println("Wakeup caused by external signal using RTC_IO"); break;
-    case ESP_SLEEP_WAKEUP_EXT1 : Serial.println("Wakeup caused by external signal using RTC_CNTL"); break;
-    case ESP_SLEEP_WAKEUP_TIMER : Serial.println("Wakeup caused by timer"); break;
-    case ESP_SLEEP_WAKEUP_TOUCHPAD : Serial.println("Wakeup caused by touchpad"); break;
-    case ESP_SLEEP_WAKEUP_ULP : Serial.println("Wakeup caused by ULP program"); break;
-    default :
-      Serial.print("Wakeup was not caused by deep sleep: ");
-      Serial.println(wakeup_reason);
-      break;
-  }
-}
-
 int getWakeupPin(){
-  Serial.println(esp_sleep_get_touchpad_wakeup_status());
   switch(esp_sleep_get_touchpad_wakeup_status()){
     case 0  : return 4;
     case 1  : return 0;
@@ -256,26 +273,6 @@ int getWakeupPin(){
     case 8  : return 33;
     case 9  : return 32;
     default : return -1;
-  }
-}
-
-/*
-Method to print the touchpad by which ESP32
-has been awaken from sleep
-*/
-void print_wakeup_touchpad(){
-  switch(esp_sleep_get_touchpad_wakeup_status()){
-    case 0  : Serial.println("Touch detected on GPIO 4"); break;
-    case 1  : Serial.println("Touch detected on GPIO 0"); break;
-    case 2  : Serial.println("Touch detected on GPIO 2"); break;
-    case 3  : Serial.println("Touch detected on GPIO 15"); break;
-    case 4  : Serial.println("Touch detected on GPIO 13"); break;
-    case 5  : Serial.println("Touch detected on GPIO 12"); break;
-    case 6  : Serial.println("Touch detected on GPIO 14"); break;
-    case 7  : Serial.println("Touch detected on GPIO 27"); break;
-    case 8  : Serial.println("Touch detected on GPIO 33"); break;
-    case 9  : Serial.println("Touch detected on GPIO 32"); break;
-    default : Serial.println("Wakeup not by touchpad"); break;
   }
 }
 
