@@ -32,11 +32,11 @@ jobs:
       - name: Setup go-task
         uses: lukeshay/setup-task@v1
       - name: Install platform
-        run: >
-          task secrets SSID=MySSID PASS=MyPassword CH_ID=0000000 WRITE_APIKEY=XYZ USER_APIKEY=ABC PROJECT_ID=esp-signer-xxxxxx
+        run: |
+          task secrets SSID=MySSID PASS=MyPassword CH_ID=0000000 WRITE_APIKEY=XYZ USER_APIKEY=ABC PROJECT_ID=esp-signer-xxxxxx \
           CLIENT_EMAIL="esp-signer-sa@esp-signer-xxxxxx.iam.gserviceaccount.com" \
           SPREADSHEET_ID="xxxxxxxxxxxxx" \
-          PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nxxxxxxxxxxxxx\n-----END PRIVATE KEY-----\n"
+          PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nxxxxxxxxxxxxx\n-----END PRIVATE KEY-----\n" \
           task bootstrap
       - name: Compile Sketch
         run: arduino-cli compile -b ${{ matrix.fqbn }} .
