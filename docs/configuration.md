@@ -287,6 +287,20 @@ See [these instructions][9].
 The sketch can also upload data to a Google Sheet using the [ESP-Google-Sheet-Client][13] library.
 Checkout the [documentation][14] for how to setup the library.
 
+Create a new sheet.
+
+Share the sheet with the client email from the Google Cloud Platform json file.
+
+Fill out the header of the sheet.
+
+Get the spreadsheet ID from the URL in between the `/d/` and `/edit#gid=0`
+
+```
+https://docs.google.com/spreadsheets/d/<SPREADSHEET_ID>/edit#gid=0
+```
+
+![](./assets/images/sheet-header.png)
+
 Fill out the variables in the `secrets.h` file.
 
 Set `doSheets` in the `config.h` file to `true` to enable the uploading of values to Sheets.

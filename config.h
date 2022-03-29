@@ -55,6 +55,8 @@ const char * myUserAPIKey = SECRET_USER_APIKEY;
 
 bool doSheets = true;
 
+const char * myRange = "Sheet1!A2";
+
 const char * myProjectId = PROJECT_ID;
 
 //Service Account's client email

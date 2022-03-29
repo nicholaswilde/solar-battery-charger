@@ -9,7 +9,7 @@
 
   Software:     Developed using arduino-cli 0.21.1.
 
-  Date:         16MAR2022
+  Date:         28MAR2022
 
   Author:       Nicholas Wilde 0x08b7d7a3
 -----------------------------------------------------------------------------*/
@@ -36,7 +36,6 @@ Adafruit_INA260 ina260 = Adafruit_INA260();
 Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);
 ClearChannel cc;
 
-#define Threshold 40 /* Greater the value, more the sensitivity */
 unsigned long previousMillis = 0;
 bool doWake;
 time_t getNtpTime();
@@ -212,7 +211,7 @@ void writeToSheets(int percentage, int voltage, int current, int power){
   Serial.print(" Sheet: ");
   Serial.println(mySpreadsheetId);
   Serial.print(" Status: ");
-  bool success = GSheet.values.append(&response, mySpreadsheetId, "Sheet1!A2", &valueRange);
+  bool success = GSheet.values.append(&response, mySpreadsheetId, myRange, &valueRange);
   if (success) {
     Serial.println("success");
   } else {
@@ -260,31 +259,7 @@ void goToSleep(){
   ESP.deepSleep(SLEEP_TIME * 60 * 1e6);
 }
 
-void callback(){
-  //placeholder callback function
-  Serial.println("callback called");
-}
-
-void print_wakeup_reason(){
-  esp_sleep_wakeup_cause_t wakeup_reason;
-
-  wakeup_reason = esp_sleep_get_wakeup_cause();
-
-  switch(wakeup_reason){
-    case ESP_SLEEP_WAKEUP_EXT0 : Serial.println("Wakeup caused by external signal using RTC_IO"); break;
-    case ESP_SLEEP_WAKEUP_EXT1 : Serial.println("Wakeup caused by external signal using RTC_CNTL"); break;
-    case ESP_SLEEP_WAKEUP_TIMER : Serial.println("Wakeup caused by timer"); break;
-    case ESP_SLEEP_WAKEUP_TOUCHPAD : Serial.println("Wakeup caused by touchpad"); break;
-    case ESP_SLEEP_WAKEUP_ULP : Serial.println("Wakeup caused by ULP program"); break;
-    default :
-      Serial.print("Wakeup was not caused by deep sleep: ");
-      Serial.println(wakeup_reason);
-      break;
-  }
-}
-
 int getWakeupPin(){
-  Serial.println(esp_sleep_get_touchpad_wakeup_status());
   switch(esp_sleep_get_touchpad_wakeup_status()){
     case 0  : return 4;
     case 1  : return 0;
@@ -297,26 +272,6 @@ int getWakeupPin(){
     case 8  : return 33;
     case 9  : return 32;
     default : return -1;
-  }
-}
-
-/*
-Method to print the touchpad by which ESP32
-has been awaken from sleep
-*/
-void print_wakeup_touchpad(){
-  switch(esp_sleep_get_touchpad_wakeup_status()){
-    case 0  : Serial.println("Touch detected on GPIO 4"); break;
-    case 1  : Serial.println("Touch detected on GPIO 0"); break;
-    case 2  : Serial.println("Touch detected on GPIO 2"); break;
-    case 3  : Serial.println("Touch detected on GPIO 15"); break;
-    case 4  : Serial.println("Touch detected on GPIO 13"); break;
-    case 5  : Serial.println("Touch detected on GPIO 12"); break;
-    case 6  : Serial.println("Touch detected on GPIO 14"); break;
-    case 7  : Serial.println("Touch detected on GPIO 27"); break;
-    case 8  : Serial.println("Touch detected on GPIO 33"); break;
-    case 9  : Serial.println("Touch detected on GPIO 32"); break;
-    default : Serial.println("Wakeup not by touchpad"); break;
   }
 }
 
