@@ -181,7 +181,7 @@ credentials that aren't updated in GitHub. The file is ignored in `.gitignore`.
 
 #define SECRET_USER_APIKEY "ABC"               // replace ABC with ThingSpeak User API Key
 
-#define PROJECT_ID "esp-signer-345301"         // taken from "project_id" key in the Google Cloud Platform JSON file.
+#define PROJECT_ID "esp-signer-xxxxxx"         // taken from "project_id" key in the Google Cloud Platform JSON file.
 #define CLIENT_EMAIL "esp-signer-sa@esp-signer-xxxxxx.iam.gserviceaccount.com" // taken from "client_email" key in the Google Cloud Platform JSON file.
 #define SPREADSHEET_ID "ABCDEFG"               // Google Sheet ID.
 #define PRIVATE_KEY "-----BEGIN PRIVATE KEY-----\nxxxxxxxxxxxxx\n-----END PRIVATE KEY-----\n" // taken from "private_key" key in the Google Cloud Platform JSON file.
@@ -200,9 +200,9 @@ specifies (`arduino_secrets.h`) because this project does not use an Arduino.
 
 ```shell
 task secrets SSID=MySSID PASS=MyPassword CH_ID=0000000 WRITE_APIKEY=XYZ USER_APIKEY=ABC \
-PROJECT_ID=esp-signer-345301 \
+PROJECT_ID=esp-signer-xxxxxx \
 CLIENT_EMAIL="esp-signer-sa@esp-signer-xxxxxx.iam.gserviceaccount.com" \
-SPREADSHEET_ID="1RtgkJY_LvvPQxOhoOLC8yOMEsfU8A4mKlcxptYz1Yu4" \
+SPREADSHEET_ID="ABCDEFG" \
 PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nxxxxxxxxxxxxx\n-----END PRIVATE KEY-----\n"
 ```
 
