@@ -25,7 +25,7 @@ Create [`secrets.h`](https://nicholaswilde.io/solar-battery-charger/configuratio
   sudo apt install python3-serial screen
   brew install arduino-cli
   arduino-cli config init
-  arduino-cli config add board_manager.additional_urls https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+  arduino-cli config add board_manager.additional_urls https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_dev_index.json
   arduino-cli core update-index
   arduino-cli core install esp32:esp32
   arduino-cli lib install ThingSpeak "Adafruit SH110X" "Adafruit INA260 Library" Timezone ESP-Google-Sheet-Client
