@@ -26,7 +26,7 @@ Create [`secrets.h`](https://nicholaswilde.io/solar-battery-charger/configuratio
   arduino-cli config add board_manager.additional_urls https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
   arduino-cli core update-index
   arduino-cli core install esp32:esp32
-  arduino-cli lib install ThingSpeak "Adafruit SH110X" "Adafruit INA260 Library" Timezone
+  arduino-cli lib install ThingSpeak "Adafruit SH110X" "Adafruit INA260 Library" Timezone ESP-Google-Sheet-Client
   arduino-cli compile -b esp32:esp32:featheresp32 .
   arduino-cli upload -b esp32:esp32:featheresp32 . -p /dev/ttyUSB0 .
   screen /dev/ttyUSB0 115200
