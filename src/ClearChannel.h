@@ -4,12 +4,7 @@
 #include <WiFiUdp.h>
 #include <TimeLib.h>
 #include <Timezone.h>
-
-#if defined(ESP8266)
-  #include <ESP8266HTTPClient.h>
-#elif defined(ESP32)
-  #include <HTTPClient.h>
-#endif
+#include <HTTPClient.h>
 
 #define THINGSPEAK_URL "api.thingspeak.com"
 
@@ -60,7 +55,7 @@ class ClearChannel{
     }
 
     String _getCurrentDate(){
-      char timeToDisplay[20];
+      char timeToDisplay[30];
       sprintf(timeToDisplay, "%02d-%02d-%02dT%02d:%02d:%02dZ", year(), month(), day(), hour(), minute(), second());
       return _extractDate(String(timeToDisplay));
     }
@@ -85,7 +80,7 @@ class ClearChannel{
       time_t t = mktime(&tm);
       TimeChangeRule *tcr;
       time_t local = myTZ.toLocal(t, &tcr);
-      char timeToDisplay[20];
+      char timeToDisplay[30];
       sprintf(timeToDisplay, "%02d-%02d-%02dT%02d:%02d:%02dZ", year(local), month(local), day(local), hour(local), minute(local), second(local));
       return String(timeToDisplay);
     }
