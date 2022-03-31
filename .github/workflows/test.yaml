@@ -4,11 +4,15 @@ on:  # yamllint disable-line rule:truthy
   push:
     paths:
       - '**.ino'
+      - '**.cpp'
+      - '**.h'
     branches:
       - main
   pull_request:
     paths:
       - '**.ino'
+      - '**.cpp'
+      - '**.h'
     branches:
       - main
   workflow_dispatch:
