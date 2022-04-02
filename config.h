@@ -15,6 +15,7 @@
 
 // Pins
 #define BUTTON_A 15
+#define BUTTON_B 32
 #define BUTTON_POWERBOOST 33
 
 const int batteryCapacity = 3000; // Battery capacity in mAh
