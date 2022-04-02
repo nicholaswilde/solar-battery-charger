@@ -50,7 +50,7 @@ void setup() {
   setupDisplay();
   setupIna260();
   doWake = (esp_sleep_get_wakeup_cause()==ESP_SLEEP_WAKEUP_EXT0);
-  esp_sleep_enable_ext0_wakeup(GPIO_NUM_15,LOW);
+  esp_sleep_enable_ext0_wakeup(GPIO_NUM_32,LOW);
 }
 
 void loop() {
@@ -58,6 +58,8 @@ void loop() {
 
   // toggle Powerboost
   if (checkButton()) digitalWrite(BUTTON_POWERBOOST, !digitalRead(BUTTON_POWERBOOST));
+
+  if (checkButtonB()) goToSleep();
 
   if (currentMillis - previousMillis < interval*1e3) return;
 
@@ -93,6 +95,7 @@ void loop() {
 
 void setupPins(){
   pinMode(BUTTON_A, INPUT_PULLUP);
+  pinMode(BUTTON_B, INPUT_PULLUP);
   pinMode(BUTTON_POWERBOOST, OUTPUT);
   pinMode(ledPin, OUTPUT);
 }
@@ -282,6 +285,17 @@ bool checkButton() {
   static bool oldButton;
   bool but = !digitalRead(BUTTON_A);
   delay(40);	// simple debounce button
+  if( but != oldButton){
+    oldButton = but;
+    return true && !oldButton;
+  }
+  return false;
+}
+
+bool checkButtonB() {
+  static bool oldButton;
+  bool but = !digitalRead(BUTTON_B);
+  delay(40);  // simple debounce button
   if( but != oldButton){
     oldButton = but;
     return true && !oldButton;
