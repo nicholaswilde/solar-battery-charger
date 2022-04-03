@@ -17,6 +17,7 @@ nav:
   - About: about.md
   - Design: design.md
   - Configuration: configuration.md
+  - Calibration: calibration.md
   - Test:
       - adjusttime: test/adjusttime.md
       - animation: test/animation.md
