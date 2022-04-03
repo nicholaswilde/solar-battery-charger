@@ -83,7 +83,7 @@ void loop() {
   current = abs(current);
 
   int voltage = ina260.readBusVoltage();
-  int percentage;
+  int percentage = getPercentage(voltage);
   int power = ina260.readPower();
 
   if(!doDischarge && !doWake)executeRecharge(percentage, voltage, current, power);
@@ -280,6 +280,15 @@ int getWakeupPin(){
 }
 
 /* ------------------------------- Functions ------------------------------- */
+
+int getPercentage(int voltage){
+  if (voltage <= VOLTAGE_MIN) {
+    return 0;
+	} else if (voltage >= VOLTAGE_MAX) {
+		return 100;
+  }
+  return (float)EXP_B * exp((float)EXP_A*voltage)*100;
+}
 
 bool checkButton() {
   static bool oldButton;

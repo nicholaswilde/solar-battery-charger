@@ -310,6 +310,10 @@ Set `doSheets` in the `config.h` file to `true` to enable the uploading of value
     the email address specified in `CLIENT_EMAIL` in order to write to it using the Google Cloud
     Platform.
 
+## Battery Percentage
+
+See the [calibration page](./calibration.md) on how to calibrate the system.
+
 ## :robot: Task
 
 [go-task][10] may be used to automate some of the commands.
