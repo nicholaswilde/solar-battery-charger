@@ -135,7 +135,7 @@ void executeRecharge(int percentage, int voltage, int current, int power){
   GSheet.begin(myClientEmail, myProjectId, myPrivateKey);
 
   String date = ThingSpeak.readCreatedAt(myChannelNumber, myWriteAPIKey);
-  if (doClear && cc.shouldClearChannel(date)) cc.clearChannel(myUserAPIKey);
+  if (doClear && (timeStatus() != timeNotSet) && cc.shouldClearChannel(date)) cc.clearChannel(myUserAPIKey);
   display.clearDisplay();
   display.setCursor(0,0);
   delay(DELAY_SCREEN1*1e3);
