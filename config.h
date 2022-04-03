@@ -10,8 +10,10 @@
 #define FIELD_NO_POWER 4        // field number of battery power
 
 #define SLEEP_TIME 15           // the time the Feather goes into a deep sleep (m)
-#define VOLTAGE_MAX 4.2         // max voltage of lipo battery (V)
-#define VOLTAGE_MIN 2.64        // min voltage of lipo battery (V)
+#define VOLTAGE_MAX 4072        // max voltage of lipo battery (V)
+#define VOLTAGE_MIN 3000        // min voltage of lipo battery (V)
+#define EXP_A 0.00348           // y = B * exp(A*x)
+#define EXP_B 0.000000686       // y = B * exp(A*x)
 
 // Pins
 #define BUTTON_A 15
