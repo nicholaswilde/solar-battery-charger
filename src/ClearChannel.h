@@ -152,8 +152,6 @@ class ClearChannel{
       String currentDate = _getCurrentDate();
       Serial.print(" Current: ");
       Serial.println(currentDate);
-      Serial.print(" Created at1: ");
-      Serial.println(createdAt);
       createdAt = _adjustDate(createdAt);
       createdAt = _extractDate(createdAt);
       Serial.print(" Created at: ");
