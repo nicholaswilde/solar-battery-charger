@@ -14,6 +14,7 @@
 #define VOLTAGE_MIN 3000        // min voltage of lipo battery (V)
 #define EXP_A 0.00348           // y = B * exp(A*x)
 #define EXP_B 0.000000686       // y = B * exp(A*x)
+#define DISPLAY_THRESHOLD 65    // threshold current for the display to turn on (mA)
 
 // Pins
 #define BUTTON_A 15
