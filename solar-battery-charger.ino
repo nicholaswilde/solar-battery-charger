@@ -70,13 +70,14 @@ void loop() {
 
   int current = ina260.readCurrent();
 
-  print("Mode: ");
-
   // Determine the mode by sign of current
   if (current<0){
+    if (abs(current)<DISPLAY_THRESHOLD) display.oled_command(SH110X_DISPLAYOFF);
+    print("Mode: ");
     println("recharge");
     doDischarge = false;
   } else {
+    print("Mode: ");
     println("discharge");
     doDischarge = true;
   }
